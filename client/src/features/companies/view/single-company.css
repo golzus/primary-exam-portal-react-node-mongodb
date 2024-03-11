@@ -1,0 +1,91 @@
+/* .single-company-container{
+    display: flex;
+    gap: 50px;
+    margin-top: 20px;
+}
+.single-company-info{
+    flex: 1;
+    background-color: var(--bgSoft);
+    padding: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: var(--textSoft);
+    height: max-content;
+}
+.single-company-img-container{
+width: 100%;
+height: 300px;
+position: relative;
+border-radius: 10px;
+overflow: hidden;
+margin-bottom: 20px;
+    }
+.single-company-img-container img{
+    width: 100% important ;
+    object-fit: contain;
+    position: relative;
+}
+.single-company-form-container{
+flex: 3;
+background-color: var(--bgSoft);
+padding: 20px;
+border-radius: 10px;
+}
+.single-company-form{
+    display: flex;
+    flex-direction: column;
+}
+.single-company-form input,
+.single-company-form select{
+    padding: 20px;
+    border: solid 2px #2e374a;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 10px 0px;
+}
+.single-company-form label{
+    font-size: 12px;
+}
+.single-company-form button{
+    width: 100%;
+    padding: 20px;
+    background-color: teal;
+    color: var(--text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+} */
+
+.classesList{
+    display: flex;
+    flex-wrap: wrap;
+}
+.single-class{
+    width: 30vw;
+    height: 30vw;
+    margin: 20px;
+    background-color: var(--bgSoft);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.btn-delete,.lnk-see-all-students{
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--text);
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+
+} 
+.lnk-see-all-students{
+    background-color: teal;
+}
+.btn-delete{
+    background-color: crimson;
+
+}
