@@ -1,0 +1,31 @@
+.div-choose-classAndSchool{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-choose-classAndSchool{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    height: 40vh;
+    border-radius: 5px;
+    margin: 5vw;
+    align-self: center;
+    gap: 5px;
+    background-color: var(--bgSoft);
+}
+.form-choose-classAndSchool select{
+    background-color: var(--bg);
+    color: var(--text);
+    text-align: center;
+    width: 70%;
+    height: 20%;
+font-size: larger;
+
+}
+/* --bg:#c67d10;
+--bgSoft:#905a0a;
+--text:white;
+--textSoft:#b7bac1; */

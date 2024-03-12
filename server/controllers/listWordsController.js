@@ -25,11 +25,11 @@ const getListWords = async (req, res) => {
 // };
 
 const addListWords = async (req, res) => {
-    const{title,date,company,test}=req.body
-    if(!test||!company){
-        return res.status(400).json({error:true,message:"test  and company are required!",data:null})
+    const{title,date,test,class:class1}=req.body
+    if(!test){
+        return res.status(400).json({error:true,message:"test   are required!",data:null})
     }
-    const listWords=await ListWords.create({title,date,company,test})
+    const listWords=await ListWords.create({title,date,test,class1})
     if(!listWords){
         return res.status(400).json({error:true,message:"something wrong",data:null})
     }
@@ -38,15 +38,14 @@ const addListWords = async (req, res) => {
 };
 
 const updateListWords = async (req, res) => {
-    const{title,date,company,test,active,_id}=req.body
-    if(!test||!company||!_id){
+    const{title,date,test,active,_id}=req.body
+    if(!test||!_id){
         return res.status(400).json({error:true,message:"test,_id and company are required!",data:null})
     }
     const listWords=await ListWords.findById(_id)
     if(!listWords){
         return res.status(400).json({error:true,message:"no ListWords found",data:null})
     }
-    listWords.company=company
     listWords.title=title
     listWords.active=active
     listWords.data=date

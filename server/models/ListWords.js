@@ -1,5 +1,6 @@
 const mongoose=require("mongoose")
 const Company=require('../models/Company')
+const Class=require("./Class")
 const listWordsSchema=new mongoose.Schema({
     title:{
         type:String,
@@ -7,6 +8,10 @@ const listWordsSchema=new mongoose.Schema({
     },
     date:{
 type:mongoose.Schema.Types.Date
+    },
+    class:{
+        type:mongoose.Schema.Types.ObjectId,
+    ref:Class  
     },
     company:{
         type:mongoose.Schema.Types.ObjectId,
