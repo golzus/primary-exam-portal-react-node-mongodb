@@ -12,7 +12,6 @@ root.render(
    <React.StrictMode>
    <Provider store={store}> 
      <App />
-    <h1>ggg</h1>
      </Provider>
   </React.StrictMode>
 );

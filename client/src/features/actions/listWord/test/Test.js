@@ -31,7 +31,7 @@ const listWord = data.data.find((list) => list._id === _id);
     const updatedList = [...wordList];
     //updatedList[index][field]=value
     setWordList(updatedList);
-//setWordList(()=>[...wordList,wordList[index][field]=value])
+setWordList(()=>[...wordList,wordList[index][field]=value])
   };
 
   const navigate = useNavigate();
@@ -49,14 +49,16 @@ if(!isupdateSuccess)console.log(error,"data");
   if (isLoading) return <h1>Loading...</h1>;
   if (isError || error) return <h1>data.message</h1>;
 
-
   let count = 0;
-  const formSubmit=(e)=>{
+  const checkTest=(e)=>{
+
     e.preventDefault()
     console.log(wordList,"yyyyyyyyyyy");
+    const formData =new FormData(e.target)
+    const listObject=Object.fromEntries(formData.entries())
 
-    const data =new FormData(e.target)
-    const listObject=Object.fromEntries(data.entries())
+  console.log(listObject,"list");
+
     listObject.company=company._id
     listObject._id=_id
     listObject.test=wordList
@@ -64,10 +66,11 @@ if(!isupdateSuccess)console.log(error,"data");
   console.log(listObject,"list");
   updateListWords(listObject)
  }
+ console.log(wordList,"wordlist");
   return (
     <div
     
-      className="formupdatelistword"><form  onSubmit={formSubmit} >
+      className="formupdatelistword"><form  onSubmit={checkTest} >
       <input className="inputWordUpdate ss" name="title" defaultValue={listWord.title} />
       <input
         className="inputWordUpdate ss"name="date"
@@ -103,10 +106,11 @@ if(!isupdateSuccess)console.log(error,"data");
               </td>
              
               <td>תשובה:
-             <input
-                  name="test.translate"
+             <input key={cat.translate}
+                  name="testAnswers"
+                  id="testAnswers"
                   className="answerTranslateWord"
-                  //  {/* onChange={(e) => handleChange(index, 'translate', e.target.value)} */}
+                  /* onChange={(e) => handleChange(index, 'translate', e.target.value)} */
                  /> 
               {/* <span><input className="answerTranslateWord"/>answer:</span> */}
               </td>
@@ -118,8 +122,8 @@ if(!isupdateSuccess)console.log(error,"data");
 
         </tbody>
       </table>
-  
-      <button type="submit" className="updateList">עדכן</button>
+  <button type="submit">הגש</button>
+      {/* <button type="submit" className="updateList">עדכן</button> */}
       </form>
     </div>
   );

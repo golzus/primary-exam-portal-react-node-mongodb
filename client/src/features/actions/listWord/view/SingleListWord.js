@@ -71,9 +71,10 @@ if(!isupdateSuccess)console.log(error,"data");
     >
       <ExaminerPage/>
       <form  onSubmit={formSubmit} className="print-content" >
-      <input className="inputWordUpdate ss" name="title" defaultValue={listWord.title} />
+        <div className="titles">
+      <input className="inputWordUpdate ss titleListWord" name="title" defaultValue={listWord.title} />
       <input
-        className="inputWordUpdate ss"name="date"
+        className="inputWordUpdate ss dateListWord"name="date"
         defaultValue={listWord.date}
         type="date"
       />
@@ -81,14 +82,15 @@ if(!isupdateSuccess)console.log(error,"data");
                             <option selected={!listWord.active} value={false}>ניתן לעשות {""}</option>
                             <option selected={listWord.active} value={true}>לא ניתן לעשות {""} </option>
                         </select>
+                        </div>
       <table className="users-list-table">
         <thead>
           <tr>
-            <td>מס'</td>
+            <th className="inputWordUpdateSmaller">מס'</th>
+            <th className="inputWordUpdateSmaller inputWordUpdateSmallerEar"> שמיעה</th>
 
-            <td>מילה</td>
-            <td> תרגום</td>
-            <td>השמעה</td>
+            <th className="inputWordUpdate">מילה</th>
+            <th className="inputWordUpdate"> תרגום</th>
           </tr>
         </thead>
         <tbody>
@@ -96,26 +98,30 @@ if(!isupdateSuccess)console.log(error,"data");
 
 {wordList?.map((cat, index) => (
             <tr key={index}>
-              <td>{index + 1}.</td>
-              <td>
+              <td  className="inputWordUpdate inputWordUpdateSmaller">{index + 1}.</td>
+              <td  className="inputWordUpdate inputWordUpdateSmaller inputWordUpdateSmallerEar"> <WordSpeaker word={cat.word} /> </td>
+              <td   className="inputWordUpdate">
                 <input
                   name="test"
-                  className="inputWordUpdate"
+                  // className="inputWordUpdate"
                   defaultValue={cat.word}
+                  
                     onChange={(e) => handleChange(index,"word", e.target.value)}
-                />
+                />         
+                       {/* <WordSpeaker word={cat.word} /> */}
+
               </td>
              
-              <td>
+              <td  className="inputWordUpdate">
                 <input 
                   name="test.translate"
-                  className="inputWordUpdate"
+                  // className="inputWordUpdate"
                   defaultValue={cat.translate}
                   //  onChange={(e) => handleChange(index, 'translate', e.target.value)}
                 />
               </td>
               <td>
-                <WordSpeaker word={cat.word} />
+                {/* <WordSpeaker word={cat.word} /> */}
               </td>
             </tr>
           ))}

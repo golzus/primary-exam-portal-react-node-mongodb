@@ -49,7 +49,7 @@ function App() {
                   <Route path="aa" element={<Students/>}/>
                   <Route path="class" element={<AddClass/>}/>
                 </Route>
-                {/* <Route path="settings"element={<AudioRecorder/>}/> */}
+                 <Route path="settings"element={<AudioRecorder/>}/> 
                 {/* <Route path="settings"element={<Translation />}/> */}
 
 

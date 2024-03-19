@@ -3,11 +3,11 @@
    
   }
 .list-word{
-    width: 50vw;
-    padding: 20px;
+    width: 40vw;
+    /* padding: 20px; */
     border-radius: 10px;
 
-    background-color: var(--bgSoft);
+    /* background-color: var(--bgSoft); */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,27 +16,11 @@
 .test-name&date{
     display: flex;
 }
-.addWordForm{
-    position: fixed;
- 
-    top: 5vh;
-left: 0;
-z-index: 1;
-    /* background-color: var(--bgSoft); */
-    padding: 20px;
-    border-radius: 10px;
-    width: 25vw;
-    margin-top: 10px;
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    
- }
 
 
-    .addWordForm input,.list-word input{
-        background-color: var( --bg);
+
+.formEnteries{
+        /* background-color: var( --bg); */
         color: var(--text);
         padding: 30px;
         background-color: var(--bgSoft);
@@ -48,8 +32,10 @@ z-index: 1;
 
 
     }
-    .addWordForm button,.list-word button{
-        width: 100%;
+    .buttonForm{
+        /* width: 100%; */
+        height: 3vh;
+
         padding: 30px;
         background-color: teal;
         color: var(--text);
@@ -58,18 +44,24 @@ z-index: 1;
         cursor: pointer;
     }
     
-    .list-word input,.list-word button{
+    .formEnteries,.buttonForm{
         width: 20%;
         height: 5vh;
         margin: 10px;
         padding: 0;
 
     }
-   .td-addWord{
-        background-color: teal;
+   .td-addWord input{
+        /* background-color: teal; */
+        /* color: var(--text); */
+        border: none;
+        border-bottom: solid 5px;
+        border-color: var(--bgSoft);
         border-radius: 10px;
         margin: 2px;
-        width: 45%;
+        width: 70%;
+        height: 8vh;
+        text-align: center;
     }
    .qq{
     background-color: teal;
@@ -77,10 +69,11 @@ z-index: 1;
 height: 5vh;
 width: 10vw;  
 align-items: center;  }
-.wordSpeakerButton{
-    color:var(--bg);
-    background-color: teal;
-    font-size: 300%;
+.deleteWord{
+    color:var(--text);
+    font-weight: bolder;
+    font-size: xx-large;
+    background-color: var(--bgSoft);
+    border: none;
     cursor: pointer;
-    cursor:pointer;
 }

@@ -59,7 +59,7 @@ const SitdeBar = () => {
           icon: <MdDashboard />,
         },
         {
-          title: "משתמשים",
+          title: "תלמידות",
           path: "users",
           icon: <MdSupervisedUserCircle />,
         },

@@ -3,7 +3,11 @@ const ListWords= require('../models/ListWords')
 
 
 const getListWords = async (req, res) => {
-    const listWords=await ListWords.find().lean()
+    
+    const {chosenClass:classmate}=req.body
+    
+    const listWords=await ListWords.find({class:classmate}).lean()
+    
     if(!listWords.length){
         return res.status(400).json({error:true,message:"no listWords",data:null})
     }
@@ -27,7 +31,7 @@ const getListWords = async (req, res) => {
 const addListWords = async (req, res) => {
     const{title,date,test,class:class1}=req.body
     if(!test){
-        return res.status(400).json({error:true,message:"test   are required!",data:null})
+        return res.status(400).json({error:true,message:"test is required!",data:null})
     }
     const listWords=await ListWords.create({title,date,test,class1})
     if(!listWords){

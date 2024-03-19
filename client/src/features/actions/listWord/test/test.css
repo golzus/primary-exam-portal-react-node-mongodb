@@ -3,6 +3,6 @@
     height: 5vh;
     background: none;
    border: none;
-   border-bottom: 2px var(--bg) solid;
+   border-bottom: 2px var(--bgSoft) solid;
 text-align: center;
 }

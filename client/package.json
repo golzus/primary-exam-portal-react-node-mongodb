@@ -8,14 +8,13 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
-    "google-translate-api": "^2.3.0",
     "jwt-decode": "^4.0.0",
     "reacr": "^1.0.0",
-    "react": "^17.0.2",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
     "react-mic": "^12.4.6",
-    "react-redux": "^7.2.5",
+    "react-redux": "^9.1.0",
     "react-router-dom": "^6.21.0",
     "react-scripts": "5.0.1",
     "react-speech-kit": "^3.0.1",
@@ -47,3 +46,5 @@
     ]
   }
 }
+
+

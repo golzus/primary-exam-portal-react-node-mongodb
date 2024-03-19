@@ -5,9 +5,9 @@ const listWordsController=require('../controllers/listWordsController')
 
 
 
- router.get("/",listWordsController.getListWords)
+ router.post("/",listWordsController.getListWords)
 // //router.get("/:id")
- router.post("/",listWordsController.addListWords)
+ router.post("/add",listWordsController.addListWords)
  router.put("/",listWordsController.updateListWords)
  router.delete("/",listWordsController.deleteListWords)
 module.exports=router

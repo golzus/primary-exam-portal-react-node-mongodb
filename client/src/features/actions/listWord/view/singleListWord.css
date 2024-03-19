@@ -1,12 +1,16 @@
 
 .formupdatelistword{
-    background-color: var(--bgSoft);
-
-
+    /* background-color: var(--bgSoft); */
+align-content: center;
+justify-content: center;
 
 }
-.inputWordUpdate,.updateList{
-    color: var(--text);
+.titles{
+    display: flex;
+    justify-content: space-between;
+}
+.inputWordUpdate,.updateList,.if-you-may-do,.inputWordUpdate1,.inputWordUpdateSmaller{
+    /* color: var(--text);
     padding: 30px;
     background-color: teal;
 
@@ -14,16 +18,41 @@
     border-radius: 5px;
     margin-bottom: 30px;
     width: 45%;
+    margin: 10px; */
+    padding: 30px;
+    width:30vw;
     margin: 10px;
+    margin-bottom: 30px;
+    font-size: x-large;
+    background-color: var(--bgSort);
+    border: solid 2px brown;
+    width: 30%;
+    align-items: center;
+    background-color: var(--bg);
+    height: 5vh;
 }
-.ss{
+.inputWordUpdate input,.inputWordUpdateSmaller input{
+   border: none;
+   background-color: var(--bg);
+   font-size: x-large;
+text-align: center;
+}
+
+.inputWordUpdateSmaller{
+    width: 1vw;
+
+}
+/* .ss{
 
     width: 30%;
     align-items: center;
     background-color: var(--bg);
     height: 5vh;
 
-}
+} */
+.updateList{display: none;
+color: red;
+width: 400%;}
 .updateList{
     width: 80%;
     height: 5%;
@@ -31,11 +60,40 @@
 
 }
 .if-you-may-do{
-    width: 40%;
-    padding: 30px;
+    /* width: 40%;
+    padding: 30px; */
     background-color: teal;
     color: var(--text);
-    border: none;
-    border-radius: 5px;
+    /* border: none;
+    border-radius: 5px; */
     cursor: pointer;
+    height: 7vw;
 }
+@media print {
+    /* הסתרת התוכן בעת הדפסה */
+    .wordSpeakerButton,.if-you-may-do{display: none;}
+    .inputWordUpdate input, .inputWordUpdate{
+        background-color: white;
+    }
+   
+    .titleListWord{
+        display: block;
+        border: none; 
+       font-weight: bold;
+   }
+   .dateListWord{
+    display: none;
+   }
+   .inputWordUpdateSmallerEar{
+    display: none;
+   }
+   body{
+    align-content: center;
+   }
+}
+.wordSpeakerButton{
+width: 5vh;
+height: 5vh;
+background-color: var(--bg);
+cursor: pointer;
+color: brown;}

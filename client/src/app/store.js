@@ -2,15 +2,22 @@
 import { configureStore } from "@reduxjs/toolkit";
 import apiSlice from "./apiSlice";
 import authReducer from "../features/auth/authSlice"
-
+import currentSchoolAndClassSlice from "../features/companies/CurrentSchoolAndClass/currentSchoolAndClassSlice";
 const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
-        auth:authReducer
+        auth:authReducer,
+        schoolAndClass:currentSchoolAndClassSlice,
     },
+       
+    
     middleware: (defaultMiddleware) =>
     defaultMiddleware().concat(apiSlice.middleware),
     devTools: true//לא שלכוח לשנות בהמשך לfalse
+
+
+    
+    
 });
 
 export default store; 

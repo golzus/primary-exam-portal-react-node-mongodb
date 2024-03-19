@@ -32,7 +32,7 @@ const WordSpeaker = ({ word }) => {
   };
 
   return (
-     <button onClick={handleClick}><HiOutlineSpeakerWave className='wordSpeakerButton' /></button>
+     <button onClick={handleClick}><HiOutlineSpeakerWave className='wordSpeakerButton'  /></button>
   );
 };
 
