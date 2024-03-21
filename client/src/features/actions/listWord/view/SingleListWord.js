@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  useGetAllListWordsQuery,
+  useGetListWordsByIdMutation,
   useUpdateListWordsMutation,
 } from "./ListWordApiSlice";
 import "./singleListWord.css";
@@ -9,127 +9,168 @@ import useAuth from "../../../../hooks/useAuth";
 import WordSpeaker from "../add/WordSpeaker";
 import ExaminerPage from "../list/ExaminerPage";
 const SingleListWord = () => {
-  const {company,roles}=useAuth()
+  const { company, roles } = useAuth();
 
   const { _id } = useParams();
   const [
     updateListWords,
     { data: updatedData, error, isSuccess: isupdateSuccess, isError },
   ] = useUpdateListWordsMutation();
- 
-  const {
-    isSuccess,
-    data,
-    isLoading,
-    isError: err,
-  } = useGetAllListWordsQuery();
-if(data)console.log(data.data.test,"test");
-const listWord = data.data.find((list) => list._id === _id);
-  const [wordList, setWordList] = useState(listWord.test)
 
+  const [
+    getListWordsById,
+    { isSuccess, data: listWord, isLoading, isError: err },
+  ] = useGetListWordsByIdMutation();
+  useEffect(() => {
+    getListWordsById({ _id });
+  }, []);
+  const [wordList, setWordList] = useState(listWord?.data.test);
 
-    const handleChange = (index,field, value) => {
+  useEffect(() => {
+    if (isSuccess) {
+      setWordList(listWord.data.test);
+    }
+  }, [isSuccess]);
+  // if(listWord)console.log(listWord.data.test,"test");
+  // const listWord = data.data.find((list) => list._id === _id);
+
+  if (isLoading) return <h1>Loading...</h1>;
+  if (isError || error) return <h1>data.message</h1>;
+  if (listWord) console.log(listWord, "litwordllllllllllllllll");
+  const handleChange2 = (index, field, value) => {
     const updatedList = [...wordList];
     //updatedList[index][field]=value
     setWordList(updatedList);
-//setWordList(()=>[...wordList,wordList[index][field]=value])
+    //setWordList(()=>[...wordList,wordList[index][field]=value])
   };
 
-  const navigate = useNavigate();
-//   useEffect(() => {
-//     if (isupdateSuccess) {
-//         navigate("/dash/actions");
-//     }
-// }, [isupdateSuccess]);
+  //  const navigate = useNavigate();
+  //   useEffect(() => {
+  //     if (isupdateSuccess) {
+  //         navigate("/dash/actions");
+  //     }
+  // }, [isupdateSuccess]);
+  const handleChange = (index, field, value) => {
+    const updatedList = [...wordList];
+    const updateListNew = updatedList?.map((e, i) => {
+      if (field === "translate")
+        e = i === index ? { word: e.word, translate: value } : e;
+      if (field === "word")
+        e = i === index ? { word: value, translate: e.translate } : e;
+      return e;
+    });
+    setWordList(updateListNew);
+  };
+  if (!listWord) return <h1>listWord not found</h1>;
 
-
-if (!listWord) return <h1>listWord not found</h1>;
-
-if(isError)console.log(error,"err");
-if(!isupdateSuccess)console.log(error,"data");
-  if (isLoading) return <h1>Loading...</h1>;
-  if (isError || error) return <h1>data.message</h1>;
-
+  if (isError) console.log(error, "err");
+  if (!isupdateSuccess) console.log(error, "data");
 
   let count = 0;
-  const formSubmit=(e)=>{
-    e.preventDefault()
-    console.log(wordList,"yyyyyyyyyyy");
-
-    const data =new FormData(e.target)
-    const listObject=Object.fromEntries(data.entries())
-    listObject.company=company._id
-    listObject._id=_id
-    listObject.test=wordList
-
-  console.log(listObject,"list");
-  updateListWords(listObject)
- }
+  const formSubmit = (e) => {
+    e.preventDefault();
+    console.log(wordList, "yyyyyyyyyyy");
+    const cat = { ff: "lll" };
+    const data = new FormData(e.target);
+    const listObject = Object.fromEntries(data.entries());
+    listObject.cat = cat;
+    listObject.company = company._id;
+    listObject._id = _id;
+    listObject.test = wordList;
+    console.log(listObject);
+    console.log(listObject, "list");
+    updateListWords(listObject);
+  };
   return (
-    <div
-      className="formupdatelistword"
-    >
-      <ExaminerPage/>
-      <form  onSubmit={formSubmit} className="print-content" >
+    <div className="formupdatelistword">
+      <ExaminerPage />
+      <form onSubmit={formSubmit} className="print-content">
         <div className="titles">
-      <input className="inputWordUpdate ss titleListWord" name="title" defaultValue={listWord.title} />
-      <input
-        className="inputWordUpdate ss dateListWord"name="date"
-        defaultValue={listWord.date}
-        type="date"
-      />
-         <select name='active' id='active'className="if-you-may-do">
-                            <option selected={!listWord.active} value={false}>ניתן לעשות {""}</option>
-                            <option selected={listWord.active} value={true}>לא ניתן לעשות {""} </option>
-                        </select>
-                        </div>
-      <table className="users-list-table">
-        <thead>
-          <tr>
-            <th className="inputWordUpdateSmaller">מס'</th>
-            <th className="inputWordUpdateSmaller inputWordUpdateSmallerEar"> שמיעה</th>
+          <input
+            className="inputWordUpdate ss titleListWord"
+            name="title"
+            defaultValue={listWord.data.title}
+          />
+          <input
+            className="inputWordUpdate ss dateListWord"
+            name="date"
+            // defaultValue={listWord.data.date}
+            value={listWord?.data.date.slice(0, 10)}
+            type="date"
+          />
+          <select name="active" id="active" className="if-you-may-do">
+            <option selected={!listWord.data.active} value={false}>
+              ניתן לעשות {""}
+            </option>
+            <option selected={listWord.data.active} value={true}>
+              לא ניתן לעשות {""}{" "}
+            </option>
+          </select>
+          <select name="seeWords" id="seeWords" className="if-you-may-see">
+            <option selected={!listWord.data.seeWords} value={false}>
+              לא ניתן לראות {""}
+            </option>
+            <option selected={listWord.data.seeWords} value={true}>
+              ניתן לראות {""}{" "}
+            </option>
+          </select>
+        </div>
+        <table className="users-list-table">
+          <thead>
+            <tr>
+              <th className="inputWordUpdateSmaller">מס'</th>
+              <th className="inputWordUpdateSmaller inputWordUpdateSmallerEar">
+                {" "}
+                שמיעה
+              </th>
 
-            <th className="inputWordUpdate">מילה</th>
-            <th className="inputWordUpdate"> תרגום</th>
-          </tr>
-        </thead>
-        <tbody>
-         
-
-{wordList?.map((cat, index) => (
-            <tr key={index}>
-              <td  className="inputWordUpdate inputWordUpdateSmaller">{index + 1}.</td>
-              <td  className="inputWordUpdate inputWordUpdateSmaller inputWordUpdateSmallerEar"> <WordSpeaker word={cat.word} /> </td>
-              <td   className="inputWordUpdate">
-                <input
-                  name="test"
-                  // className="inputWordUpdate"
-                  defaultValue={cat.word}
-                  
-                    onChange={(e) => handleChange(index,"word", e.target.value)}
-                />         
-                       {/* <WordSpeaker word={cat.word} /> */}
-
-              </td>
-             
-              <td  className="inputWordUpdate">
-                <input 
-                  name="test.translate"
-                  // className="inputWordUpdate"
-                  defaultValue={cat.translate}
-                  //  onChange={(e) => handleChange(index, 'translate', e.target.value)}
-                />
-              </td>
-              <td>
-                {/* <WordSpeaker word={cat.word} /> */}
-              </td>
+              <th className="inputWordUpdate">מילה</th>
+              <th className="inputWordUpdate"> תרגום</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {wordList?.map((cat, index) => (
+              <tr key={index}>
+                <td className="inputWordUpdate inputWordUpdateSmaller">
+                  {index + 1}.
+                </td>
+                <td className="inputWordUpdate inputWordUpdateSmaller inputWordUpdateSmallerEar">
+                  {" "}
+                  <WordSpeaker word={cat.word} />{" "}
+                </td>
+                <td className="inputWordUpdate">
+                  <input
+                    name="test"
+                    // className="inputWordUpdate"
+                    defaultValue={cat.word}
+                    onChange={(e) =>
+                      handleChange(index, "word", e.target.value)
+                    }
+                  />
+                  {/* <WordSpeaker word={cat.word} /> */}
+                </td>
 
-        </tbody>
-      </table>
-  
-      <button type="submit" className="updateList">עדכן</button>
+                <td className="inputWordUpdate">
+                  <input
+                    // name="test.translate"
+                    // name={index}
+                    // className="inputWordUpdate"
+                    defaultValue={cat.translate}
+                    onChange={(e) =>
+                      handleChange(index, "translate", e.target.value)
+                    }
+                    //  onChange={(e) => handleChange(index, 'translate', e.target.value)}
+                  />
+                </td>
+                <td>{/* <WordSpeaker word={cat.word} /> */}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <button type="submit" className="updateList">
+          עדכן
+        </button>
       </form>
     </div>
   );

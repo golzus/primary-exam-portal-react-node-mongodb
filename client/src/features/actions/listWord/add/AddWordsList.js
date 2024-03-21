@@ -13,7 +13,6 @@ const AddWordsList = () => {
     useAddListWordsMutation();
   // const [arrWords, setArrWords] = useState([]);
   const navigate = useNavigate();
-
   useEffect(() => {
     if (isSuccess) {
       navigate("/dash/actions/wordLsList");
@@ -26,7 +25,7 @@ const AddWordsList = () => {
   //   const wordObject = Object.fromEntries(formData.entries());
   //   setArrWords((a) => [...arrWords, wordObject]);
   // };
-  const  {chosenClass}=useSelector((state)=>state.schoolAndClass)
+  const { chosenClass } = useSelector((state) => state.schoolAndClass);
 
   const handleSubmitSave = (e) => {
     e.preventDefault();
@@ -34,9 +33,9 @@ const AddWordsList = () => {
     const formData = new FormData(e.target);
     const listObject = Object.fromEntries(formData.entries());
     listObject.test = words;
-  
 
-    listObject.class=chosenClass
+    listObject.class = chosenClass;
+    console.log(listObject,"llllll");
     addListWords(listObject);
   };
 
@@ -52,23 +51,24 @@ const AddWordsList = () => {
   };
   const handleAddNewWord = () => {
     if (newWord && newTranslate) {
-      setWords([...words, { word: newWord, translate: newTranslate }]);
+      setWords([...words, { word: newWord, translate: newTranslate,answer:"" }]);
       setNewWord("");
       setNewTranslate("");
     }
   };
 
   const handleDeleteWord = (index) => {
-    setWords(words.filter((_, i) => i !== index));
+    setWords(words.filter((_,i)=>i!=index))
+    // setWords(words.filter((_, i) => i !== index));
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && newWord && newTranslate) {
-    handleAddNewWord();
+      handleAddNewWord();
     }
   };
-  if(!chosenClass)return <CurrentSchoolAndClass/>
-
+  if (!chosenClass) return <CurrentSchoolAndClass />;
+console.log(words,"words");
   return (
     <div className="add--word-list">
       <form onSubmit={handleSubmitSave} className="list-word">
@@ -92,7 +92,9 @@ const AddWordsList = () => {
             <option value={true}>ניתן לעשות {""}</option>
             <option value={false}>לא ניתן לעשות {""} </option>
           </select>
-          <button className="buttonForm" type="submit">שליחה</button>
+          <button className="buttonForm" type="submit">
+            שליחה
+          </button>
         </div>
         <table className="users-list-table">
           <thead>
@@ -116,9 +118,13 @@ const AddWordsList = () => {
                   <input className="td-addWord" defaultValue={cat.translate} />
                 </td>
                 <td>
-                  <button className="deleteWord" onClick={() => handleDeleteWord(index)}> <MdDelete 
-                   
-                   /></button>
+                  <button
+                    className="deleteWord"
+                    onClick={() => handleDeleteWord(index)}
+                  >
+                    {" "}
+                    <MdDelete />
+                  </button>
                 </td>
               </tr>
             ))}

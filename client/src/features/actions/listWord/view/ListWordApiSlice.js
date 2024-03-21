@@ -2,16 +2,24 @@ import apiSlice from "../../../../app/apiSlice";
 
 const ListWordApiSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
-    // getAllListWords: build.query({
-    //   query: () => ({
-    //     url: "/api/listwords",
-    //     method:"GET"
-    //   }),
-    //   providesTags: ["ListWords"],
-    // }),
+    getAllListWords: build.query({
+      query: () => ({
+        url: "/api/listwords",
+        method:"GET"
+      }),
+      providesTags: ["ListWords"],
+    }),
     getAllListWordsByClass: build.mutation({
       query: (company) => ({
         url: "/api/listwords",
+        method: "POST",
+        body: company,
+      }),
+      invalidatesTags: ["ListWords"],
+    }),
+    getListWordsById: build.mutation({
+      query: (company) => ({
+        url: "/api/listwords/get",
         method: "POST",
         body: company,
       }),
@@ -46,6 +54,7 @@ const ListWordApiSlice = apiSlice.injectEndpoints({
 });
 export const {
   useGetAllListWordsQuery,
+  useGetListWordsByIdMutation,
   useAddListWordsMutation,
   useUpdateListWordsMutation,
   useDeleteListWordsMutation,

@@ -23,7 +23,11 @@ default:false
     },
     test:{
         type:[]
-    }
+    },
+seeWords:{
+    type:Boolean,
+    default:true
+}
 },{timestamps:true})
 
 module.exports=mongoose.model("ListWords",listWordsSchema)

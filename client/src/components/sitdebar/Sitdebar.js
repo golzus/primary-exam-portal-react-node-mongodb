@@ -10,9 +10,10 @@ import {
   MdLogout,
 } from "react-icons/md";
 import { useSendLogoutMutation } from "../../features/auth/authApiSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
+import CurrentSchoolAndClass from "../../features/companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
 const SitdeBar = () => {
   const {username,fullname,company,roles}=useAuth()
   const [logout, { isSuccess, isError }] = useSendLogoutMutation();
@@ -116,8 +117,7 @@ const menuItems=roles==="Teacher"?teacherMenuItems:studentMenuItems
           <span className="side-car-user-title">{company?.name} </span>
           {/* <span className="side-car-user-title">{user.company} </span> */}
           <span className="side-car-user-title">{roles} </span>
-
-
+<Link to={"dash/choose"}>classAndSchool</Link>
         </div>
       </div>
       <ul className="side-bar-menu-list">

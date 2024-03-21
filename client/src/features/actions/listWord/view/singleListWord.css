@@ -10,16 +10,6 @@ justify-content: center;
     justify-content: space-between;
 }
 .inputWordUpdate,.updateList,.if-you-may-do,.inputWordUpdate1,.inputWordUpdateSmaller{
-    /* color: var(--text);
-    padding: 30px;
-    background-color: teal;
-
-    color: var(--text);
-    border-radius: 5px;
-    margin-bottom: 30px;
-    width: 45%;
-    margin: 10px; */
-    padding: 30px;
     width:30vw;
     margin: 10px;
     margin-bottom: 30px;
@@ -27,9 +17,10 @@ justify-content: center;
     background-color: var(--bgSort);
     border: solid 2px brown;
     width: 30%;
+    justify-content: center;
     align-items: center;
     background-color: var(--bg);
-    height: 5vh;
+    height: 10vh;
 }
 .inputWordUpdate input,.inputWordUpdateSmaller input{
    border: none;
@@ -50,11 +41,9 @@ text-align: center;
     height: 5vh;
 
 } */
-.updateList{display: none;
-color: red;
-width: 400%;}
 .updateList{
-    width: 80%;
+color: red;
+cursor: pointer;
     height: 5%;
     background-color: var(--bg);
 
@@ -67,8 +56,8 @@ width: 400%;}
     /* border: none;
     border-radius: 5px; */
     cursor: pointer;
-    height: 7vw;
-}
+    font-size: smaller;
+    align-items: center;}
 @media print {
     /* הסתרת התוכן בעת הדפסה */
     .wordSpeakerButton,.if-you-may-do{display: none;}
@@ -89,6 +78,9 @@ width: 400%;}
    }
    body{
     align-content: center;
+   }
+   .updateList{
+    display: none;
    }
 }
 .wordSpeakerButton{

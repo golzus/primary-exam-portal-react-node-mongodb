@@ -4,8 +4,9 @@ const listWordsController=require('../controllers/listWordsController')
 
 
 
-
- router.post("/",listWordsController.getListWords)
+router.get("/",listWordsController.getListWords)
+router.post("/get",listWordsController.getlistWordById)
+ router.post("/",listWordsController.getListWordsByClass)
 // //router.get("/:id")
  router.post("/add",listWordsController.addListWords)
  router.put("/",listWordsController.updateListWords)

@@ -65,7 +65,8 @@ const SideBarActions = () => {
               <span className="side-car-user-title">{company?.name} </span>
               {/* <span className="side-car-user-title">{user.company} </span> */}
               <span className="side-car-user-title">{roles} </span>
-    
+              <Link to={"/dash/actions/choose"}>classAndSchool</Link>
+
             </div>
           </div>
           <ul className="side-bar-menu-list">

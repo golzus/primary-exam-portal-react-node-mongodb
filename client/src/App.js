@@ -35,8 +35,10 @@ function App() {
           <Route path="login" element={<LoginPage />} />
           <Route element={<RequireAuth allowRoles={["Teacher", "Student"]} />}>
             <Route path="/dash" element={<DashLayout />}>
+
               {/* <Route index element={<Audio/>} /> */}
               <Route element={<RequireAuth allowRoles={["Teacher"]} />}>
+              <Route path="dash/choose" element={<CurrentSchoolAndClass/>}/>
                 <Route path="users" element={<Outlet />}>
                   <Route index element={<UsersList />} />
                   <Route path="add" element={<AddUser />} />
@@ -59,6 +61,7 @@ function App() {
             </Route>
             <Route path="dash/actions" element={<LayoutActions />}>
               <Route index element={<h1> actions</h1>} />
+              <Route path="choose" element={<CurrentSchoolAndClass/>}/>
 
               <Route path="wordLsList" element={<ListWord />} />
               <Route path="add" element={<AddWordsList/>}/>

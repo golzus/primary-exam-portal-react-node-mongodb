@@ -15,19 +15,19 @@ const ListWord = () => {
     getAllListWordsByClass,
     { data: wordLsList, isError, error, isLoading },
   ] = useGetAllListWordsByClassMutation();
-  if(wordLsList)
-  console.log(wordLsList,"wordLsListkkkkkkkkk");
   const { chosenClass } = useSelector((state) => state.schoolAndClass);
+  let classObj
+  if(chosenClass)
+   classObj={chosenClass:chosenClass}
   useEffect(() => {
     if(chosenClass)
-    getAllListWordsByClass({ chosenClass });
-  },[]);
+    getAllListWordsByClass(classObj);
+  },[chosenClass]);
   const [deleteListWords, { error: er }] = useDeleteListWordsMutation();
   if(!chosenClass)return <CurrentSchoolAndClass/>
 if(error)
 {
-  console.log(error,"ff");
- return <h1>{error}</h1>
+ return( <h1>{error.data.message}</h1>)
 }  // const {
   //   data: wordLsList,
   //   isError,
@@ -40,12 +40,8 @@ if(error)
       deleteListWords({ _id: list._id });
     }
   };
-  console.log(wordLsList, "wordlist");
-  console.log(error, "error");
-  if (isLoading) return <h1>loading...</h1>;
-  if (isError){
-    console.log(error,"err"); return <h1>jj</h1>};
-  
+
+  if (isLoading) return <h1>loading...</h1>;  
   let count = 0;
   return (
     <div>
