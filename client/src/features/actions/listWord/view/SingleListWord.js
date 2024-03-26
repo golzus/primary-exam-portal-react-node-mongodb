@@ -31,12 +31,8 @@ const SingleListWord = () => {
       setWordList(listWord.data.test);
     }
   }, [isSuccess]);
-  // if(listWord)console.log(listWord.data.test,"test");
-  // const listWord = data.data.find((list) => list._id === _id);
-
   if (isLoading) return <h1>Loading...</h1>;
   if (isError || error) return <h1>data.message</h1>;
-  if (listWord) console.log(listWord, "litwordllllllllllllllll");
   const handleChange2 = (index, field, value) => {
     const updatedList = [...wordList];
     //updatedList[index][field]=value
@@ -62,25 +58,22 @@ const SingleListWord = () => {
     setWordList(updateListNew);
   };
   if (!listWord) return <h1>listWord not found</h1>;
-
-  if (isError) console.log(error, "err");
   if (!isupdateSuccess) console.log(error, "data");
 
   let count = 0;
   const formSubmit = (e) => {
     e.preventDefault();
-    console.log(wordList, "yyyyyyyyyyy");
-    const cat = { ff: "lll" };
     const data = new FormData(e.target);
     const listObject = Object.fromEntries(data.entries());
-    listObject.cat = cat;
     listObject.company = company._id;
     listObject._id = _id;
     listObject.test = wordList;
-    console.log(listObject);
-    console.log(listObject, "list");
     updateListWords(listObject);
   };
+  const funcOver=(()=>{
+    console.log("over");
+  return<h1>"rr"</h1>
+  })
   return (
     <div className="formupdatelistword">
       <ExaminerPage />
@@ -131,7 +124,7 @@ const SingleListWord = () => {
           <tbody>
             {wordList?.map((cat, index) => (
               <tr key={index}>
-                <td className="inputWordUpdate inputWordUpdateSmaller">
+                <td className="inputWordUpdate inputWordUpdateSmaller" onPointerOver={funcOver}>
                   {index + 1}.
                 </td>
                 <td className="inputWordUpdate inputWordUpdateSmaller inputWordUpdateSmallerEar">

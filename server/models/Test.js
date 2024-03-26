@@ -1,11 +1,26 @@
 const mongoose = require("mongoose");
 const User = require("./User");
-const TestsArraySubSchema=require('./SubSchema/TestsArraySubSchema')
+const TestsArraySubSchema=require('./SubSchema/TestsArraySubSchema');
+const Class = require("./Class");
+const ListWords = require("./ListWords");
 const TestSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: User,
+    },
+    listWord:{
+      type: mongoose.Schema.Types.ObjectId,
+ref:ListWords
+    },
+    date:{
+      type:mongoose.Schema.Types.Date
+    },
+    title:{
+      type:String
+    },
+    test:{
+      type:[]
     },
     avgMarks: {
       type: BigInt,

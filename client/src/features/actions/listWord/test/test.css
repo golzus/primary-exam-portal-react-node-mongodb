@@ -10,3 +10,22 @@ text-align: center;
 .trWords{
 background-color:var(--bgSoft)
 }
+.warningBeforeCheckingTest{
+    display: flex;
+    flex-direction: column;
+    background-color:#5b3c0796;;
+    width: 25vw;
+    height: 40vh;
+    position: absolute;
+    left:27.5vw;
+    top: 30vh;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+.warningBeforeCheckingTest button{
+    width: 50%;
+    background-color: var(--bgSoft);
+
+}

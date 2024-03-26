@@ -34,7 +34,6 @@ if(error)
   //   error,
   //   isLoading,
   // } = useGetAllListWordsQuery();
-  if (er) console.log(er);
   const deleteClick = (list) => {
     if (window.confirm("בטוח שברתונך למחוק את החברה ?")) {
       deleteListWords({ _id: list._id });

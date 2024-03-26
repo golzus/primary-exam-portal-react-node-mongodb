@@ -25,7 +25,8 @@ import { HiOutlineSpeakerWave } from "react-icons/hi2";
 const WordSpeaker = ({ word }) => {
   const { speak } = useSpeechSynthesis();
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+e.stopPropagation()
     const voices = window.speechSynthesis.getVoices();
     const voice = voices.find(voice => voice.name === 'Google UK English Female'); // השתמש בשם המדויק של הקול שאת רוצה להשתמש בו
     speak({ text: word, voice });

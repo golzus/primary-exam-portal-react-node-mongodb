@@ -4,15 +4,16 @@ import {
   useGetListWordsByIdMutation,
   useUpdateListWordsMutation,
 } from "../view/ListWordApiSlice";
+import {GrStatusGood} from "react-icons/gr"
 import { useEffect, useState } from "react";
 import useAuth from "../../../../hooks/useAuth";
 import WordSpeaker from "../add/WordSpeaker";
 const Test = () => {
   const { company, roles } = useAuth();
   const [markStudent, setMarkStudent] = useState(0);
-const [seeMark,setSeeMark]=useState(false)
-
-
+  const [seeMark, setSeeMark] = useState(false);
+  const [seeWarning, setSeewarning] = useState(false);
+  const [sureStarting, setSureStarting] = useState(false);
   const { _id } = useParams();
   const [
     updateListWords,
@@ -29,8 +30,6 @@ const [seeMark,setSeeMark]=useState(false)
   }, []);
   useEffect(() => {
     if (isSuccess) {
-      console.log(listWord, "4444444444444");
-      console.log(listWord.data.date, "ll");
       setWordList(listWord.data.test);
     }
   }, [isSuccess]);
@@ -38,14 +37,12 @@ const [seeMark,setSeeMark]=useState(false)
   const handleChange = (index, value) => {
     const updatedList = [...wordList];
     const updateListNew = updatedList?.map((e, i) => {
-      console.log(value, "val");
       e =
         i === index
           ? { word: e.word, translate: e.translate, answer: value }
           : e;
       return e;
     });
-    console.log(updateListNew, ";;;;;;;;;;;;;");
     setWordList(updateListNew);
   };
   const navigate = useNavigate();
@@ -54,49 +51,64 @@ const [seeMark,setSeeMark]=useState(false)
   //         navigate("/dash/actions");
   //     }
   // }, [isupdateSuccess]);
-
+  const handleWantsStart = () => {
+    setSureStarting(true);
+  };
+  if (sureStarting === false)
+    return (
+      <div className="warningBeforeCheckingTest">
+        <p>
+          האם הינך בטוח שברצונך להתחיל את הבוחן?
+          <br />
+          לא ניתן לעשות זאת פעם נוספת!
+        </p>
+        <button onClick={handleWantsStart}>המשך</button>
+        {/* <button>ביטול</button> */}
+      </div>
+    );
   // if (!listWord) return <h1>listWord not found</h1>;
   if (isLoading) return <h1>Loading...</h1>;
   if (isError || error) return <h1>data.message</h1>;
-  if (isError) console.log(error, "err");
-  if (!isupdateSuccess) console.log(error, "data");
-  let g = wordList;
-  // g["0"]["translate"]="l"
-  console.log(g, "ppppppppppppp");
-  const a = (index, val) => {
-    g = g?.map((e, i) => {
-      e = i === index ? { word: e.word, translate: val } : e;
+  // let g = wordList;
+  // // g["0"]["translate"]="l"
+  // console.log(g, "ppppppppppppp");
+  // const a = (index, val) => {
+  //   g = g?.map((e, i) => {
+  //     e = i === index ? { word: e.word, translate: val } : e;
 
-      return e;
-    });
-  };
-  console.log(g, ";;");
+  //     return e;
+  //   });
+  // };
+  // console.log(g, ";;");
   let count = 0;
-let mark=0
-  const checkTest = (e) => {
+  let mark = 0;
+  const handleSubmit = (e) => {
     e.preventDefault();
+    setSeewarning(true);
+  };
+  const removeWarning = (e) => {
+    setSeewarning(false);
+  };
+  const checkTest = (e) => {
+    setSeewarning(false);
     wordList.map((e) => {
       if (e.translate === e.answer) {
-        mark++
-      console.log(markStudent,"aa");};
+        mark++;
+      }
     });
-    mark=(mark/wordList.length)*100
-setMarkStudent(mark)
-    console.log(mark,"try");
-    console.log(markStudent, "mark");
-    mark=0
-    setSeeMark(true)
+    mark = (mark / wordList.length) * 100;
+    setMarkStudent(mark);
+    mark = 0;
+    setSeeMark(true);
   };
-  console.log(wordList, "wordlist");
   return (
     <div className="formupdatelistword">
-      <form onSubmit={checkTest}>
+      <form onSubmit={handleSubmit}>
         <input
           className="inputWordUpdate ss"
           name="title"
           value={listWord?.data.title}
         />
-
         <input
           className="inputWordUpdate ss"
           name="date"
@@ -114,11 +126,11 @@ setMarkStudent(mark)
         <table className="users-list-table">
           <thead>
             <tr>
-            {seeMark&&<td>סימון</td>}
+              {seeMark && <td>סימון</td>}
               <td>מס'</td>
               {listWord?.data.seeWords && <td>מילה</td>}
               <td> תרגום</td>
-              {seeMark&&<td>תשובה נכונה</td>}
+              {seeMark && <td>תשובה נכונה</td>}
 
               <td>השמעה</td>
             </tr>
@@ -126,7 +138,7 @@ setMarkStudent(mark)
           <tbody>
             {wordList?.map((cat, index) => (
               <tr key={index} className="trWords">
-               {seeMark&&<td>x</td>}
+                {seeMark && <td><GrStatusGood/></td>}
                 <td>{index + 1}.</td>
                 {listWord?.data.seeWords && (
                   <td>
@@ -148,7 +160,7 @@ setMarkStudent(mark)
                   />
                   {/* <span><input className="answerTranslateWord"/>answer:</span> */}
                 </td>
-                {seeMark&&<td>{cat.translate}</td>}
+                {seeMark && <td>{cat.translate}</td>}
 
                 <td>
                   <WordSpeaker word={cat.word} />
@@ -157,10 +169,20 @@ setMarkStudent(mark)
             ))}
           </tbody>
         </table>
-        <button type="submit">הגש</button>
+        {!seeMark && <button type="submit">הגש</button>}{" "}
+        {seeWarning && (
+          <div className="warningBeforeCheckingTest">
+            <p>
+              האם הינך בטוח שברצונך להגיש- <br />
+              לא יהיה אפשרות לעשות את הבוחן פעם נוספת!
+            </p>
+            <button onClick={checkTest}>אישור</button>
+            <button onClick={removeWarning}>חזרה</button>
+          </div>
+        )}
         {/* <button type="submit" className="updateList">עדכן</button> */}
         {/* { readyMark&&<h1>ציונך הוא:{mark}</h1>} */}
-       {seeMark&& <h1>ציונך הוא:{markStudent}%</h1>} 
+        {seeMark && <h1>ציונך הוא:{markStudent}%</h1>}
       </form>
     </div>
   );
