@@ -51,7 +51,7 @@ const AddWordsList = () => {
   };
   const handleAddNewWord = () => {
     if (newWord && newTranslate) {
-      setWords([...words, { word: newWord, translate: newTranslate,answer:"" }]);
+      setWords([...words, { word: newWord, translate: newTranslate,answer:"",correct:"false" }]);
       setNewWord("");
       setNewTranslate("");
     }

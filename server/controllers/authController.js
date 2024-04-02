@@ -174,6 +174,4 @@ const login = async (req, res) => {
       data: null,
     });
   };
-
-
 module.exports = { login, refresh, logout };

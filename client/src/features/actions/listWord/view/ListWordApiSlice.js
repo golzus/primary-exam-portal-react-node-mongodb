@@ -50,6 +50,15 @@ const ListWordApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["ListWords"],
     }),
+    //TEST
+    getTestByClassAndUser: build.mutation({
+      query: (company) => ({
+        url: "/api/test",
+        method: "POST",
+        body: company,
+      }),
+      invalidatesTags: ["Test"],
+    }),
   }),
 });
 export const {
@@ -59,4 +68,5 @@ export const {
   useUpdateListWordsMutation,
   useDeleteListWordsMutation,
   useGetAllListWordsByClassMutation,
+  useGetTestByClassAndUserMutation
 } = ListWordApiSlice;

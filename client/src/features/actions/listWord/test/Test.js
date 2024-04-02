@@ -4,7 +4,7 @@ import {
   useGetListWordsByIdMutation,
   useUpdateListWordsMutation,
 } from "../view/ListWordApiSlice";
-import {GrStatusGood} from "react-icons/gr"
+import { GrStatusGood } from "react-icons/gr";
 import { useEffect, useState } from "react";
 import useAuth from "../../../../hooks/useAuth";
 import WordSpeaker from "../add/WordSpeaker";
@@ -39,11 +39,18 @@ const Test = () => {
     const updateListNew = updatedList?.map((e, i) => {
       e =
         i === index
-          ? { word: e.word, translate: e.translate, answer: value }
+          ? {
+              word: e.word,
+              translate: e.translate,
+              answer: value,
+              correct: true,
+            }
           : e;
       return e;
     });
     setWordList(updateListNew);
+    console.log(updateListNew, "ppוווווווווו");
+        console.log(wordList,"ooooooooo");
   };
   const navigate = useNavigate();
   //   useEffect(() => {
@@ -91,15 +98,31 @@ const Test = () => {
   };
   const checkTest = (e) => {
     setSeewarning(false);
-    wordList.map((e) => {
+    wordList.map((e, index) => {
       if (e.translate === e.answer) {
         mark++;
+        const updatedList = [...wordList];
+        const updateListNew = updatedList?.map((e, i) => {
+          e =
+            i === index
+              ? {
+                  word: e.word,
+                  translate: e.translate,
+                  answer: e.answer,
+                  correct: false,
+                }
+              : e;
+          return e;
+        });
+        console.log(updateListNew, "ppוווווווווו",index);
+        console.log(wordList,"ooooooooo");
       }
     });
     mark = (mark / wordList.length) * 100;
     setMarkStudent(mark);
     mark = 0;
     setSeeMark(true);
+    console.log(wordList[4].correct, "eee");
   };
   return (
     <div className="formupdatelistword">
@@ -138,7 +161,13 @@ const Test = () => {
           <tbody>
             {wordList?.map((cat, index) => (
               <tr key={index} className="trWords">
-                {seeMark && <td><GrStatusGood/></td>}
+                {seeMark&& cat.correct && (
+                  <td>
+                    <GrStatusGood />
+                  </td>
+                )}
+                {seeMark && !cat.correct && <td>x</td>}
+
                 <td>{index + 1}.</td>
                 {listWord?.data.seeWords && (
                   <td>
