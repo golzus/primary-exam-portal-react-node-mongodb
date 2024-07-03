@@ -73,7 +73,7 @@ const q=searchParams.get("q")
                 <Link to={`/dash/users/${user._id}`} className='users-list-button users-list-view'>
                   צפייה
                 </Link>
-                <button onClick={()=>{deleteClick(user)}} className='users-list-button users-list-delete'>
+                <button title="Delete item" aria-label="Delete item" onClick={()=>{deleteClick(user)}} className='users-list-button users-list-delete'>
                   מחיקה
                 </button>
                 </div>

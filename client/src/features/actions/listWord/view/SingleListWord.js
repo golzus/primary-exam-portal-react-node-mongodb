@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import {useParams } from "react-router-dom";
 import {
   useGetListWordsByIdMutation,
   useUpdateListWordsMutation,
@@ -10,7 +10,6 @@ import WordSpeaker from "../add/WordSpeaker";
 import ExaminerPage from "../list/ExaminerPage";
 const SingleListWord = () => {
   const { company, roles } = useAuth();
-
   const { _id } = useParams();
   const [
     updateListWords,
@@ -31,6 +30,12 @@ const SingleListWord = () => {
       setWordList(listWord.data.test);
     }
   }, [isSuccess]);
+//   const navigate = useNavigate();
+//   useEffect(() => {
+//     if (isupdateSuccess) {
+//         navigate("/dash/actions");
+//     }
+// }, [isupdateSuccess]);
   if (isLoading) return <h1>Loading...</h1>;
   if (isError || error) return <h1>data.message</h1>;
   const handleChange2 = (index, field, value) => {
@@ -40,12 +45,7 @@ const SingleListWord = () => {
     //setWordList(()=>[...wordList,wordList[index][field]=value])
   };
 
-  //  const navigate = useNavigate();
-  //   useEffect(() => {
-  //     if (isupdateSuccess) {
-  //         navigate("/dash/actions");
-  //     }
-  // }, [isupdateSuccess]);
+ 
   const handleChange = (index, field, value) => {
     const updatedList = [...wordList];
     const updateListNew = updatedList?.map((e, i) => {
@@ -62,6 +62,7 @@ const SingleListWord = () => {
 
   let count = 0;
   const formSubmit = (e) => {
+    e.stopPropagation()
     e.preventDefault();
     const data = new FormData(e.target);
     const listObject = Object.fromEntries(data.entries());
@@ -92,10 +93,10 @@ const SingleListWord = () => {
             type="date"
           />
           <select name="active" id="active" className="if-you-may-do">
-            <option selected={!listWord.data.active} value={false}>
+            <option selected={listWord.data.active} value={true}>
               ניתן לעשות {""}
             </option>
-            <option selected={listWord.data.active} value={true}>
+            <option selected={!listWord.data.active} value={false}>
               לא ניתן לעשות {""}{" "}
             </option>
           </select>
@@ -107,6 +108,12 @@ const SingleListWord = () => {
               ניתן לראות {""}{" "}
             </option>
           </select>
+          <input
+            name="countListenToWord"
+            id="countListenToWord"
+            defaultValue={listWord.data.countListenToWord}
+            type="number"
+          />
         </div>
         <table className="users-list-table">
           <thead>
@@ -228,3 +235,4 @@ export default SingleListWord;
 // };
 
 // export default App;
+

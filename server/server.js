@@ -6,7 +6,7 @@ const app = express();
 const cors = require("cors");
 const corsOptions = require("./config/corsOption");
 const connectDB = require("./config/dbConn");
-const PORT = 100;
+const PORT = 1000;
 //const PORT=process.env.PORT||33
 connectDB();
 app.use(cors(corsOptions));

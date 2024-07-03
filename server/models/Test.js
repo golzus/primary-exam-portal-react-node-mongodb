@@ -25,6 +25,14 @@ ref:ListWords
     avgMarks: {
       type: BigInt,
     },
+    countListenToWord:{
+      type:Number,
+      default:5
+  },
+  active:{
+    type:Boolean,
+    default:false
+        },
     TestArray:[TestsArraySubSchema]
   },
   { timestamps: true }

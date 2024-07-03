@@ -1,7 +1,7 @@
 import { createApi ,fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {setToken}from '../features/auth/authSlice'
 const baseQuery=fetchBaseQuery({
-    baseUrl:'http://localhost:100/',
+    baseUrl:'http://localhost:1000/',
     credentials:"include",
 prepareHeaders:(headers,{getState})=>{
     const token=getState().auth.token

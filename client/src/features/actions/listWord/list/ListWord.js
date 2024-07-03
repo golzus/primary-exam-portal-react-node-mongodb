@@ -71,14 +71,14 @@ if(error)
                     className="users-list-button users-list-view"
                   >
                     {" "}
-                    <RxPencil2 fontSize={20} />
+           <RxPencil2 title="update" fontSize={20} />
                   </Link>
                   <Link
                     to={`/dash/actions/${list._id}`}
                     className="users-list-button users-list-view"
                   >
                     {/* צפייה */}
-                    <ImList2 />
+                    <ImList2 title="list" />
                   </Link>
                   <button
                     onClick={() => {
@@ -87,7 +87,7 @@ if(error)
                     className="users-list-button users-list-delete"
                   >
                     {/* מחיקה */}
-                    <MdDelete fontSize={20} />
+                    <MdDelete title="Delete" fontSize={20} />
                   </button>
                 </div>
               </td>

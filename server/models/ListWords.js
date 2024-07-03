@@ -27,6 +27,10 @@ default:false
 seeWords:{
     type:Boolean,
     default:true
+},
+countListenToWord:{
+    type:Number,
+    default:5
 }
 },{timestamps:true})
 

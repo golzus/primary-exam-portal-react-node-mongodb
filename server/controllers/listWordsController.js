@@ -55,16 +55,20 @@ const getlistWordById = async (req, res) => {
 
 const addListWords = async (req, res) => {
   try {
-    const { title, date, test, class: class1, seeWords } = req.body;
+    const { title, date, test, class: class1,active, seeWords ,countListenToWord} = req.body;
     if (!test) {
       return res
         .status(400)
         .json({ error: true, message: "test is required!", data: null });
     }
+// countListenToWord=num
+    // countListenToWord=countListenToWord.Number
     const listWords = await ListWords.create({
       title,
       date,
       test,
+      active,
+      countListenToWord,
       seeWords,
       class: class1,
     });
@@ -80,9 +84,11 @@ const addListWords = async (req, res) => {
     for (const student of students) {
       const newTest = await Test.create({
         user: student._id,
+        active,
         date,
         title,
         test,
+        countListenToWord,
         listWord: listWords._id,
       });
     }
@@ -95,7 +101,7 @@ const addListWords = async (req, res) => {
 
 const updateListWords = async (req, res) => {
   try {
-    const { title, date, test, seeWords, active, _id } = req.body;
+    const { title, date, test, seeWords,countListenToWord, active, _id } = req.body;
     if (!test || !_id) {
       return res.status(400).json({
         error: true,
@@ -110,6 +116,7 @@ const updateListWords = async (req, res) => {
         .json({ error: true, message: "no ListWords found", data: null });
     }
     listWords.title = title;
+    listWords.countListenToWord=countListenToWord
     listWords.seeWords = seeWords;
     listWords.active = active;
     listWords.data = date;
@@ -121,8 +128,10 @@ const updateListWords = async (req, res) => {
       testList.title = title;
       // testList.seeWords = seeWords;
       // testList.active = active;
+      testList.active=active
       testList.data = date;
       testList.test = test;
+      testList.countListenToWord=countListenToWord
       testList.save();
     }
     res.json({ error: false, message: "", data: updateListWords });
