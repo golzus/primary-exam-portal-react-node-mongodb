@@ -16,7 +16,7 @@ const login = async (req, res) => {
     deleted: false,
     active: true,
   })
-    .populate("company", { name: 1, image: 1 })
+    // .populate("company", { name: 1, image: 1 })
     .lean();
   if (!foundUser) {
     return res.status(401).json({
@@ -36,6 +36,7 @@ const login = async (req, res) => {
   }
 
   const userInfo = {
+    _id:foundUser._id,
     username: foundUser.username,
     fullname: foundUser.fullname,
     roles: foundUser.roles,
@@ -45,6 +46,7 @@ const login = async (req, res) => {
   const acssesToken = jwt.sign(userInfo, process.env.ACCES_TOKEN_SECRET, {
     expiresIn: "15m",
   });
+
   const refreshToken = jwt.sign(
     { username: foundUser.username },
     process.env.ACCES_TOKEN_SECRET,
@@ -55,6 +57,9 @@ const login = async (req, res) => {
     httpOnly: true,
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
+  
+
+
 
   res.json({ acssesToken });
 };
@@ -94,7 +99,9 @@ const refresh = async (req,res) =>{
               username: foundUser.username,
               fullname: foundUser.fullname,
               roles: foundUser.roles,
-              company: foundUser.company
+              company: foundUser.company,
+              _id:foundUser._id,
+
           }
       
           const accessToken = jwt.sign(userInfo, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'})

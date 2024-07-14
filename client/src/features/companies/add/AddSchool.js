@@ -69,8 +69,8 @@ import useAuth from '../../../hooks/useAuth';
 const AddSchool = () => {
     const [addSchool, { isError, error, isSuccess, isLoading }] = useAddSchoolMutation();
     const navigate = useNavigate();
-const {company}=useAuth()
-const _id=company._id
+const {_id}=useAuth()
+// const _id=company._id
     useEffect(() => {
         if (isSuccess) {
             navigate("/dash/companies");
