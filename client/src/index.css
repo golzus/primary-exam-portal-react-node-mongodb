@@ -12,8 +12,7 @@
 }
 
 
-
-/* html  {
+ html  {
   font-family: "Noto Sans Hebrew", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -32,3 +31,4 @@ color: var(--text);
 a{
   color: inherit;
   text-decoration: none;
+}

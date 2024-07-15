@@ -6,6 +6,7 @@ import useAuth from "../../../hooks/useAuth";
 import NenuLink from "../../sitdebar/NenuLink";
 import { PiListPlusLight } from "react-icons/pi";
 import { GoChecklist } from "react-icons/go";
+import Logo from "../../../features/logo/Logo";
 const SideBarActions = () => {
     const {roles,company,fullname,image}=useAuth()
 
@@ -22,6 +23,14 @@ const SideBarActions = () => {
                 title: "בחנים",
                 path: "wordLsList",
               },
+            {
+              title:"ציונים",
+              path:"mark"
+            },
+            {
+              title:"משימות בתוקף",
+              path:"tasks"
+            }
             ],
           }]
       const teacherMenuActions =
@@ -54,7 +63,8 @@ const SideBarActions = () => {
       console.log(menuItems,"menu");
 
       return (
-        <div className="side-bar">
+        <div className="side-bar">            <Logo/>
+
           <div className="side-bar-user">
             <img src={company?.image || "/logo612.jpg"} alt="" width="50" height="50" />
             {/* <img src={user.image || "/3.png"} alt="" width="50" height="50" /> */}
