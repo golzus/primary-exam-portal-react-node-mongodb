@@ -92,7 +92,7 @@ const Navbar = () => {
           </div>
           <div className="navbar-icons">
             <IconButton aria-label="show 4 new notifications" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={5} color="secondary">
                 <MdNotifications size={20} />
               </Badge>
             </IconButton>
