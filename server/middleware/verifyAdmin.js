@@ -8,5 +8,9 @@ if(req.user&&req.user.roles==="Teacher"){
         data:null
     })    
 }
+
 }
 module.exports=verifyAdmin
+
+
+

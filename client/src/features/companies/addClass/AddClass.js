@@ -19,8 +19,8 @@ const AddClass = () => {
         const classrObject = Object.fromEntries(formData.entries());
         addClass(classrObject)
     };
-    const {company}=useAuth()
-    const teacher=company._id
+    const {_id}=useAuth()
+    const teacher=_id
         const {data,isError,isLoading,error}=useGetAllClassesQuery()
         if(schoolsisLoading||isLoading)return <h1>Loading...</h1>
         if(error||schoolsErrorData)return <h1>error</h1>

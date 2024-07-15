@@ -1,8 +1,5 @@
 :root{
-  /* --bg:#151c2c;
-  --bgSoft:#222c42;
-  --text:white;
-  --textSoft:#b7bac1; */
+
   --bg:#c67d10;
   --bgSoft:#905a0a;
   --text:white;
@@ -13,7 +10,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-html  {
+
+
+
+/* html  {
   font-family: "Noto Sans Hebrew", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -32,6 +32,3 @@ color: var(--text);
 a{
   color: inherit;
   text-decoration: none;
-}
-
-

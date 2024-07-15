@@ -77,3 +77,12 @@ align-items: center;  }
     border: none;
     cursor: pointer;
 }
+
+
+
+
+.add-words-list {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8
+}  

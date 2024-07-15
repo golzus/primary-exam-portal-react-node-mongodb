@@ -272,13 +272,15 @@ import useAuth from '../../../hooks/useAuth';
 const SchoolList = () => {
   const { data: Schools, isError, error, isLoading } = useGetAllSchoolsQuery();
 
-   const {company}=useAuth()
-const teacher=company._id
 
+
+
+ const {_id}=useAuth()
+
+ const teacher=_id
   // const [deleteCompany, { isSuccess }] = useDeleteCompanyMutation();
   const [deleteSchool] = useDeleteSchoolMutation();
   const [searchParams]=useSearchParams()
-
   if (isLoading) return <h1>Loading...</h1>;
   if (isError) return <h1>Error: {JSON.stringify(error)}</h1>;
   console.log(Schools,"school");
@@ -288,12 +290,14 @@ if(!Schools?.data)return<h1>no</h1>
       deleteSchool({ _id: school._id });
     }
   };
+  // const filterData=Schools
   const schoolsTeacher=Schools.data.filter(school=>school.teacher===teacher)
   console.log(schoolsTeacher);
   const q=searchParams.get("q")
 const filterData=!q?[...schoolsTeacher]:schoolsTeacher.filter(comp=>comp.name.indexOf(q)>-1)
   return (
     <div className='companies-list'>
+      
       <div className='companies-list-top'>
         <Search placeholder={"חיפוש לפי שם חברה "} />
         <Link to="/dash/companies/add" className="companies-list-add-button">

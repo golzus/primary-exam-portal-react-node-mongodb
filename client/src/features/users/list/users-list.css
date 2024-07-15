@@ -6,6 +6,7 @@
 
 
 }
+    
 .users-list-top{
 display: flex;
 align-items: center;
@@ -73,6 +74,8 @@ background-color: crimson;
   .users-list-add-button{
     padding: 10px;
     background-color: #5d57c9;
+    background-color: rgba(0, 0, 0, 0.453);
+
     color: var(--text);
     border: none;
     border-radius: 5px;

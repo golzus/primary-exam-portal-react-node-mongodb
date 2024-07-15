@@ -48,6 +48,7 @@ function App() {
                 <Route path="dash/choose" element={<CurrentSchoolAndClass />} />
                 <Route path="users" element={<Outlet />}>
                   <Route index element={<UsersList />} />
+
                   <Route path="add" element={<AddUser />} />
                   <Route path=":userId" element={<SingleUser />} />
                 </Route>
@@ -66,7 +67,7 @@ function App() {
             </Route>
             <Route path="dash/actions" element={<LayoutActions />}>
               <Route index element={<h1> actions</h1>} />
-              <Route path="choose" element={<TextToSpeechComponent />} />
+              <Route path="choose" element={<CurrentSchoolAndClass />} />
 
               <Route path="wordLsList" element={<ListWord />} />
               <Route path="add" element={<AddWordsList />} />
