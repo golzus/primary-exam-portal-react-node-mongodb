@@ -1,38 +1,3 @@
-// import{
-//   MdNotifications,
-//   MdOutlineChat,
-//   MdPublic,
-//   MdSearch,
-// } from "react-icons/md"
-// import "./navbar.css"
-// const Navbar = () => {
-//   return (
-//   <div className="navbar">
-//     <div className="navbar-title">
-// ראשי
-//     </div>
-//     <div className="navbar-manu">
-//       <div className="navbar-search">
-//         <MdSearch/>
-//         <input 
-//         type="text" 
-//         placeholder="Search..." 
-//         className="navbar-input"/>
-
-//       </div>
-//       <div className="navbar-icons">
-//         <MdOutlineChat size={20} />
-//         <MdNotifications size={20}/>
-//         <MdPublic size={20}/>
-
-//         </div>
-//     </div>
-//   </div>
-//   )
-// }
-
-// export default Navbar
-
 import React from 'react';
 import { MdNotifications, MdOutlineChat, MdPublic, MdSearch } from 'react-icons/md';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -46,10 +11,10 @@ import { styled, alpha } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#00bcd4', // צבע ראשי כחול בהיר
+      main: '#0d47a1', // צבע ראשי כחול כהה
     },
     secondary: {
-      main: '#ffd740', // צבע משני צהוב
+      main: '#1565c0', // צבע משני כחול עמוק
     },
   },
   typography: {
@@ -78,29 +43,30 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Navbar = () => {
   return (
     <ThemeProvider theme={theme}>
-      <AppBar position="static" style={{ backgroundColor: '#f5f5f5' }}>
+      <AppBar position="static" style={{ backgroundColor: '#0d47a1' }}>
         <Toolbar>
-          <div className="navbar-title" style={{ flexGrow: 1 }}>
+          <div className="navbar-title" style={{ flexGrow: 1, color: '#ffffff' }}>
             ראשי
           </div>
           <div className="navbar-search" style={{ display: 'flex', alignItems: 'center' }}>
-            <MdSearch style={{ marginRight: '10px' }} />
+            <MdSearch style={{ color: '#ffffff', marginRight: '10px' }} />
             <StyledInputBase
               placeholder="חיפוש..."
               inputProps={{ 'aria-label': 'search' }}
+              style={{ color: '#ffffff' }}
             />
           </div>
           <div className="navbar-icons">
-            <IconButton aria-label="show 4 new notifications" color="inherit">
+            <IconButton aria-label="הצג 5 התראות חדשות" color="inherit">
               <Badge badgeContent={5} color="secondary">
-                <MdNotifications size={20} />
+                <MdNotifications size={20} style={{ color: '#ffffff' }} />
               </Badge>
             </IconButton>
-            <IconButton aria-label="show chat" color="inherit">
-              <MdOutlineChat size={20} />
+            <IconButton aria-label="הצג צ'אט" color="inherit">
+              <MdOutlineChat size={20} style={{ color: '#ffffff' }} />
             </IconButton>
-            <IconButton aria-label="show public" color="inherit">
-              <MdPublic size={20} />
+            <IconButton aria-label="הצג ציבור" color="inherit">
+              <MdPublic size={20} style={{ color: '#ffffff' }} />
             </IconButton>
           </div>
         </Toolbar>
