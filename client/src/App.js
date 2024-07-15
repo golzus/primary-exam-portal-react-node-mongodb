@@ -36,8 +36,7 @@ function App() {
       <Routes>
         <Route path="/" element={<SiteLayout />}>
           <Route index element={<Site/>} />
-          {/* <Route path="login" element={<LoginPage />} /> */}
-          <Route path="login" element={<Logo />} />
+          <Route path="login" element={<LoginPage />} />
 
           <Route element={<PersistLogin />} >
 

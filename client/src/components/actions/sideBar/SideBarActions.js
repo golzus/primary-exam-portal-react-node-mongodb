@@ -22,6 +22,18 @@ const SideBarActions = () => {
                 title: "בחנים",
                 path: "wordLsList",
               },
+              {
+                title: "רשימת משימות",
+                path: "wordLsList",
+              },
+              {
+                title:"גיליון ציונים",
+                path:"marks"
+              },
+              {
+                title:"בחנים",
+                path:"exams"
+              }
             ],
           }]
       const teacherMenuActions =

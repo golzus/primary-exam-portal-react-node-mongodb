@@ -4,12 +4,12 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
-      light: '#63a4ff',
-      dark: '#004ba0',
+      main: '#283593', // Indigo
+      light: '#5c6bc0', // Light Blue
+      dark: '#1a237e', // Darker Indigo
     },
     secondary: {
-      main: '#dc004e',
+      main: '#ff7043', // Orange
     },
   },
 });

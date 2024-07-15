@@ -18,6 +18,9 @@ app.get("/", (req, res) => {
   res.send("home 1 page");
 });
 
+
+
+
 app.use("/api/listwords", require("./routes/listWordsRoute"));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/user", require("./routes/userRoute"));
