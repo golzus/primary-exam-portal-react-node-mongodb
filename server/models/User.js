@@ -20,10 +20,10 @@ const userSchema=new mongoose.Schema({
         enum:["Student","Teacher","User"],
         default:"Student"
     },
-    company:{
-type:mongoose.Schema.Types.ObjectId,
-ref:Company
-    },
+//     company:{
+// type:mongoose.Schema.Types.ObjectId,
+// ref:Company
+//     },
     class:{
         type:mongoose.Schema.Types.ObjectId,
         ref:Class
