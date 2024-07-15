@@ -39,7 +39,10 @@ function App() {
         <Route path="/" element={<SiteLayout />}>
           <Route index element={<Site/>} />
           <Route path="login" element={<LoginPage />} />
+<<<<<<< HEAD
           {/* <Route path="login" element={<Logo />} /> */}
+=======
+>>>>>>> 33636c1dafbadd274bdbc8c59e07f5febf8764d3
 
           <Route element={<PersistLogin />} >
 
