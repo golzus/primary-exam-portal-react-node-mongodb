@@ -29,13 +29,16 @@ import Translation from "./features/actions/translate/Translation";
 import TextToSpeechComponent from "./features/actions/listWord/add/TextToSpeechComponent";
 import PersistLogin from "./features/auth/PersistLogin";
 import Site from "./features/site/Site";
+import Logo from "./features/logo/Logo";
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<SiteLayout />}>
           <Route index element={<Site/>} />
-          <Route path="login" element={<LoginPage />} />
+          {/* <Route path="login" element={<LoginPage />} /> */}
+          <Route path="login" element={<Logo />} />
+
           <Route element={<PersistLogin />} >
 
           <Route element={<RequireAuth allowRoles={["Teacher", "Student"]} />}>

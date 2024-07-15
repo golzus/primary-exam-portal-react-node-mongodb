@@ -16,11 +16,11 @@ const login = async (req, res) => {
     deleted: false,
     active: true,
   })
-    .populate("company", { name: 1, image: 1 })
+    .populate("class", { name: 1, image: 1 })
     .lean();
   if (!foundUser) {
     return res.status(401).json({
-      erreo: true,
+      error: true,
       message: "Unauthorized",
       data: null,
     });
@@ -39,7 +39,8 @@ const login = async (req, res) => {
     username: foundUser.username,
     fullname: foundUser.fullname,
     roles: foundUser.roles,
-    company: foundUser.company,
+    company: foundUser.class,
+    // company: foundUser.company,
     class: foundUser.class,
   };
   const acssesToken = jwt.sign(userInfo, process.env.ACCES_TOKEN_SECRET, {
@@ -88,13 +89,13 @@ const refresh = async (req,res) =>{
                   data: null
               })
           }
-          const foundUser = await User.findOne({username: decode.username, deleted: false, active:true}).populate("company", {name: 1, image:1}).lean()
+          const foundUser = await User.findOne({username: decode.username, deleted: false, active:true}).populate("class", {name: 1, image:1}).lean()
           const userInfo  = {
               _id: foundUser._id,
               username: foundUser.username,
               fullname: foundUser.fullname,
               roles: foundUser.roles,
-              company: foundUser.company
+              company: foundUser.class
           }
       
           const accessToken = jwt.sign(userInfo, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'})
@@ -124,4 +125,6 @@ const logout = async (req, res) => {
   });
 };
 module.exports = { login, refresh, logout };
+
+
 

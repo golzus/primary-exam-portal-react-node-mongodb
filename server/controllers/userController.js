@@ -54,7 +54,7 @@ console.log(classes,"classes");
 
 
 const addUser = async (req, res) => {
-  const { fullname, username, password,class:class1, active,  type,email } = req.body;
+  const { fullname, username, password,class:class1, active,  type,email,roles } = req.body;
   // if (!username || !password || !fullname || !company || !roles) {
     if (!username || !password || !fullname) {
 
@@ -62,7 +62,7 @@ const addUser = async (req, res) => {
       .status(400)
       .json({
         error: true,
-        message: "fullname,username,password,company,roles are required!",
+        message: "fullname,username,password,roles are required!",
         data: null,
       });
   }
@@ -78,8 +78,11 @@ if(duplicateUser){
 }
 
   const hashpwd=await bcrypt.hash(password,10)
+  const newUser={fullname, username, password : hashpwd, active, type,email,roles}
+   if(class1)
+    newUser.class=class1
+  const user = await User.create(newUser);
 
-  const user = await User.create({fullname, username, password : hashpwd, active, class:class1, type,email});
   if (!user) {
     return res
       .status(400)
