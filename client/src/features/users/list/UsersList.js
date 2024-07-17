@@ -547,6 +547,242 @@
 
 // export default UsersList;
 
+// import React, { useState, useEffect } from 'react';
+// import { DataGrid } from '@mui/x-data-grid';
+// import { createTheme, ThemeProvider } from '@mui/material/styles';
+// import { CssBaseline, Box, TextField, InputAdornment, IconButton, Tooltip, Button } from '@mui/material';
+// import SearchIcon from '@mui/icons-material/Search';
+// import EditIcon from '@mui/icons-material/Edit';
+// import DeleteIcon from '@mui/icons-material/Delete';
+// import { Link } from "react-router-dom";
+// import { IoPersonAddSharp } from "react-icons/io5";
+// import { useDeleteUserMutation, useGetAllUsersQuery } from '../view/userApiSlice';
+// import useAuth from '../../../hooks/useAuth';
+// import AddUserForm from '../add/AddUser';
+// import './users-list.css';
+
+// const theme = createTheme({
+//   palette: {
+//     primary: {
+//       main: '#283593', // Indigo
+//       light: '#5c6bc0', // Light Blue
+//       dark: '#1a237e', // Darker Indigo
+//     },
+//     secondary: {
+//       main: '#ff7043', // Orange
+//     },
+//   },
+//   components: {
+//     MuiDataGrid: {
+//       styleOverrides: {
+//         root: {
+//           border: '2px solid #283593',
+//           borderRadius: '8px',
+//           padding: '16px',
+//           '& .MuiDataGrid-columnHeaders': {
+//             backgroundColor: '#e8eaf6', // Light Indigo background
+//             fontWeight: 'bold',
+//             color: '#1a237e', // Darker Indigo text
+//           },
+//           '& .MuiDataGrid-cell': {
+//             padding: '8px 16px',
+//             color: '#283593', // Indigo text
+//           },
+//           '& .MuiDataGrid-footerContainer': {
+//             backgroundColor: '#e8eaf6',
+//           },
+//           '& .MuiCheckbox-root': {
+//             color: '#283593', // Indigo for checkbox
+//           },
+//         },
+//       },
+//     },
+//     MuiTextField: {
+//       styleOverrides: {
+//         root: {
+//           '& .MuiOutlinedInput-root': {
+//             '& fieldset': {
+//               borderColor: '#283593', // Indigo border
+//             },
+//             '&:hover fieldset': {
+//               borderColor: '#1a237e', // Darker Indigo border on hover
+//             },
+//             '&.Mui-focused fieldset': {
+//               borderColor: '#5c6bc0', // Light Blue border on focus
+//             },
+//           },
+//           '& .MuiInputAdornment-root': {
+//             color: '#283593', // Indigo color for adornment
+//           },
+//           '& .MuiInputLabel-root': {
+//             color: '#283593', // Indigo color for label
+//             '&.Mui-focused': {
+//               color: '#5c6bc0', // Light Blue color on focus
+//             },
+//           },
+//         },
+//       },
+//     },
+//     MuiButton: {
+//       styleOverrides: {
+//         root: {
+//           backgroundColor: '#ff7043', // Orange background
+//           color: '#ffffff', // White text
+//           '&:hover': {
+//             backgroundColor: '#f4511e', // Darker orange on hover
+//           },
+//         },
+//       },
+//     },
+//     MuiIconButton: {
+//       styleOverrides: {
+//         root: {
+//           color: '#283593', // Indigo color for icons
+//           '&:hover': {
+//             color: '#1a237e', // Darker Indigo on hover
+//           },
+//         },
+//       },
+//     },
+//   },
+// });
+
+// const UsersList = () => {
+//   const { company } = useAuth();
+//   const { data: users, isError, error, isLoading } = useGetAllUsersQuery();
+//   const [deleteUser, { error: errorDelete, data: deletedData }] = useDeleteUserMutation();
+//   const [rows, setRows] = useState([]);
+//   const [searchText, setSearchText] = useState('');
+//   const [showAddUserForm, setShowAddUserForm] = useState(false);
+//   const [showThankYou, setShowThankYou] = useState(false);
+
+//   useEffect(() => {
+//     if (users) {
+//       const usersData = users.data.map(user => ({
+//         ...user,
+//         id: user._id,
+//         companyName: user.company?.name,
+//       }));
+//       setRows(usersData);
+//     }
+//   }, [users]);
+
+//   const deleteClick = (user) => {
+//     if (window.confirm("בטוח שברצונך למחוק את המשתמש ?")) {
+//       deleteUser({ _id: user._id });
+//     }
+//   };
+
+//   const handleSearch = (event) => {
+//     setSearchText(event.target.value);
+//   };
+
+//   const filteredRows = rows.filter((row) => {
+//     return row.fullname.toLowerCase().includes(searchText.toLowerCase());
+//   });
+
+//   const columns = [
+//     { field: 'username', headerName: 'שם משתמש', flex: 1, headerAlign: 'center', align: 'center' },
+//     { field: 'fullname', headerName: 'שם מלא', flex: 1, headerAlign: 'center', align: 'center' },
+//     { field: 'companyName', headerName: 'חברה', flex: 1, headerAlign: 'center', align: 'center' },
+//     { field: 'email', headerName: 'מייל', flex: 1, headerAlign: 'center', align: 'center' },
+//     { field: 'active', headerName: 'פעיל', flex: 1, headerAlign: 'center', align: 'center', type: 'boolean' },
+//     {
+//       field: 'actions',
+//       headerName: 'פעולות',
+//       flex: 1,
+//       headerAlign: 'center',
+//       align: 'center',
+//       sortable: false,
+//       renderCell: (params) => (
+//         <>
+//           <Link to={`/dash/users/${params.row._id}`} className='users-list-button users-list-view'>
+//             <Tooltip title="View">
+//               <IconButton aria-label="view">
+//                 <EditIcon />
+//               </IconButton>
+//             </Tooltip>
+//           </Link>
+//           <Tooltip title="Delete">
+//             <IconButton aria-label="delete" onClick={() => deleteClick(params.row)}>
+//               <DeleteIcon />
+//             </IconButton>
+//           </Tooltip>
+//         </>
+//       ),
+//     },
+//   ];
+
+//   if (isLoading) return <h1>Loading...</h1>;
+//   if (isError) return <h1>Error: {JSON.stringify(error)}</h1>;
+
+//   return (
+//     <ThemeProvider theme={theme}>
+//       <CssBaseline />
+//       <div className='user-list'>
+//         <div className='user-list-top'>
+//           <TextField
+//             label="חיפוש לפי שם"
+//             variant="outlined"
+//             fullWidth
+//             value={searchText}
+//             onChange={handleSearch}
+//             sx={{ marginBottom: '16px' }}
+//             InputProps={{
+//               startAdornment: (
+//                 <InputAdornment position="start">
+//                   <SearchIcon />
+//                 </InputAdornment>
+//               ),
+//             }}
+//           />
+//           <Button
+//             className="users-list-add-button"
+//             onClick={() => setShowAddUserForm(true)}
+//             startIcon={<IoPersonAddSharp />}
+//             sx={{
+//               marginBottom: '16px',
+//               backgroundColor: theme.palette.secondary.main, // using secondary main color
+//               color: '#ffffff', // white text color
+//               '&:hover': {
+//                 backgroundColor: theme.palette.secondary.dark, // darker secondary color on hover
+//               },
+//             }}
+//           >
+//             הוספת תלמידה
+//           </Button>
+//         </div>
+//         <Box sx={{ height: 400, width: '100%', marginTop: '20px' }}>
+//           <DataGrid
+//             rows={filteredRows}
+//             columns={columns}
+//             pageSize={5}
+//             rowsPerPageOptions={[5]}
+//             checkboxSelection
+//             disableSelectionOnClick
+//             getRowId={(row) => row._id}
+//           />
+//         </Box>
+//         {showAddUserForm && (
+//           <AddUserForm 
+//             setShowThankYou={setShowThankYou} 
+//             setOpenModal={setShowAddUserForm} 
+//           />
+//         )}
+//         {showThankYou && (
+//           <div className="thank-you-message">
+//             <h2>תודה! התלמידה נוספה בהצלחה.</h2>
+//             <button onClick={() => setShowThankYou(false)}>סגור</button>
+//           </div>
+//         )}
+//       </div>
+//     </ThemeProvider>
+//   );
+// };
+
+// export default UsersList;
+
+
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -560,6 +796,7 @@ import { useDeleteUserMutation, useGetAllUsersQuery } from '../view/userApiSlice
 import useAuth from '../../../hooks/useAuth';
 import AddUserForm from '../add/AddUser';
 import './users-list.css';
+import { Margin } from '@mui/icons-material';
 
 const theme = createTheme({
   palette: {
@@ -569,30 +806,31 @@ const theme = createTheme({
       dark: '#1a237e', // Darker Indigo
     },
     secondary: {
-      main: '#ff7043', // Orange
+     // main: '#ff7043', // Orange
+      main:'#9B153B'
     },
   },
   components: {
     MuiDataGrid: {
       styleOverrides: {
         root: {
-          border: '2px solid #283593',
+          border: 'none', // Remove the border
           borderRadius: '8px',
           padding: '16px',
           '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: '#e8eaf6', // Light Indigo background
+            backgroundColor: '#f3f3e9', // Light beige background color
             fontWeight: 'bold',
-            color: '#1a237e', // Darker Indigo text
+            color: '#9B153B', // Dark red text color
           },
           '& .MuiDataGrid-cell': {
             padding: '8px 16px',
-            color: '#283593', // Indigo text
+            color: '#9B153B', // Dark red text color
           },
           '& .MuiDataGrid-footerContainer': {
-            backgroundColor: '#e8eaf6',
+            backgroundColor: '#f3f3e9', // Light beige background color
           },
           '& .MuiCheckbox-root': {
-            color: '#283593', // Indigo for checkbox
+            color: '#9B153B', // Dark red for checkbox
           },
         },
       },
@@ -602,23 +840,27 @@ const theme = createTheme({
         root: {
           '& .MuiOutlinedInput-root': {
             '& fieldset': {
-              borderColor: '#283593', // Indigo border
+              borderColor: '#9B153B', // Dark red border
             },
             '&:hover fieldset': {
-              borderColor: '#1a237e', // Darker Indigo border on hover
+              borderColor: '#9B153B', // Dark red border on hover
             },
             '&.Mui-focused fieldset': {
-              borderColor: '#5c6bc0', // Light Blue border on focus
+              borderColor: '#9B153B', // Dark red border on focus
             },
           },
           '& .MuiInputAdornment-root': {
-            color: '#283593', // Indigo color for adornment
+            color: '#9B153B', // Dark red color for adornment
           },
           '& .MuiInputLabel-root': {
-            color: '#283593', // Indigo color for label
+            color: '#9B153B', // Dark red color for label
             '&.Mui-focused': {
-              color: '#5c6bc0', // Light Blue color on focus
+              color: '#9B153B', // Dark red color on focus
             },
+          },
+          '& .MuiInputBase-input': {
+            backgroundColor: '#f3f3e9', // Light beige background color for input
+            padding: '8px', // Padding for input text
           },
         },
       },
@@ -637,9 +879,9 @@ const theme = createTheme({
     MuiIconButton: {
       styleOverrides: {
         root: {
-          color: '#283593', // Indigo color for icons
+          color: '#9B153B', // Dark red color for icons
           '&:hover': {
-            color: '#1a237e', // Darker Indigo on hover
+            color: '#9B153B', // Dark red on hover
           },
         },
       },
@@ -668,7 +910,7 @@ const UsersList = () => {
   }, [users]);
 
   const deleteClick = (user) => {
-    if (window.confirm("בטוח שברצונך למחוק את המשתמש ?")) {
+    if (window.confirm("Are you sure you want to delete this user?")) {
       deleteUser({ _id: user._id });
     }
   };
@@ -720,28 +962,12 @@ const UsersList = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className='user-list'>
-        <div className='user-list-top'>
-          <TextField
-            label="חיפוש לפי שם"
-            variant="outlined"
-            fullWidth
-            value={searchText}
-            onChange={handleSearch}
-            sx={{ marginBottom: '16px' }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
+        <Box className='user-list-top' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
           <Button
             className="users-list-add-button"
             onClick={() => setShowAddUserForm(true)}
             startIcon={<IoPersonAddSharp />}
             sx={{
-              marginBottom: '16px',
               backgroundColor: theme.palette.secondary.main, // using secondary main color
               color: '#ffffff', // white text color
               '&:hover': {
@@ -751,8 +977,24 @@ const UsersList = () => {
           >
             הוספת תלמידה
           </Button>
-        </div>
-        <Box sx={{ height: 400, width: '100%', marginTop: '20px' }}>
+          <TextField
+            label="חיפוש לפי שם"
+            variant="outlined"
+            value={searchText}
+            
+            onChange={handleSearch}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+            sx={{margin:"10px"}}
+            // sx={{ flex: 1, marginLeft: '16px' }}
+          />
+        </Box>
+        <Box sx={{ height: 400, width: '100%', marginTop: '20px', padding: '16px' }}>
           <DataGrid
             rows={filteredRows}
             columns={columns}
