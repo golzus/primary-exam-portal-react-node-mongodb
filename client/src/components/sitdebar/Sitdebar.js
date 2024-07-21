@@ -617,6 +617,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaUser, FaBars } from "react-icons/fa";
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Avatar, Typography, Divider, Box, IconButton, Collapse } from '@mui/material';
+
 import { NavLink } from 'react-router-dom';
 import { 
   Dashboard, 
@@ -625,8 +626,9 @@ import {
   PendingActions, 
   Settings, 
   Help, 
-  ExitToApp 
-} from '@mui/icons-material';
+  ExitToApp ,
+   Quiz, Assignment, School, Info } 
+from '@mui/icons-material';
 import { PiListPlusLight } from 'react-icons/pi';
 import { GoChecklist } from 'react-icons/go';
 import useAuth from '../../hooks/useAuth';
@@ -667,6 +669,26 @@ const teacherMenuActions = [
     ],
   },
 ];
+const studentMenuActions = [
+  {
+    title: "בחנים",
+    list: [
+      { title: "ראשי", path: "/dash/actions", icon: <Quiz /> },
+      { title: "בחנים", path: "actions/wordLsList", icon: <Assignment /> },
+      { title: "רשימת משימות", path: "actions/wordLsList", icon: <Assignment /> },
+      { title: "גיליון ציונים", path: "actions/marks", icon: <School /> },
+    ],
+  },
+  {
+    title: "אישי",
+    list: [
+      { title: "הפרטים שלי", icon: <Person /> },
+    ],
+  },
+];
+
+
+
 
 const SiteBar = () => {
   const { roles, company, fullname, image } = useAuth();

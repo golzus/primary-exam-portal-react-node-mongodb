@@ -262,25 +262,63 @@ import useAuth from "../../../hooks/useAuth";
 import { NavLink } from 'react-router-dom';
 import { ExitToApp } from '@mui/icons-material'; // Import ExitToApp icon from MUI
 
-
+import { 
+  Star,
+  ListAlt,
+  Dashboard, 
+  Person, 
+  Business, 
+  PendingActions, 
+  Settings, 
+  Help, 
+  
+   Quiz, Assignment, School, Info } 
+from '@mui/icons-material';
 const drawerWidth = 260;
 
 const SideBarActions = () => {
   const { roles, company, fullname, image } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+
+
+  // const studentMenuActions = [
+  //   {
+  //     title: "בחנים",
+  //     list: [
+  //       { title: "ראשי", path: "/dash/actions", icon: <Quiz /> },
+  //       { title: "בחנים", path: "actions/wordLsList", icon: <Assignment /> },
+  //       { title: "רשימת משימות", path: "actions/wordLsList", icon: <Assignment /> },
+  //       { title: "גיליון ציונים", path: "actions/marks", icon: <School /> },
+  //     ],
+  //   },
+  //   {
+  //     title: "אישי",
+  //     list: [
+  //       { title: "הפרטים שלי", icon: <Person /> },
+  //     ],
+  //   },
+  // ];
+  
   const studentMenuActions = [
     {
       title: "בחנים",
       list: [
-        { title: "ראשי", path: "/dash/actions" },
-        { title: "בחנים", path: "wordLsList" },
-        { title: "רשימת משימות", path: "wordLsList" },
-        { title: "גיליון ציונים", path: "marks" },
-        { title: "בחנים", path: "exams" }
-      ]
-    }
+        { title: "ראשי", path: "/dash/actions", icon: <Dashboard /> }, // Dashboard icon for main
+        { title: "בחנים", path: "actions/wordLsList", icon: <Quiz /> }, // Quiz icon for tests
+        { title: "רשימת משימות", path: "actions/wordLsList", icon: <ListAlt /> }, // List icon for task list
+        { title: "גיליון ציונים", path: "actions/marks", icon: <Star /> }, // Star icon for grades (representing excellence)
+      ],
+    },
+    {
+      title: "אישי",
+      list: [
+        { title: "הפרטים שלי", icon: <Person /> }, // Person icon for personal details
+      ],
+    },
   ];
+  
+  
 
   const teacherMenuActions = [
     {
