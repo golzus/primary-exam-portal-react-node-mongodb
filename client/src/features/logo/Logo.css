@@ -2,19 +2,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0;
-    /* margin-top: 20px; */
-    /* background-color: #2c3e50; צבע רקע כהה */
-    /* padding: 20px; */
-    /* border-radius: 10px; */
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+    margin-top: 20px;
+    background-color: #2c3e50; /* צבע רקע כהה */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
   .logo-image {
-    width: 60px; /* גודל התמונה */
-    height: 60px; /* גודל התמונה */
-    /* animation: spin infinite 10s linear; ההגדרה לסיבוב התמונה */
-    margin-bottom: 0;
+    width: 120px; /* גודל התמונה */
+    height: 120px; /* גודל התמונה */
+    animation: spin infinite 10s linear; /* ההגדרה לסיבוב התמונה */
   }
   
   @keyframes spin {
@@ -27,11 +25,10 @@
   }
   
   .logo-text {
-margin-top: 0;
-    font-size: 9px; /* גודל טקסט */
-    color: #eb2b28; /* צבע ורוד מבריק */
-    text-shadow: 0 0 5px rgba(255, 85, 0, 0.7); /* אפקט זרחן */
-    /* margin-top: 15px; */
+    font-size: 18px; /* גודל טקסט */
+    color: #ff00ff; /* צבע ורוד מבריק */
+    text-shadow: 0 0 5px rgba(255, 0, 255, 0.7); /* אפקט זרחן */
+    margin-top: 15px;
     font-family: 'Arial', sans-serif; /* סוג הגופן */
   }
   
