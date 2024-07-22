@@ -2,11 +2,6 @@
    
 
 
-
-    import { Link, useNavigate } from "react-router-dom";
-    import { useEffect } from "react";
-import useAuth from "../../../hooks/useAuth";
-
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaBars } from "react-icons/fa";
