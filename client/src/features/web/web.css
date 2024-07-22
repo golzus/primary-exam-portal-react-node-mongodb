@@ -1,0 +1,86 @@
+/* סגנונות כלליים */
+.App {
+    text-align: center;
+    background-color: #000; /* רקע שחור */
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
+    color: #fff; /* טקסט לבן */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  h1 {
+    color: #ff69b4; /* ורוד */
+    margin-bottom: 20px;
+  }
+  
+  .face-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .face-image {
+    width: 300px;
+    height: auto;
+    transition: opacity 2s;
+  }
+  
+  .web-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    pointer-events: none; /* מניעת קליקים על הרשת */
+  }
+  
+  .web-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: invert(100%); /* להפוך לצבע לבן */
+    transition: opacity 5s ease; /* אנימציה שתמשך 5 שניות */
+  }
+  
+  button, .login-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #fff; /* רקע לבן */
+    color: #000; /* טקסט שחור */
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    text-decoration: none; /* להסיר קו תחתון בקישור */
+  }
+  
+  button:hover, .login-button:hover {
+    background-color: #ff69b4; /* ורוד */
+  }
+  
+  p {
+    margin-top: 20px;
+    color: #fff; /* טקסט לבן */
+    opacity: 0;
+    transition: opacity 2s ease; /* אנימציה של הופעה איטית */
+  }
+  
+  /* אנימציות */
+  .animate .web-image {
+    opacity: 0; /* הרשת תיעלם */
+  }
+  
+  .fade-in-text {
+    opacity: 1; /* טקסט יופיע באיטיות */
+  }
+  

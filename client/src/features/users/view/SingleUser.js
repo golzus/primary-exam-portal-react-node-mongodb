@@ -90,3 +90,127 @@ if (isError)
 }
 
 export default SingleUser
+
+
+// import React, { useEffect } from 'react';
+// import { useNavigate, useParams } from 'react-router-dom';
+// import { useGetAllCompaniesQuery } from '../../companies/CompaniesApiSlice';
+// import { useUpdateUserMutation, useGetAllUsersQuery } from './userApiSlice';
+// import { TextField, Button, MenuItem, FormControl, InputLabel, Select, CircularProgress, Typography } from '@mui/material';
+
+// const SingleUser = () => {
+//     const { userId } = useParams();
+//     const navigate = useNavigate();
+
+//     const { data, isLoading, isError, error } = useGetAllUsersQuery();
+//     const { data: companies, isLoading: companiesLoading, isError: companiesIsError, error: companiesError } = useGetAllCompaniesQuery();
+//     const [updateUser, { isSuccess, error: updateError }] = useUpdateUserMutation();
+
+//     useEffect(() => {
+//         if (isSuccess) {
+//             navigate("/dash/users");
+//         }
+//     }, [isSuccess, navigate]);
+
+//     if (isLoading || companiesLoading) return <CircularProgress />;
+//     if (isError || companiesIsError) return <Typography color="error">Error: {error?.message || companiesError?.message}</Typography>;
+
+//     const user = data?.data?.find(user => user._id === userId);
+
+//     if (!user) return <Typography variant="h6">User not found</Typography>;
+
+//     const handleSubmit = (e) => {
+//         e.preventDefault();
+//         const formData = new FormData(e.target);
+//         const userObject = Object.fromEntries(formData.entries());
+
+//         console.log('Submitting:', userObject); // לוגים של הנתונים לפני שליחה
+
+//         updateUser(userObject)
+//             .unwrap() // .unwrap() מצפה שהפונקציה תחזיר Promise ונתניה לסטטוס של הצלחה/שגיאה
+//             .catch(err => {
+//                 console.error('Update failed', err); // לוגים של שגיאות עדכון
+//             });
+//     };
+
+//     return (
+//         <div className='single-user-container'>
+//             <div className='single-user-info'>
+//                 <div className='single-user-img-container'>
+//                     <Typography variant="h5">{user.username}</Typography>
+//                 </div>
+//                 <div className='single-user-form-container'>
+//                     <form onSubmit={handleSubmit} className='single-user-form'>
+//                         <input name='_id' defaultValue={user._id} type='hidden' />
+                        
+//                         <TextField
+//                             fullWidth
+//                             label='שם יחודי'
+//                             value={user.username}
+//                             InputProps={{ readOnly: true }}
+//                         />
+//                         <TextField
+//                             fullWidth
+//                             label='שם פרטי'
+//                             defaultValue={user.fullname}
+//                             name='fullname'
+//                         />
+//                         <FormControl fullWidth>
+//                             <InputLabel id='company-label'>חברה</InputLabel>
+//                             <Select
+//                                 id='company'
+//                                 name='company'
+//                                 labelId='company-label'
+//                                 defaultValue={user.company?._id || ''}
+//                                 required
+//                             >
+//                                 {companies?.data?.map(company => (
+//                                     <MenuItem key={company._id} value={company._id}>
+//                                         {company.name}
+//                                     </MenuItem>
+//                                 ))}
+//                             </Select>
+//                         </FormControl>
+//                         <FormControl fullWidth>
+//                             <InputLabel id='roles-label'>הרשאה</InputLabel>
+//                             <Select
+//                                 id='roles'
+//                                 name='roles'
+//                                 labelId='roles-label'
+//                                 defaultValue={user.roles || 'Student'}
+//                             >
+//                                 <MenuItem value='Student'>Student</MenuItem>
+//                                 <MenuItem value='Teacher'>Teacher</MenuItem>
+//                             </Select>
+//                         </FormControl>
+//                         <FormControl fullWidth>
+//                             <InputLabel id='active-label'>פעיל</InputLabel>
+//                             <Select
+//                                 id='active'
+//                                 name='active'
+//                                 labelId='active-label'
+//                                 defaultValue={user.active ? true : false}
+//                             >
+//                                 <MenuItem value={true}>פעיל</MenuItem>
+//                                 <MenuItem value={false}>לא פעיל</MenuItem>
+//                             </Select>
+//                         </FormControl>
+//                         <TextField
+//                             fullWidth
+//                             label='מייל'
+//                             type='email'
+//                             defaultValue={user.email}
+//                             name='email'
+//                         />
+//                         <Button type='submit' variant='contained' color='primary'>
+//                             עדכן
+//                         </Button>
+//                         {updateError && <Typography color='error'>שגיאה: {updateError.message}</Typography>}
+//                     </form>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default SingleUser;

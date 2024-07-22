@@ -40,7 +40,7 @@
 //     }
 //   };
 
-//   if (isLoading) return <h1>loading...</h1>;  
+//   if (isLoading) return <h1>loading...</h1>;
 //   let count = 0;
 //   return (
 //     <div>
@@ -358,47 +358,99 @@
 
 // export default ListWord;
 // ListWord.js
-import React, { useState, useEffect } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { ThemeProvider, CssBaseline, Box, TextField, InputAdornment, IconButton, Tooltip, Button, Typography } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import DescriptionIcon from '@mui/icons-material/Description';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import PrintIcon from '@mui/icons-material/Print';
-import VisibilityIcon from '@mui/icons-material/Visibility'; // Added icon for viewing
-import { Link } from 'react-router-dom';
-import theme from '../../../../theme'; // Import the theme
 
-import { useDeleteListWordsMutation, useGetAllListWordsByClassMutation } from '../view/ListWordApiSlice';
-import { useSelector } from 'react-redux';
-import CurrentSchoolAndClass from '../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass';
-import useAuth from '../../../../hooks/useAuth';
+import React, { useState, useEffect } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import {
+  ThemeProvider,
+  CssBaseline,
+  Box,
+  TextField,
+  InputAdornment,
+  IconButton,
+  Tooltip,
+  Button,
+  Typography,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DescriptionIcon from "@mui/icons-material/Description";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import PrintIcon from "@mui/icons-material/Print";
+import VisibilityIcon from "@mui/icons-material/Visibility"; // Added icon for viewing
+import { Link } from "react-router-dom";
+import theme from "../../../../theme"; // Import the theme
 
-const ListWord = () => {
-  const { roles } = useAuth(); // Retrieve roles
+import {
+  useDeleteListWordsMutation,
+  useGetAllListWordsByClassMutation,
+  useGetTestByClassAndUserMutation,
+  useGetAllTestsDoneMutation
+} from "../view/ListWordApiSlice";
+import { useSelector } from "react-redux";
+import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
+import useAuth from "../../../../hooks/useAuth";
 
-  const [
-    getAllListWordsByClass,
-    { data: wordLsList, isError, error, isLoading },
-  ] = useGetAllListWordsByClassMutation();
+const ListWord = ({todos}) => {
+  const { roles, _id: user } = useAuth(); // Retrieve roles
+
+// הגדרת mutations לצורך קבלת נתונים
+const [getAllTestsDone, doneResponse] =   useGetAllTestsDoneMutation();
+const [getTestByClassAndUser, studentResponse] = useGetTestByClassAndUserMutation();
+const [getAllListWordsByClass, teacherResponse] = useGetAllListWordsByClassMutation();
+
+// הגדרת משתנים עבור נתוני המילים, שגיאות וסטטוס טעינה
+let wordLsList, isError, error, isLoading;
+
+// קבלת נתוני המילים בהתאם לפרופס todos ולתפקיד של המשתמש
+if (todos) {
+  wordLsList = doneResponse.data;
+  isError = doneResponse.isError;
+  error = doneResponse.isError;
+  isLoading = doneResponse.isLoading;
+  console.log(wordLsList, "word", isLoading);
+} else if (roles === 'Student') {
+  wordLsList = studentResponse.data;
+  isError = studentResponse.isError;
+  error = studentResponse.isStudentError;
+  isLoading = studentResponse.isStudentisLoading;
+} else if (roles === 'Teacher') {
+  wordLsList = teacherResponse.data;
+  isError = teacherResponse.isError;
+  error = teacherResponse.error;
+  isLoading = teacherResponse.isLoading;
+}
+
+
   const { chosenClass } = useSelector((state) => state.schoolAndClass);
   let classObj;
   if (chosenClass) classObj = { chosenClass: chosenClass };
 
-  const [searchText, setSearchText] = useState('');
-
+  const [searchText, setSearchText] = useState("");
   useEffect(() => {
-    if (chosenClass) getAllListWordsByClass(classObj);
+    if (roles === "Student"&&!todos) {
+      getTestByClassAndUser({ user });
+      console.log(todos,"tod");
+    }
+   else if(todos)
+    console.log("111111111");
+     { getAllTestsDone({user})
+  }  }, []);
+  useEffect(() => {
+    if (roles === "Teacher" && chosenClass) getAllListWordsByClass(classObj);
   }, [chosenClass]);
 
   const [deleteListWords] = useDeleteListWordsMutation();
 
-  if (!chosenClass) return <CurrentSchoolAndClass />;
+  if (!chosenClass&&roles==='Teacher') return <CurrentSchoolAndClass />;
 
   if (error) {
-    return <Typography color="error" variant="h5">{error.data.message}</Typography>;
+    return (
+      <Typography color="error" variant="h5">
+        {error.data.message}
+      </Typography>
+    );
   }
 
   if (isLoading) return <Typography variant="h5">Loading...</Typography>;
@@ -408,16 +460,20 @@ const ListWord = () => {
       deleteListWords({ _id: list._id });
     }
   };
-
   const handleSearch = (event) => {
     setSearchText(event.target.value);
   };
-
+  if (roles === "Student") {
+    if (isLoading) return <h1>Loading...</h1>;
+    if (isError) console.log(isError, "error");
+    if (wordLsList) {
+      console.log(wordLsList, "testStudent")};
+  }
   const printTest = (testId) => {
     const test = wordLsList?.data.find((list) => list._id === testId);
 
     if (test) {
-      const printWindow = window.open('', '', 'width=800,height=600');
+      const printWindow = window.open("", "", "width=800,height=600");
 
       const content = `
         <html>
@@ -439,7 +495,7 @@ const ListWord = () => {
           <div class="container">
             <h1>${test.title}</h1>
             <ul>
-              ${test.test.map(word => `<li>${word}</li>`).join('')}
+              ${test.test.map((word) => `<li>${word}</li>`).join("")}
             </ul>
             <div class="no-print">
               <button onclick="window.print()">Print</button>
@@ -456,32 +512,54 @@ const ListWord = () => {
       alert("Test not found!");
     }
   };
-
   const filteredRows = (wordLsList?.data || [])
-    .filter((list) => list.title.toLowerCase().includes(searchText.toLowerCase()))
+    .filter((list) =>
+      list.title.toLowerCase().includes(searchText.toLowerCase())
+    )
     .map((list) => ({
       id: list._id,
       title: list.title,
-      date: list.date ? list.date.slice(0, 10) : '', // Check if date exists before slicing
+      date: list.date ? list.date.slice(0, 10) : "", // Check if date exists before slicing
       wordCount: list.test.length,
     }));
 
   const columns = [
-    { field: 'title', headerName: 'כותרת', flex: 1, headerAlign: 'center', align: 'center', renderCell: (params) => (
-      <Typography variant="body2" color="textSecondary">{params.row.title}</Typography>
-    )},
-    { field: 'date', headerName: 'תאריך', flex: 1, headerAlign: 'center', align: 'center' },
-    { field: 'wordCount', headerName: 'מספר מילים', flex: 1, headerAlign: 'center', align: 'center' },
     {
-      field: 'actions',
-      headerName: 'פעולות',
+      field: "title",
+      headerName: "כותרת",
       flex: 1,
-      headerAlign: 'center',
-      align: 'center',
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params) => (
+        <Typography variant="body2" color="textSecondary">
+          {params.row.title}
+        </Typography>
+      ),
+    },
+    {
+      field: "date",
+      headerName: "תאריך",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "wordCount",
+      headerName: "מספר מילים",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "actions",
+      headerName: "פעולות",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
       sortable: false,
       renderCell: (params) => (
         <>
-          {roles === 'Teacher' ? (
+          {roles === "Teacher" ? (
             <>
               <Tooltip title="Fill Test">
                 <IconButton
@@ -525,7 +603,7 @@ const ListWord = () => {
                 </IconButton>
               </Tooltip>
             </>
-          ) : roles === 'Student' ? (
+          ) : roles === "Student" ? (
             <Tooltip title="View">
               <IconButton
                 component={Link}
@@ -545,9 +623,16 @@ const ListWord = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ display: 'flex', flexDirection: 'column', height: '50vh' }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-          <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box sx={{ display: "flex", flexDirection: "column", height: "50vh" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          <Box
+            sx={{
+              p: 2,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <TextField
               label="Search"
               variant="outlined"
@@ -568,23 +653,35 @@ const ListWord = () => {
               to={`/dash/actions/new`}
               variant="contained"
               startIcon={<AddCircleIcon />}
-              sx={{ backgroundColor: '#283593', '&:hover': { backgroundColor: '#1a237e' } }}
+              sx={{
+                backgroundColor: "#283593",
+                "&:hover": { backgroundColor: "#1a237e" },
+              }}
             >
               Add New
             </Button>
           </Box>
-          <Box sx={{ flex: 1, overflowY: 'auto' }}>
+          <Box sx={{ flex: 1, overflowY: "auto" }}>
             <DataGrid
               rows={filteredRows}
               columns={columns}
               pageSize={10}
               rowsPerPageOptions={[10, 20, 50]}
               disableSelectionOnClick
-              sx={{ height: '100%', width: '100%' }}
+              sx={{ height: "100%", width: "100%" }}
             />
           </Box>
         </Box>
-        <Box sx={{ position: 'sticky', bottom: 0, backgroundColor: '#f3f3e9', padding: '8px', textAlign: 'center', zIndex: 1 }}>
+        <Box
+          sx={{
+            position: "sticky",
+            bottom: 0,
+            backgroundColor: "#f3f3e9",
+            padding: "8px",
+            textAlign: "center",
+            zIndex: 1,
+          }}
+        >
           <Typography variant="body2" color="textSecondary">
             © 2024 Your Company
           </Typography>
