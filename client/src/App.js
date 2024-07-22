@@ -30,6 +30,8 @@ import TextToSpeechComponent from "./features/actions/listWord/add/TextToSpeechC
 import PersistLogin from "./features/auth/PersistLogin";
 import Site from "./features/site/Site";
 import Logo from "./features/logo/Logo";
+import FirstPage from "./features/firstPage/FirstPage";
+import Web from "./features/web/Web";
 function App() {
   return (
 
@@ -37,9 +39,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<SiteLayout />}>
-          <Route index element={<Site/>} />
+          <Route index element={<FirstPage/>} />
           <Route path="login" element={<LoginPage />} />
-          {/* <Route path="login" element={<Logo />} /> */}
+          {/* <Route path="login" element={<FirstPage />} /> */}
 
           <Route element={<PersistLogin />} >
 
