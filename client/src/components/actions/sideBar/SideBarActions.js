@@ -313,7 +313,7 @@ const SideBarActions = () => {
     {
       title: "אישי",
       list: [
-        { title: "הפרטים שלי", icon: <Person /> }, // Person icon for personal details
+        { title: "הפרטים שלי",path: "PersonalDetails", icon: <Person /> }, // Person icon for personal details
       ],
     },
   ];
