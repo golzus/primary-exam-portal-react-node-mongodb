@@ -56,7 +56,7 @@ justify-content: space-between;
 .users-list-delete{
 background-color: crimson;
 } */
-
+/* 
 
 .users-list{
     background-color: var(--bgSoft);
@@ -120,4 +120,15 @@ background-color: crimson;
   
   .users-list-delete{
     background-color: crimson;
+  } */
+
+
+
+  .red-icon-button {
+    color: #f44336; /* אדום */
   }
+  
+  .red-icon-button:hover {
+    color: #d32f2f; /* אדום כהה יותר בהעברה */
+  }
+  

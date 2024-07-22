@@ -4,11 +4,16 @@ import { Outlet } from 'react-router-dom'
 import Footer from '../../footer/Footer'
 import "./dash-dashLayout.css"
 import SitdeBar from '../../sitdebar/Sitdebar'
+import useAuth from '../../../hooks/useAuth'
+import SideBarActions from '../../actions/sideBar/SideBarActions'
+
 const DashLayout = () => {
+  const { roles } = useAuth();
   return (
     <div className='container'>
       <div className='mane'>
-        <SitdeBar/>
+      {roles==='Teacher'&&  <SitdeBar/>}
+      {roles==='Student'&&<SideBarActions/>}
       </div>
       <div className='contemt'>
       <Navbar/>
