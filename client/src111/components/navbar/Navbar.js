@@ -76,9 +76,6 @@
 // };
 
 // export default Navbar;
-
-
-
 import React from 'react';
 import { MdNotifications, MdOutlineChat, MdPublic, MdSearch } from 'react-icons/md';
 import { ThemeProvider, createTheme } from '@mui/material/styles';

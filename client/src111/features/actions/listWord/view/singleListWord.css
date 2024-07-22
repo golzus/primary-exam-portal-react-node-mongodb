@@ -1,0 +1,123 @@
+/* 
+.formupdatelistword{
+
+align-content: center;
+justify-content: center;
+
+}
+.titles{
+    display: flex;
+    justify-content: space-between;
+}
+.inputWordUpdate,.updateList,.if-you-may-do,.inputWordUpdate1,.inputWordUpdateSmaller{
+    width:30vw;
+    margin: 10px;
+    margin-bottom: 30px;
+    font-size: x-large;
+    background-color: var(--bgSort);
+    border: solid 2px brown;
+    width: 30%;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg);
+    height: 10vh;
+}
+.inputWordUpdate input,.inputWordUpdateSmaller input{
+   border: none;
+   background-color: var(--bg);
+   font-size: x-large;
+text-align: center;
+}
+
+.inputWordUpdateSmaller{
+    width: 1vw;
+
+}
+
+.updateList{
+color: red;
+cursor: pointer;
+    height: 5%;
+    background-color: var(--bg);
+
+}
+.if-you-may-do{
+   
+    background-color: teal;
+    color: var(--text);
+
+    cursor: pointer;
+    font-size: smaller;
+    align-items: center;}
+@media print {
+
+    .wordSpeakerButton,.if-you-may-do{display: none;}
+    .inputWordUpdate input, .inputWordUpdate{
+        background-color: white;
+    }
+   
+    .titleListWord{
+        display: block;
+        border: none; 
+       font-weight: bold;
+   }
+   .dateListWord{
+    display: none;
+   }
+   .inputWordUpdateSmallerEar{
+    display: none;
+   }
+   body{
+    align-content: center;
+   }
+   .updateList{
+    display: none;
+   }
+}
+.wordSpeakerButton{
+width: 5vh;
+height: 5vh;
+background-color: var(--bg);
+cursor: pointer;
+color: brown;}
+
+
+ */
+
+
+
+
+ .formupdatelistword {
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .print-content {
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .titles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .inputWordUpdate {
+    margin-bottom: 10px;
+  }
+  
+  .inputWordUpdateSmaller {
+    text-align: center;
+  }
+  
+  .users-list-table {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+ 

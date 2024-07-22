@@ -1,0 +1,29 @@
+.add-user-container{
+    background-color: var(--bgSoft);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+.add-user-form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.add-user-form input,
+.add-user-form select{
+    padding: 30px;
+    background-color: var(--bg);
+    color: var(--text);
+    border-radius: 5px;
+    margin-bottom: 30px;
+    width: 45%;
+}
+.add-user-form button{
+    width: 100%;
+    padding: 30px;
+    background-color: teal;
+    color: var(--text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

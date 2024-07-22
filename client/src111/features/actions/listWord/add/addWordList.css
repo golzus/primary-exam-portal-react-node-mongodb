@@ -1,0 +1,88 @@
+.add--word-list{
+    display: flex;
+   
+  }
+.list-word{
+    width: 40vw;
+    /* padding: 20px; */
+    border-radius: 10px;
+
+    /* background-color: var(--bgSoft); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}
+.test-name&date{
+    display: flex;
+}
+
+
+
+.formEnteries{
+        /* background-color: var( --bg); */
+        color: var(--text);
+        padding: 30px;
+        background-color: var(--bgSoft);
+        color: var(--text);
+        border-radius: 5px;
+        margin-bottom: 30px;
+        width: 45%;
+        width: 100%;
+
+
+    }
+    .buttonForm{
+        /* width: 100%; */
+        height: 3vh;
+
+        padding: 30px;
+        background-color: teal;
+        color: var(--text);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .formEnteries,.buttonForm{
+        width: 20%;
+        height: 5vh;
+        margin: 10px;
+        padding: 0;
+
+    }
+   .td-addWord input{
+        /* background-color: teal; */
+        /* color: var(--text); */
+        border: none;
+        border-bottom: solid 5px;
+        border-color: var(--bgSoft);
+        border-radius: 10px;
+        margin: 2px;
+        width: 70%;
+        height: 8vh;
+        text-align: center;
+    }
+   .qq{
+    background-color: teal;
+
+height: 5vh;
+width: 10vw;  
+align-items: center;  }
+.deleteWord{
+    color:var(--text);
+    font-weight: bolder;
+    font-size: xx-large;
+    background-color: var(--bgSoft);
+    border: none;
+    cursor: pointer;
+}
+
+
+
+
+.add-words-list {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8
+}  
