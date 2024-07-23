@@ -118,13 +118,15 @@ const AddUserForm = ({ setShowThankYou, setOpenModal }) => {
   const { data: classes, isError: classesIsError, isLoading: classesIsLoading, error: classesError } = useGetAllClassesQuery();
   const { data: schools, isError: schoolsIsError, isLoading: schoolsIsLoading, error: schoolsErrorData } = useGetAllSchoolsQuery();
   const [addUser, { isError, error, isSuccess, isLoading }] = useAddUserMutation();
+  //בדיקה האם המורה בחרה כיתה וב''ס ואם לא אפשרות לבחירה
+const { chosenClass, chosenSchool } = useSchoolAndClass();
   const [inputValue, setInputValue] = useState("");
   const [formData, setFormData] = useState({
     username: '',
     password: '',
     fullname: '',
-    school: '',
-    class: '',
+    school: chosenSchool,
+    class: chosenClass,
     roles: 'Student',
     active: true,
     email: ''
@@ -150,11 +152,11 @@ const AddUserForm = ({ setShowThankYou, setOpenModal }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(formData,"formData");
     addUser(formData);
   };
 
-//בדיקה האם המורה בחרה כיתה וב''ס ואם לא אפשרות לבחירה
-const { chosenClass, chosenSchool } = useSchoolAndClass();
+
 if(!chosenClass)
 return <CurrentSchoolAndClass/>
 
@@ -189,7 +191,7 @@ return <CurrentSchoolAndClass/>
         value={formData.fullname}
         onChange={handleInputChange}
       />
-      <FormControl required fullWidth>
+      {/* <FormControl required fullWidth>
         <InputLabel id='school-label'>בית ספר</InputLabel>
         <Select
           id='school'
@@ -199,6 +201,7 @@ return <CurrentSchoolAndClass/>
           onChange={handleInputChange}
           label='בית ספר'
         >
+          
           <MenuItem value="" disabled>בחר בית ספר</MenuItem>
           {schools?.data?.map(school => (
             <MenuItem key={school._id} value={school._id}>
@@ -207,6 +210,12 @@ return <CurrentSchoolAndClass/>
           ))}
         </Select>
       </FormControl>
+      <TextField
+  id='school'
+  type='hidden'
+  name='school'
+  value={chosenSchool}
+/>
       <FormControl required fullWidth>
         <InputLabel id='class-label'>כיתה</InputLabel>
         <Select
@@ -224,7 +233,7 @@ return <CurrentSchoolAndClass/>
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
+      </FormControl> */}
       <FormControl required fullWidth>
         <InputLabel id='roles-label'>הרשאה</InputLabel>
         <Select
@@ -254,7 +263,6 @@ return <CurrentSchoolAndClass/>
         </Select>
       </FormControl>
       <TextField
-        required
         name='email'
         label='אימייל'
         type='email'
