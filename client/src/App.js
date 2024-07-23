@@ -34,11 +34,13 @@ import Web from "./features/web/Web";
 import Todos from "./features/actions/todos/Todos";
 import WelcomePage from "./WelcomePage";
 function App() {
+  
   return (
     <Router>
       <Routes>
         <Route path="/" element={<SiteLayout />}>
-          <Route index element={<WelcomePage/>} />
+          <Route index element={    <WelcomePage />
+} />
           <Route path="login" element={<LoginPage />} />
 
           <Route element={<PersistLogin />} >
