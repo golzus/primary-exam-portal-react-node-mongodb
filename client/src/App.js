@@ -30,12 +30,15 @@ import TextToSpeechComponent from "./features/actions/listWord/add/TextToSpeechC
 import PersistLogin from "./features/auth/PersistLogin";
 import Site from "./features/site/Site";
 import Logo from "./features/logo/Logo";
+import Web from "./features/web/Web";
+import Todos from "./features/actions/todos/Todos";
+import WelcomePage from "./WelcomePage";
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<SiteLayout />}>
-          <Route index element={<Site/>} />
+          <Route index element={<WelcomePage/>} />
           <Route path="login" element={<LoginPage />} />
 
           <Route element={<PersistLogin />} >
@@ -70,6 +73,8 @@ function App() {
 
               <Route path="wordLsList" element={<ListWord />} />
               <Route path="add" element={<AddWordsList />} />
+              <Route path="todos" element={<Todos />} />
+
               <Route path=":_id" element={<SingleListWord />} />
               <Route path="test/:_id" element={<Test />} />
             </Route>

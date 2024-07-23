@@ -21,6 +21,8 @@ html  {
   font-style: normal;
   font-variation-settings:
     "wdth" 100;
+    
+
 
     direction: rtl;
     text-align: right;
@@ -31,6 +33,7 @@ color: var(--text);
 }
 
 a{
+ 
   color: inherit;
   text-decoration: none;
 }

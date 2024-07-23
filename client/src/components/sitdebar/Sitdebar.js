@@ -612,23 +612,23 @@
 
 // export default SiteBar;
 
-
-
 import React, { useState, useEffect } from 'react';
 import { FaUser, FaBars } from "react-icons/fa";
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Avatar, Typography, Divider, Box, IconButton, Collapse } from '@mui/material';
-
 import { NavLink } from 'react-router-dom';
-import { 
-  Dashboard, 
-  Person, 
-  Business, 
-  PendingActions, 
-  Settings, 
-  Help, 
-  ExitToApp ,
-   Quiz, Assignment, School, Info } 
-from '@mui/icons-material';
+import {
+  Dashboard,
+  Person,
+  Business,
+  PendingActions,
+  Settings,
+  Help,
+  ExitToApp,
+  Quiz,
+  Assignment,
+  School,
+  Info,
+} from '@mui/icons-material';
 import { PiListPlusLight } from 'react-icons/pi';
 import { GoChecklist } from 'react-icons/go';
 import useAuth from '../../hooks/useAuth';
@@ -669,6 +669,7 @@ const teacherMenuActions = [
     ],
   },
 ];
+
 const studentMenuActions = [
   {
     title: "בחנים",
@@ -686,9 +687,6 @@ const studentMenuActions = [
     ],
   },
 ];
-
-
-
 
 const SiteBar = () => {
   const { roles, company, fullname, image } = useAuth();
@@ -731,25 +729,41 @@ const SiteBar = () => {
         <IconButton onClick={toggleCollapse} sx={{ position: 'absolute', top: 0, right: 0 }}>
           <FaBars style={{ color: '#9B153B' }} />
         </IconButton>
+        <Box sx={{ textAlign: 'center', marginBottom: '1rem' }}>
+          <img 
+            src='/logo.png' 
+            style={{ 
+              height: isCollapsed ? '50px' : '100px', 
+              marginRight: '8px',
+              transition: 'height 0.3s ease-in-out'
+            }} 
+          />
+        </Box>
         {image ? (
-          <Avatar 
-            src={image} 
-            sx={{ 
+          <Avatar
+            src={image}
+            sx={{
               width: '10vw', // Width based on viewport width
               height: '10vw', // Height based on viewport width
               maxWidth: '7rem', // Max width to avoid being too large on large screens
               maxHeight: '7rem', // Max height to avoid being too large on large screens
-              margin: '2rem auto 1rem' 
-            }} 
+              margin: '0 auto 1rem',
+            }}
           />
         ) : (
-          <FaUser style={{ fontSize: '10vw', maxWidth: '40px', maxHeight: '40px', margin: '2rem auto 1rem', color: '#9B153B' }} />
+          <FaUser style={{ fontSize: '10vw', maxWidth: '40px', maxHeight: '40px', color: '#9B153B', margin: '0 auto 1rem' }} />
         )}
         {!isCollapsed && (
           <>
-            <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '1.5rem', fontWeight: 'bold', marginTop: '1rem' }}>{fullname}</Typography>
-            <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '1.25rem', fontWeight: 'bold' }}>{classTeacher}</Typography>
-            <Typography variant="body1" sx={{ color: '#9B153B', fontSize: '1.1rem' }}>{roles}</Typography>
+            <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '1.5rem', fontWeight: 'bold' }}>
+              {fullname}
+            </Typography>
+            <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '1.25rem', fontWeight: 'bold' }}>
+              {classTeacher}
+            </Typography>
+            <Typography variant="body1" sx={{ color: '#9B153B', fontSize: '1.1rem' }}>
+              {roles}
+            </Typography>
           </>
         )}
       </Box>
@@ -762,11 +776,11 @@ const SiteBar = () => {
             </ListItem>
             {cat.list.map((item, subIndex) => (
               <div key={subIndex}>
-                <ListItem 
-                  button 
-                  component={NavLink} 
-                  to={item.path} 
-                  exact 
+                <ListItem
+                  button
+                  component={NavLink}
+                  to={item.path}
+                  exact
                   sx={{
                     paddingRight: '1rem',
                     marginBottom: '0.5rem',
@@ -775,7 +789,7 @@ const SiteBar = () => {
                     alignItems: 'center',
                     gap: '0.5rem',
                     '&:hover': {
-                      backgroundColor:'#f8bbd0', // Light pink background on hover
+                      backgroundColor: '#f8bbd0', // Light pink background on hover
                     },
                     '&.active': {
                       backgroundColor: '#c2185b', // Dark pink background color for active link

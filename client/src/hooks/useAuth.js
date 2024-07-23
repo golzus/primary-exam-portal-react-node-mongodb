@@ -7,7 +7,6 @@ let isAdmin=false
 let isUser=false
 if(token){
 const userDecoded=jwtDecode(token)
-console.log(userDecoded,"userrrrrrrrrrrrrr")
 const {_id,username,roles,class:classUser,fullname,company}=userDecoded
 isAdmin=roles==="Teacher"
 isUser=roles==="Student"

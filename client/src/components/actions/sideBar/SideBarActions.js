@@ -306,7 +306,7 @@ const SideBarActions = () => {
       list: [
         { title: "ראשי", path: "/dash/actions", icon: <Dashboard /> }, // Dashboard icon for main
         { title: "בחנים", path: "actions/wordLsList", icon: <Quiz /> }, // Quiz icon for tests
-        { title: "רשימת משימות", path: "actions/wordLsList", icon: <ListAlt /> }, // List icon for task list
+        { title: "רשימת משימות", path: "actions/todos", icon: <ListAlt /> }, // List icon for task list
         { title: "גיליון ציונים", path: "actions/marks", icon: <Star /> }, // Star icon for grades (representing excellence)
       ],
     },

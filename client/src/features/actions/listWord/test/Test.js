@@ -16,17 +16,17 @@
 //   const [sureStarting, setSureStarting] = useState(false);
 //   const { _id } = useParams();
 //   const [
-//     updateListWords,
+//     updateTest,
 //     { data: updatedData, error, isSuccess: isupdateSuccess, isError },
 //   ] = useUpdateListWordsMutation();
 
 //   const [
-//     getlistWordById,
+//     getSingleTest,
 //     { isSuccess, data: listWord, isLoading, isError: err },
 //   ] = useGetListWordsByIdMutation();
 //   const [wordList, setWordList] = useState(listWord?.data.test);
 //   useEffect(() => {
-//     getlistWordById({ _id });
+//     getSingleTest({ _id });
 //   }, []);
 //   useEffect(() => {
 //     if (isSuccess) {
@@ -243,14 +243,14 @@
 //   const [sureStarting, setSureStarting] = useState(false);
 //   const { _id } = useParams();
   
-//   const [updateListWords, { data: updatedData, error, isSuccess: isupdateSuccess, isError }] = useUpdateListWordsMutation();
+//   const [updateTest, { data: updatedData, error, isSuccess: isupdateSuccess, isError }] = useUpdateListWordsMutation();
   
-//   const [getlistWordById, { isSuccess, data: listWord, isLoading, isError: err }] = useGetListWordsByIdMutation();
+//   const [getSingleTest, { isSuccess, data: listWord, isLoading, isError: err }] = useGetListWordsByIdMutation();
   
 //   const [wordList, setWordList] = useState(listWord?.data.test);
 
 //   useEffect(() => {
-//     getlistWordById({ _id });
+//     getSingleTest({ _id });
 //   }, []);
 
 //   useEffect(() => {
@@ -457,30 +457,41 @@ import {
   Divider
 } from '@mui/material';
 import { VolumeUp } from '@mui/icons-material';
-import { useGetListWordsByIdMutation, useUpdateListWordsMutation } from "../view/ListWordApiSlice";
+import { useGetListWordsByIdMutation, useUpdateListWordsMutation,useGetSingleTestMutation,useUpdateTestMutation } from "../view/ListWordApiSlice";
 import { GrStatusGood } from "react-icons/gr";
 import useAuth from "../../../../hooks/useAuth";
 // import './test.css';
-
 const Test = () => {
   const { company, roles } = useAuth();
   const [markStudent, setMarkStudent] = useState(0);
   const [seeMark, setSeeMark] = useState(false);
   const [seeWarning, setSeeWarning] = useState(false);
   const [sureStarting, setSureStarting] = useState(false);
+  const [active,setActive]=useState(true)
   const { _id } = useParams();
+
   
-  const [updateListWords, { data: updatedData, error, isSuccess: isupdateSuccess, isError }] = useUpdateListWordsMutation();
-  const [getlistWordById, { isSuccess, data: listWord, isLoading, isError: err }] = useGetListWordsByIdMutation();
+  const [updateTest, { data: updatedData, error, isSuccess: isupdateSuccess, isError,isLoading:loading }] = useUpdateTestMutation();
+  const [getSingleTest, { isSuccess, data: listWord, isLoading, isError: err }] = useGetSingleTestMutation();
   const [wordList, setWordList] = useState(listWord?.data.test);
 
   useEffect(() => {
-    getlistWordById({ _id });
+    getSingleTest({ _id });
+    console.log(listWord,"llllllllllll");
   }, []);
+ useEffect(()=>{
+if(sureStarting){
+  updateTest({_id:_id,active:false})
+if(isupdateSuccess)console.log("isupdateSuccess");
+if(isError)console.log("err");
+if(loading)console.log("load");
+console.log("oo",_id);}
 
+ },[sureStarting])
   useEffect(() => {
     if (isSuccess) {
       setWordList(listWord.data.test);
+      console.log("succes",wordList);
     }
   }, [isSuccess]);
 
@@ -576,7 +587,7 @@ const Test = () => {
           {listWord?.data.title}
         </Typography>
         <Typography variant="subtitle1" gutterBottom>
-          {listWord?.data.date.slice(0, 10)}
+          {/* {listWord?.data.date.slice(0, 10)} */}
         </Typography>
         <Divider sx={{ my: 2 }} />
         <form onSubmit={handleSubmit}>
