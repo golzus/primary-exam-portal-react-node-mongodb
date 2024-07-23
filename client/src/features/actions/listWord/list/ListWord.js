@@ -391,6 +391,7 @@ import {
 import { useSelector } from "react-redux";
 import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
 import useAuth from "../../../../hooks/useAuth";
+import useSchoolAndClass from "../../../../hooks/useSchoolAndClass";
 
 const ListWord = ({todos}) => {
   const { roles, _id: user } = useAuth(); // Retrieve roles
@@ -423,9 +424,8 @@ if (todos) {
 }
 
 
-  const { chosenClass } = useSelector((state) => state.schoolAndClass);
-  let classObj;
-  if (chosenClass) classObj = { chosenClass: chosenClass };
+//בדיקה האם המורה בחרה כיתה וב''ס ואם לא אפשרות לבחירה
+const { chosenClass, chosenSchool } = useSchoolAndClass();
 
   const [searchText, setSearchText] = useState("");
   useEffect(() => {
@@ -443,7 +443,10 @@ if (todos) {
 
   const [deleteListWords] = useDeleteListWordsMutation();
 
-  if (!chosenClass&&roles==='Teacher') return <CurrentSchoolAndClass />;
+if(!chosenClass&&roles==='Teacher')
+return <CurrentSchoolAndClass/> 
+ let classObj;
+  if (chosenClass) classObj = { chosenClass: chosenClass };
 
   if (error) {
     return (

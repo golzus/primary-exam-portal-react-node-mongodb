@@ -111,6 +111,8 @@ import React, { useEffect, useState } from 'react';
 import { useAddUserMutation } from '../view/userApiSlice';
 import { useGetAllClassesQuery, useGetAllSchoolsQuery } from '../../companies/CompaniesApiSlice';
 import { TextField, Button, MenuItem, FormControl, InputLabel, Select, CircularProgress, Typography } from '@mui/material';
+import useSchoolAndClass from '../../../hooks/useSchoolAndClass';
+import CurrentSchoolAndClass from '../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass';
 
 const AddUserForm = ({ setShowThankYou, setOpenModal }) => {
   const { data: classes, isError: classesIsError, isLoading: classesIsLoading, error: classesError } = useGetAllClassesQuery();
@@ -150,6 +152,11 @@ const AddUserForm = ({ setShowThankYou, setOpenModal }) => {
     event.preventDefault();
     addUser(formData);
   };
+
+//בדיקה האם המורה בחרה כיתה וב''ס ואם לא אפשרות לבחירה
+const { chosenClass, chosenSchool } = useSchoolAndClass();
+if(!chosenClass)
+return <CurrentSchoolAndClass/>
 
   if (classesIsLoading || schoolsIsLoading) return <CircularProgress />;
 
