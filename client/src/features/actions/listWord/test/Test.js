@@ -13,14 +13,16 @@ import {
   Paper,
   CircularProgress,
   IconButton,
-  Divider
-} from '@mui/material';
-import { VolumeUp } from '@mui/icons-material';
-import { useGetSingleTestMutation, useUpdateTestMutation } from "../view/ListWordApiSlice";
-import { GrStatusGood } from "react-icons/gr";
-import useAuth from "../../../../hooks/useAuth";
+  Divider,
+} from "@mui/material";
+import { FaCheck, FaTimes } from "react-icons/fa";
+import {
+  useGetSingleTestMutation,
+  useUpdateTestMutation,
+} from "../view/ListWordApiSlice";
 import WordComparison from "./WordComparison";
-// import './test.css';
+import useAuth from "../../../../hooks/useAuth";
+import WordSpeaker from "../add/WordSpeaker";
 
 const Test = () => {
   const { company, roles } = useAuth();
@@ -30,8 +32,20 @@ const Test = () => {
   const [sureStarting, setSureStarting] = useState(false);
   const [wordList, setWordList] = useState([]);
   const { _id } = useParams();
-  const [updateTest, { data: updatedData, error, isSuccess: isupdateSuccess, isError, isLoading: loading }] = useUpdateTestMutation();
-  const [getSingleTest, { isSuccess, data: listWord, isLoading, isError: err }] = useGetSingleTestMutation();
+  const [
+    updateTest,
+    {
+      data: updatedData,
+      error,
+      isSuccess: isupdateSuccess,
+      isError,
+      isLoading: loading,
+    },
+  ] = useUpdateTestMutation();
+  const [
+    getSingleTest,
+    { isSuccess, data: listWord, isLoading, isError: err },
+  ] = useGetSingleTestMutation();
 
   useEffect(() => {
     getSingleTest({ _id });
@@ -50,7 +64,7 @@ const Test = () => {
   }, [sureStarting, _id, isupdateSuccess, isError, loading, updateTest]);
 
   const handleChange = (index, value) => {
-    const updatedList = wordList.map((item, i) => 
+    const updatedList = wordList.map((item, i) =>
       i === index
         ? { ...item, answer: value } // Create a new object with the updated answer
         : item
@@ -60,11 +74,6 @@ const Test = () => {
 
   const handleWantsStart = () => {
     setSureStarting(true);
-  };
-
-  const playSound = (word) => {
-    const utterance = new SpeechSynthesisUtterance(word);
-    speechSynthesis.speak(utterance);
   };
 
   const handleSubmit = (e) => {
@@ -77,24 +86,20 @@ const Test = () => {
     setSeeWarning(false);
   };
 
-  // פונקציה לעדכון המערך לפי תוצאות ההשוואות
   const updateWordList = (index, isCorrect) => {
-    setWordList(prevList =>
+    setWordList((prevList) =>
       prevList.map((item, i) =>
         i === index ? { ...item, correct: isCorrect } : item
       )
     );
   };
 
-  // פונקציה לעיבוד התוצאה המתקבלת
   const handleResult = (index, isCorrect) => {
     updateWordList(index, isCorrect);
   };
 
-  // פונקציה לביצוע ההשוואות
   const compareAnswers = () => {
     wordList.forEach((item, index) => {
-      // צור קומפוננטת WordComparison ותקבל את התוצאה
       <WordComparison
         inputWord={item.answer}
         correctAnswer={item.translate}
@@ -102,77 +107,81 @@ const Test = () => {
       />;
     });
   };
-
-
-
 
   const checkTest = (e) => {
     setSeeWarning(false);
-    const updatedList = wordList.map(item => ({
+    const updatedList = wordList.map((item) => ({
       ...item,
-      correct: item.translate === item.answer // Check if the answer is correct
+      correct: item.translate === item.answer, // Check if the answer is correct
     }));
 
-    // Calculate mark
-    const correctAnswers = updatedList.filter(item => item.correct).length;
+    const correctAnswers = updatedList.filter((item) => item.correct).length;
     const mark = (correctAnswers / updatedList.length) * 100;
     setMarkStudent(mark);
-
-    // Update state with new wordList including answers
     setWordList(updatedList);
-
-    // Print updatedList to the console
     console.log("Updated List with User Answers: ", updatedList);
 
+    const updateWordList = (index, isCorrect) => {
+      setWordList((prevList) =>
+        prevList.map((item, i) =>
+          i === index ? { ...item, correct: isCorrect } : item
+        )
+      );
+    };
 
+    const handleResult = (index, isCorrect) => {
+      updateWordList(index, isCorrect);
+    };
 
+    const compareAnswers = () => {
+      updatedList.forEach((item, index) => {
+        <WordComparison
+          inputWord={item.answer}
+          correctAnswer={item.translate}
+          onResult={(isCorrect) => handleResult(index, isCorrect)}
+        />;
+      });
+    };
 
-//פונקציות לבדיקת התשובות
-  // פונקציה לעדכון המערך לפי תוצאות ההשוואות
-  const updateWordList = (index, isCorrect) => {
-    setWordList(prevList =>
-      prevList.map((item, i) =>
-        i === index ? { ...item, correct: isCorrect } : item
-      )
-    );
-  };
-
-  // פונקציה לעיבוד התוצאה המתקבלת
-  const handleResult = (index, isCorrect) => {
-    updateWordList(index, isCorrect);
-  };
-
-  // פונקציה לביצוע ההשוואות
-  const compareAnswers = () => {
-    updatedList.forEach((item, index) => {
-      // צור קומפוננטת WordComparison ותקבל את התוצאה
-      <WordComparison
-        inputWord={item.answer}
-        correctAnswer={item.translate}
-        onResult={(isCorrect) => handleResult(index, isCorrect)}
-      />;
-    });
-  };
-
-  compareAnswers()
-
-    //שמירת הבוחן
-    updateTest({ _id: _id, active: false,test:updatedList })
-    // Show mark to the user
+    compareAnswers();
+    updateTest({ _id: _id, active: false, test: updatedList });
     setSeeMark(true);
   };
 
   if (sureStarting === false) {
     return (
-      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh" textAlign="center">
-        <Typography variant="h6">האם הינך בטוח שברצונך להתחיל את הבוחן?<br />לא ניתן לעשות זאת פעם נוספת!</Typography>
-        <Button variant="contained" color="primary" onClick={handleWantsStart} sx={{ mt: 2 }}>המשך</Button>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        minHeight="100vh"
+        textAlign="center"
+      >
+        <Typography variant="h6">
+          האם הינך בטוח שברצונך להתחיל את הבוחן?
+          <br />
+          לא ניתן לעשות זאת פעם נוספת!
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleWantsStart}
+          sx={{ mt: 2 }}
+        >
+          המשך
+        </Button>
       </Box>
     );
   }
 
   if (isLoading) return <CircularProgress />;
-  if (isError || error) return <Typography color="error">{error ? error.message : "An error occurred"}</Typography>;
+  if (isError || error)
+    return (
+      <Typography color="error">
+        {error ? error.message : "An error occurred"}
+      </Typography>
+    );
 
   return (
     <Box className="background-animation">
@@ -180,7 +189,11 @@ const Test = () => {
         p={3}
         component={Paper}
         elevation={3}
-        sx={{ maxWidth: '900px', margin: 'auto', backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
+        sx={{
+          maxWidth: "900px",
+          margin: "auto",
+          backgroundColor: "rgba(255, 255, 255, 0.9)",
+        }}
       >
         <Typography variant="h4" gutterBottom>
           {listWord?.data.title}
@@ -206,7 +219,7 @@ const Test = () => {
                 <TableRow key={index}>
                   {seeMark && (
                     <TableCell>
-                      {cat.correct ? <GrStatusGood /> : 'x'}
+                      {cat.correct ? <FaCheck /> : <FaTimes />}
                     </TableCell>
                   )}
                   <TableCell>{index + 1}.</TableCell>
@@ -220,14 +233,20 @@ const Test = () => {
                       size="small"
                       variant="standard"
                       onChange={(e) => handleChange(index, e.target.value)}
-                      sx={{ width: '100px', '& .MuiInput-underline:before': { borderBottomColor: '#1976d2' }, '& .MuiInput-underline:after': { borderBottomColor: '#1976d2' } }}
+                      sx={{
+                        width: "100px",
+                        "& .MuiInput-underline:before": {
+                          borderBottomColor: "#1976d2",
+                        },
+                        "& .MuiInput-underline:after": {
+                          borderBottomColor: "#1976d2",
+                        },
+                      }}
                     />
                   </TableCell>
                   {seeMark && <TableCell>{cat.translate}</TableCell>}
                   <TableCell>
-                    <IconButton onClick={() => playSound(cat.word)}>
-                      <VolumeUp />
-                    </IconButton>
+                    <WordSpeaker word={cat.word} />
                   </TableCell>
                 </TableRow>
               ))}
@@ -235,19 +254,52 @@ const Test = () => {
           </Table>
           {!seeMark && (
             <Box display="flex" justifyContent="center" sx={{ mt: 2 }}>
-              <Button type="submit" variant="contained" color="primary">הגש</Button>
+              <Button type="submit" variant="contained" color="primary">
+                הגש
+              </Button>
             </Box>
           )}
           {seeWarning && (
             <Box mt={3} textAlign="center">
-              <Typography variant="body1">האם הינך בטוח שברצונך להגיש?<br />לא יהיה אפשרות לעשות את הבוחן פעם נוספת!</Typography>
+              <Typography variant="body1">
+                האם הינך בטוח שברצונך להגיש?
+                <br />
+                לא יהיה אפשרות לעשות את הבוחן פעם נוספת!
+              </Typography>
               <Box mt={2}>
-                <Button variant="contained" color="secondary" onClick={checkTest}>אישור</Button>
-                <Button variant="outlined" color="primary" onClick={handleWarningClose} sx={{ ml: 2 }}>חזרה</Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={checkTest}
+                  sx={{ mr: 1 }}
+                >
+                  כן
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleWarningClose}
+                >
+                  לא
+                </Button>
               </Box>
             </Box>
           )}
-          {seeMark && <Typography variant="h4" sx={{ mt: 3 }}>ציונך הוא: {markStudent}%</Typography>}
+          {seeMark && (
+            <Box mt={3} textAlign="center">
+              <Typography variant="h6">
+                הציון שלך: {Math.round(markStudent)}%
+              </Typography>
+              {/* <Button
+                variant="contained"
+                color="primary"
+                onClick={() => navigate("/some/path")} // Update the path as needed
+                sx={{ mt: 2 }}
+              >
+                חזור לדף הבית
+              </Button> */}
+            </Box>
+          )}
         </form>
       </Box>
     </Box>

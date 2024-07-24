@@ -51,7 +51,7 @@ function App() {
               <Route element={<RequireAuth allowRoles={["Teacher"]} />}>
                 <Route path="dash/choose" element={<CurrentSchoolAndClass />} />
                 <Route path="users" element={<Outlet />}>
-                  <Route index element={<UsersList />} />
+                  <Route index element={<AddWordsList />} />
 
                   <Route path="add" element={<AddUser />} />
                   <Route path=":userId" element={<SingleUser />} />

@@ -533,11 +533,11 @@ return <CurrentSchoolAndClass/>
       flex: 1,
       headerAlign: "center",
       align: "center",
-      renderCell: (params) => (
-        <Typography variant="body2" color="textSecondary">
-          {params.row.title}
-        </Typography>
-      ),
+      // renderCell: (params) => (
+      //   <Typography variant="body2" color="textSecondary">
+      //     {params.row.title}
+      //   </Typography>
+      // ),
     },
     {
       field: "date",
@@ -567,7 +567,7 @@ return <CurrentSchoolAndClass/>
               <Tooltip title="Fill Test">
                 <IconButton
                   component={Link}
-                  to={`/dash/actions/test/${params.row.id}`}
+                  to={`/dash/actions//${params.row.id}`}
                   aria-label="fill-test"
                   color="primary"
                   sx={{ mr: 1 }}
@@ -617,6 +617,8 @@ return <CurrentSchoolAndClass/>
                 <VisibilityIcon />
               </IconButton>
             </Tooltip>
+
+            
           ) : null}
         </>
       ),
