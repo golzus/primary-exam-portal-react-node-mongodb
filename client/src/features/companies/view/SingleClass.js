@@ -1,7 +1,7 @@
 import  { useEffect } from 'react';
 import './single-company.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useDeleteClassMutation, useGetAllClassesQuery} from '../CompaniesApiSlice'
+import { useDeleteClassMutation, useGetAllClassesBySchoolMutation} from '../CompaniesApiSlice'
 
 const SingleClass = () => {
     const {school}=useParams()
@@ -31,9 +31,11 @@ const SingleClass = () => {
 
 //     if (!company)
 //         return <h1>Company not found</h1>;
-const {data:classes,isError:classesisError,isLoading:classesIsLoading,error:classesError}=useGetAllClassesQuery()
+const [getAllClassesBySchool,{data:classes,isError:classesisError,isLoading:classesIsLoading,error:classesError}]=useGetAllClassesBySchoolMutation()
 const [deleteClass,{isSuccess}]=useDeleteClassMutation()
-
+useEffect(()=>{
+  getAllClassesBySchool({school})
+},[])
 const deleteClick = (class1) => {
     if (window.confirm("בטוח שברצונך למחוק את הכיתה ?")) {
       deleteClass({ _id: class1._id });

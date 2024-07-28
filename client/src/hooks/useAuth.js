@@ -7,11 +7,13 @@ let isAdmin=false
 let isUser=false
 if(token){
 const userDecoded=jwtDecode(token)
-const {_id,username,roles,class:classUser,fullname,company}=userDecoded
+const {_id,username,roles,class:classUser,fullname}=userDecoded
 isAdmin=roles==="Teacher"
 isUser=roles==="Student"
-return {username,roles,fullname,company,isAdmin,isUser,classUser,_id}
+if(classUser)
+console.log(classUser,"class");
+return {username,roles,fullname,isAdmin,isUser,classUser,_id}
 }
-return {username:"",isAdmin,isUser,fullname:"",company:null,_id:""}
+return {username:"",isAdmin,isUser,fullname:"",_id:""}
 }
 export default useAuth

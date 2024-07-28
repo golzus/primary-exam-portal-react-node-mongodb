@@ -305,9 +305,9 @@ const SideBarActions = () => {
       title: "בחנים",
       list: [
         { title: "ראשי", path: "/dash/actions", icon: <Dashboard /> }, // Dashboard icon for main
-        { title: "בחנים", path: "actions/wordLsList", icon: <Quiz /> }, // Quiz icon for tests
-        { title: "רשימת משימות", path: "actions/todos", icon: <ListAlt /> }, // List icon for task list
-        { title: "גיליון ציונים", path: "actions/marks", icon: <Star /> }, // Star icon for grades (representing excellence)
+        { title: "בחנים", path: "wordLsList", icon: <Quiz /> }, // Quiz icon for tests
+        { title: "רשימת משימות", path: "todos", icon: <ListAlt /> }, // List icon for task list
+        { title: "גיליון ציונים", path: "marks", icon: <Star /> }, // Star icon for grades (representing excellence)
       ],
     },
     {
@@ -363,6 +363,7 @@ const SideBarActions = () => {
         }
       }}
     >
+      
       <Box sx={{ padding: '1rem', textAlign: 'center', position: 'relative' }}>
         <IconButton onClick={toggleCollapse} sx={{ position: 'absolute', top: 0, right: 0 }}>
           <FaBars style={{ color: '#9B153B' }} />
@@ -386,6 +387,7 @@ const SideBarActions = () => {
           </>
         )}
       </Box>
+      
       <Divider sx={{ borderColor: '#9B153B' }} />
       <List sx={{ paddingTop: '1rem' }}>
         {menuItems.map((cat, index) => (

@@ -297,11 +297,13 @@ import {
   School,
   Info,
 } from '@mui/icons-material';
+import { LuSchool2 } from "react-icons/lu";
+ import { LiaSchoolSolid } from "react-icons/lia";
 import { PiListPlusLight } from 'react-icons/pi';
 import { GoChecklist } from 'react-icons/go';
 import useAuth from '../../hooks/useAuth';
 import { useSelector } from 'react-redux';
-
+import useSchoolAndClass from '../../hooks/useSchoolAndClass'
 const user = {
   username: "username",
   fullname: "שם מלא",
@@ -362,7 +364,7 @@ const SiteBar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const { chosenClass } = useSelector((state) => state.schoolAndClass);
-
+const {chosenNameClass,chosenNameSchool}=useSchoolAndClass()
   useEffect(() => {
     if (chosenClass) {
       setClassTeacher(chosenClass);
@@ -426,14 +428,24 @@ const SiteBar = () => {
             <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '1.5rem', fontWeight: 'bold' }}>
               {fullname}
             </Typography>
-            <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '1.25rem', fontWeight: 'bold' }}>
-              {classTeacher}
-            </Typography>
             <Typography variant="body1" sx={{ color: '#9B153B', fontSize: '1.1rem' }}>
               {roles}
             </Typography>
           </>
         )}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+              <LuSchool2 style={{ fontSize: '1rem' }} />
+               <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '0.8rem', fontWeight: 'bold' }}>
+                 {chosenNameSchool}
+               </Typography>
+             </Box>
+             <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+               <LiaSchoolSolid style={{ fontSize: '1rem' }} />
+               <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '0.8rem', fontWeight: 'bold' }}>
+                 {chosenNameClass}
+               </Typography>
+             </Box>
+    
       </Box>
       <Divider sx={{ borderColor: '#9B153B' }} /> {/* Burgundy line marking the end of the sidebar */}
       <List sx={{ paddingTop: '1rem' }}>

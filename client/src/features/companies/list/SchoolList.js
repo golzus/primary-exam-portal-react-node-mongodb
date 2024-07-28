@@ -266,11 +266,11 @@ import './school-list.css';
 import Search from '../../../components/search/Search';
 import { Link, useSearchParams } from 'react-router-dom';
 import { BsBuildingAdd } from "react-icons/bs";
-import { useGetAllSchoolsQuery, useDeleteSchoolMutation } from '../CompaniesApiSlice';
+import { useGetAllSchoolsByTeacherMutation, useDeleteSchoolMutation } from '../CompaniesApiSlice';
 import useAuth from '../../../hooks/useAuth';
 
 const SchoolList = () => {
-  const { data: Schools, isError, error, isLoading } = useGetAllSchoolsQuery();
+  const [getAllSchoolsByTeacher, { data: Schools, isError, error, isLoading }] = useGetAllSchoolsByTeacherMutation();
 
 
 
@@ -278,6 +278,9 @@ const SchoolList = () => {
  const {_id}=useAuth()
 
  const teacher=_id
+useEffect(()=>{
+  getAllSchoolsByTeacher({teacher})
+},[])
   // const [deleteCompany, { isSuccess }] = useDeleteCompanyMutation();
   const [deleteSchool] = useDeleteSchoolMutation();
   const [searchParams]=useSearchParams()

@@ -33,6 +33,8 @@ import Logo from "./features/logo/Logo";
 import Web from "./features/web/Web";
 import Todos from "./features/actions/todos/Todos";
 import WelcomePage from "./WelcomePage";
+import Words from "./features/actions/listWord/view/Words";
+import ListMarkStudents from "./features/actions/ListMarkStudents";
 function App() {
   
   return (
@@ -47,11 +49,11 @@ function App() {
 
           <Route element={<RequireAuth allowRoles={["Teacher", "Student"]} />}>
             <Route path="/dash" element={<DashLayout />}>
-              {/* <Route index element={<Audio/>} /> */}
+             <Route index element={<Audio/>} /> 
               <Route element={<RequireAuth allowRoles={["Teacher"]} />}>
                 <Route path="dash/choose" element={<CurrentSchoolAndClass />} />
                 <Route path="users" element={<Outlet />}>
-                  <Route index element={<AddWordsList />} />
+                  <Route index element={<UsersList />} />
 
                   <Route path="add" element={<AddUser />} />
                   <Route path=":userId" element={<SingleUser />} />
@@ -72,11 +74,14 @@ function App() {
             <Route path="dash/actions" element={<LayoutActions />}>
               <Route index element={<h1> actions</h1>} />
               <Route path="choose" element={<CurrentSchoolAndClass />} />
+              <Route path="PersonalDetails" element={<SingleUser />} />
 
               <Route path="wordLsList" element={<ListWord />} />
               <Route path="add" element={<AddWordsList />} />
               <Route path="todos" element={<Todos />} />
+              <Route path="marks/:_id" element={<ListMarkStudents />} />
 
+              <Route path="words/:_id" element={<Words />} />
               <Route path=":_id" element={<SingleListWord />} />
               <Route path="test/:_id" element={<Test />} />
             </Route>

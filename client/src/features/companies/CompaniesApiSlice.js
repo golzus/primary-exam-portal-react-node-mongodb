@@ -38,8 +38,8 @@
 // export const {useGetAllCompaniesQuery, useAddCompanyMutation,
 //     useUpdateCompanyMutation, useDeleteCompanyMutation}=CompaniesApiSlice;
 
+// import { method } from "../../../../server/models/SubSchema/TestsArraySubSchema";
 import apiSlice from "../../app/apiSlice";
-
 const CompaniesApiSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     getAllCompanies: build.query({
@@ -48,15 +48,19 @@ const CompaniesApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Company"],
     }),
-    getAllSchools: build.query({
-      query: () => ({
-        url: "/api/schools",
+    getAllSchoolsByTeacher: build.mutation({
+      query: (teacher) => ({
+        url: "/api/schools/list",
+        method:"POST",
+        body:teacher
       }),
       invalidatesTags: ["Company"],
     }),
-    getAllClasses: build.query({
-      query: () => ({
-        url: "/api/schools/class",
+    getAllClassesBySchool: build.mutation({
+      query: (school) => ({
+        url: "/api/schools/list/class",
+        method:"POST",
+        body:school
       }),
       invalidatesTags: ["Company"],
     }),
@@ -104,9 +108,9 @@ const CompaniesApiSlice = apiSlice.injectEndpoints({
 });
 export const {
   useAddSchoolMutation,
-  useGetAllSchoolsQuery,
+  useGetAllSchoolsByTeacherMutation,
   useGetAllCompaniesQuery,
-  useGetAllClassesQuery,
+  useGetAllClassesBySchoolMutation,
   useAddClassMutation,
   useDeleteSchoolMutation,
   useDeleteClassMutation

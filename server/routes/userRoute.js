@@ -11,7 +11,7 @@ const verifyAdmin=require("../middleware/verifyAdmin")
 
 router.get("/",userController.getUsers)
 router.post("/class",userController.getUsersByClass)
-//router.get("/:id")
+router.post("/:id",userController.getUserById)
 router.post("/",userController.addUser)
 router.put("/",userController.updateUser)
 router.delete("/",userController.deleteUser)

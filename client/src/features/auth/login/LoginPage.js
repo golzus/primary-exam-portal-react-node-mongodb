@@ -4,7 +4,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'; // ייבוא
 import { Container, Box, TextField, Button, Typography, CssBaseline, Paper } from '@mui/material'; // ייבוא רכיבי MUI שונים לעיצוב
 import { useLoginMutation } from '../authApiSlice'; // ייבוא פונקציית ההתחברות מ-API
 import { useNavigate } from 'react-router-dom'; // ייבוא useNavigate לניווט
-
+import useAuth from '../../../hooks/useAuth';
 // יצירת ערכת נושא מותאמת אישית עם צבעים ופונטים מותאמים
 const theme = createTheme({
   palette: {
@@ -27,13 +27,16 @@ const theme = createTheme({
 const LoginPage = () => {
   const [login, { isError, error, isLoading, data, isSuccess }] = useLoginMutation(); // קריאת הפונקציה login מ-useLoginMutation
   const navigate = useNavigate(); // שימוש ב-useNavigate לניווט
-
+  const {roles}=useAuth()
   const [username, setUsername] = useState(''); // הגדרת state לאחסון שם המשתמש
   const [password, setPassword] = useState(''); // הגדרת state לאחסון הסיסמה
 
   useEffect(() => {
     if (isSuccess) {
+      if(roles==='Teacher')
       navigate('/dash'); // אם ההתחברות הצליחה, נווט לדשבורד
+    else
+      navigate('/dash/actions')
     }
   }, [isSuccess, navigate]);
 

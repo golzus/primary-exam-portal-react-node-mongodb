@@ -33,6 +33,13 @@ ref:ListWords
     type:Boolean,
     default:false
         },
+  mark:{
+    type:Number
+  },
+  seeWords:{
+    type:Boolean,
+    default:true
+},
     TestArray:[TestsArraySubSchema]
   },
   { timestamps: true }

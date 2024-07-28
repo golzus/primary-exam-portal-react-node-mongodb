@@ -1,5 +1,3 @@
-
-
 // import React, { useEffect, useState } from 'react';
 // import './currentSchoolAndClass.css'
 // import { useGetAllSchoolsQuery, useGetAllClassesQuery } from '../CompaniesApiSlice';
@@ -176,15 +174,13 @@
 // };
 
 // export default CurrentSchoolAndClass;
-
-
-
-import React, { useState } from 'react';
-import { useGetAllSchoolsQuery, useGetAllClassesQuery } from '../CompaniesApiSlice';
+import React, { useEffect, useState } from 'react';
+import { useGetAllSchoolsByTeacherMutation, useGetAllClassesBySchoolMutation } from '../CompaniesApiSlice';
 import { chooseSchool, chooseClass, nameClass, nameSchool } from './currentSchoolAndClassSlice';
 import { useDispatch } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Container, CssBaseline, FormControl, InputLabel, MenuItem, Select, Typography, Box, CircularProgress, Alert } from '@mui/material';
+import useAuth from '../../../hooks/useAuth';
 
 const theme = createTheme({
   palette: {
@@ -205,12 +201,19 @@ const theme = createTheme({
 });
 
 const CurrentSchoolAndClass = () => {
-  const { data: Schools, isError, error, isLoading } = useGetAllSchoolsQuery(); // קבלת נתוני בתי ספר מהשרת
-  const { data: classes, isError: classesIsError, isLoading: classesIsLoading, error: classesError } = useGetAllClassesQuery(); // קבלת נתוני כיתות מהשרת
+  const [getAllSchoolsByTeacher,{ data: Schools, isError, error, isLoading }] = useGetAllSchoolsByTeacherMutation(); // קבלת נתוני בתי ספר מהשרת
+  const [getAllClassesBySchool,{ data: classes, isError: classesIsError, isLoading: classesIsLoading, error: classesError }] = useGetAllClassesBySchoolMutation(); // קבלת נתוני כיתות מהשרת
   const dispatch = useDispatch(); // הגדרת פונקציית dispatch לעדכון state
   const [selectedSchoolId, setSelectedSchoolId] = useState(""); // הגדרת state לאחסון הערך הנבחר של בית הספר
   const [selectedClassId, setSelectedClassId] = useState(""); // הגדרת state לאחסון הערך הנבחר של הכיתה
-
+  const {_id}=useAuth()
+  useEffect(()=>{
+    getAllSchoolsByTeacher({teacher:_id})
+  },[])
+  useEffect(()=>{
+    if(selectedSchoolId)
+    getAllClassesBySchool({school:selectedSchoolId})
+  },[selectedSchoolId])
   const handleChangeSchool = (event) => {
     const selectedSchoolId = event.target.value;
     const selectedSchool = Schools.data.find(school => school._id === selectedSchoolId);

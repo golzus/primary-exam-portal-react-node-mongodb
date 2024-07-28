@@ -15,6 +15,25 @@ const getUsers = async (req, res) => {
   res.json({ error: false, message: "", data: users });
 };
 
+
+const getUserById = async (req, res) => {
+  const {_id}=req.body
+  console.log(_id,"id");
+  if(!_id) return res
+  .status(400)
+  .json({ error: true, message: "no id", data: null });
+  // const users = await User.find({deleted:false},{password:0,}).populate("company").lean();
+  const user = await User.find({_id:_id,deleted:false},{password:0,}).populate("class").lean();
+console.log(_id);
+  // const users = await User.find().lean({username:false},{password:0});
+  if (!user) {
+    return res
+      .status(400)
+      .json({ error: true, message: "no user", data: null });
+  }
+  console.log(user,"user");
+  res.json({ error: false, message: "", data: user[0] });
+};
 // const getUsersByCompany = async (req, res) => {
 //   const {_id}=
 //   const users = await User.find({deleted:false,},{password:0}).populate("company").lean();
@@ -92,7 +111,7 @@ if(duplicateUser){
 };
 
 const updateUser = async (req, res) => {
-  const {_id, fullname, username, password, active, class:class1, roles,email} = req.body;
+  const {_id, fullname, username, password, active, roles,email} = req.body;
   // if (!username  || !fullname || !company || !type||!_id) {
     if (!username  || !fullname||!_id) {
 
@@ -119,7 +138,6 @@ user.password=hashpwd
   user.username = username;
   user.active = active;
   user.email=email;
-  user.class=class1
   const updateUser = await user.save();
   res.json({ error: false, message: "", data:  {username:updateUser.username,_id:updateUser._id} });
 };
@@ -142,4 +160,4 @@ const deleteUser = async (req, res) => {
   res.json({ error: false, message: "", data:  {username:updateUser.username,_id:updateUser._id,deleted:updateUser.deleted} });
 };
 
-module.exports = { getUsers, getUser, addUser, updateUser, deleteUser,getUsersByClass };
+module.exports = { getUsers, getUser, addUser, updateUser,getUserById, deleteUser,getUsersByClass };

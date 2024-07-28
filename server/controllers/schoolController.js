@@ -1,8 +1,8 @@
 const School=require("../models/School")
 const Class=require('../models/Class')
 const getSchools = async (req, res) => {
-
-    const schools=await School.find({deleted:false})
+const {teacher}=req.body
+    const schools=await School.find({deleted:false,teacher})
     if(!schools.length){
         return res.status(400).json({error:true,message:"no schools",data:null})
     }
@@ -27,6 +27,7 @@ res.json(error)    }
 };
 
 const addClass = async (req, res) => {
+    console.log("hello");
     const{name,school,active}=req.body
     if(!name||!school){
         return res.status(400).json({error:true,message:"name  and school are required!",data:null})
@@ -36,11 +37,11 @@ const class1=await Class.create({name,school,active})
 
 };
 
-const getAllClass=async (req,res)=>{
-    // const {school}=req.body
-    // if (!school)return res.status(400).json({error:true,message:"name  and school are required!",data:null})
+const getAllClassesBySchool=async (req,res)=>{
+     const {school}=req.body
+     if (!school)return res.status(400).json({error:true,message:"school is required!",data:null})
 
-    const classes=await Class.find({deleted:false});
+    const classes=await Class.find({deleted:false,school});
     if(!classes)  return   res.status(400).json({error:true,message:"name  and school are required!",data:null})
     res.json({error:false,message:"",data:classes})
 }
@@ -109,4 +110,4 @@ const deleteClass = async (req, res) => {
 
 };
 
-module.exports={getSchools,getAllClass,addSchool,addClass,deleteSchool,updateSchool,deleteClass}
+module.exports={getSchools,getAllClassesBySchool,addSchool,addClass,deleteSchool,updateSchool,deleteClass}

@@ -6,9 +6,16 @@ const usersApiSlice = apiSlice.injectEndpoints({
         getAllUsers: build.query({
             query: () => ({
                 url:"/api/users"
-
             }),
             providesTags:["Users"]
+        }),
+        getUserById:build.mutation({
+            query: (User) => ({
+                url: "/api/users/:id",
+                method:"POST",
+                body:User
+            }),
+            invalidatesTags:["Users"]
         }),
        listUsersCompany:build.mutation({
             query: (Users) => ({
@@ -61,5 +68,5 @@ const usersApiSlice = apiSlice.injectEndpoints({
     })
 })
 export const {useGetAllUsersQuery, useAddUserMutation, useGetAllUsersByClassMutation,
-    useUpdateUserMutation, useDeleteUserMutation,useListUsersCompanyMutation}=usersApiSlice;
+    useUpdateUserMutation, useDeleteUserMutation,useListUsersCompanyMutation,useGetUserByIdMutation}=usersApiSlice;
 

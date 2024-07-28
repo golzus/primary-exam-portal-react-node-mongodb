@@ -431,10 +431,8 @@ const { chosenClass, chosenSchool } = useSchoolAndClass();
   useEffect(() => {
     if (roles === "Student"&&!todos) {
       getTestByClassAndUser({ user });
-      console.log(todos,"tod");
     }
    else if(todos)
-    console.log("111111111");
      { getAllTestsDone({user})
   }  }, []);
   useEffect(() => {
@@ -546,7 +544,7 @@ return <CurrentSchoolAndClass/>
       headerAlign: "center",
       align: "center",
     },
-    {
+  {
       field: "wordCount",
       headerName: "מספר מילים",
       flex: 1,
@@ -562,19 +560,19 @@ return <CurrentSchoolAndClass/>
       sortable: false,
       renderCell: (params) => (
         <>
-          {roles === "Teacher" ? (
-            <>
-              <Tooltip title="Fill Test">
+         <Tooltip title="words">
                 <IconButton
                   component={Link}
-                  to={`/dash/actions//${params.row.id}`}
-                  aria-label="fill-test"
-                  color="primary"
+                  to={`/dash/actions/words/${params.row.id}`}
+                  aria-label="update"
+                  color="info"
                   sx={{ mr: 1 }}
                 >
-                  <DescriptionIcon />
+                  <VisibilityIcon />
                 </IconButton>
               </Tooltip>
+          {roles === "Teacher" ? (
+            <>
               <Tooltip title="Print">
                 <IconButton
                   aria-label="print"
@@ -582,6 +580,7 @@ return <CurrentSchoolAndClass/>
                   color="info"
                   sx={{ mr: 1 }}
                 >
+                
                   <PrintIcon />
                 </IconButton>
               </Tooltip>
@@ -596,6 +595,20 @@ return <CurrentSchoolAndClass/>
                   <EditIcon />
                 </IconButton>
               </Tooltip>
+
+
+              <Tooltip title="marks">
+                <IconButton
+                  component={Link}
+                  to={`/dash/actions/marks/${params.row.id}`}
+                  aria-label="marks"
+                  color="info"
+                  sx={{ mr: 1 }}
+                >
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+             
               <Tooltip title="Delete">
                 <IconButton
                   aria-label="delete"
@@ -607,7 +620,7 @@ return <CurrentSchoolAndClass/>
               </Tooltip>
             </>
           ) : roles === "Student" ? (
-            <Tooltip title="View">
+            <Tooltip title="test">
               <IconButton
                 component={Link}
                 to={`/dash/actions/test/${params.row.id}`}
@@ -653,7 +666,7 @@ return <CurrentSchoolAndClass/>
                 ),
               }}
             />
-            <Button
+            {/* <Button
               component={Link}
               to={`/dash/actions/new`}
               variant="contained"
@@ -664,7 +677,7 @@ return <CurrentSchoolAndClass/>
               }}
             >
               Add New
-            </Button>
+            </Button> */}
           </Box>
           <Box sx={{ flex: 1, overflowY: "auto" }}>
             <DataGrid

@@ -14,7 +14,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import './users-list.css';
 
 const UsersList = () => {
-  const { company } = useAuth();
+  const { classUser } = useAuth();
+ 
   const { data: users, isError, error, isLoading } = useGetAllUsersQuery();
   const [deleteUser, { error: errorDelete, data: deletedData }] = useDeleteUserMutation();
   const [rows, setRows] = useState([]);
@@ -42,7 +43,8 @@ const UsersList = () => {
   const handleSearch = (event) => {
     setSearchText(event.target.value);
   };
-
+  if(users)
+    console.log(users,"classUser");
   const filteredRows = rows.filter((row) => {
     return row.fullname.toLowerCase().includes(searchText.toLowerCase());
   });
@@ -50,9 +52,9 @@ const UsersList = () => {
   const columns = [
     { field: 'username', headerName: 'שם משתמש', flex: 1, headerAlign: 'center', align: 'center' },
     { field: 'fullname', headerName: 'שם מלא', flex: 1, headerAlign: 'center', align: 'center' },
-    { field: 'companyName', headerName: 'חברה', flex: 1, headerAlign: 'center', align: 'center' },
+    { field: 'class.name', headerName: 'כיתה', flex: 1, headerAlign: 'center', align: 'center' },
     { field: 'email', headerName: 'מייל', flex: 1, headerAlign: 'center', align: 'center' },
-    { field: 'active', headerName: 'פעיל', flex: 1, headerAlign: 'center', align: 'center', type: 'boolean' },
+    // { field: 'active', headerName: 'פעיל', flex: 1, headerAlign: 'center', align: 'center', type: 'boolean' },
     {
       field: 'actions',
       headerName: 'פעולות',

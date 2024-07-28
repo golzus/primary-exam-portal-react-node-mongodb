@@ -16,6 +16,20 @@ const getListWordsByClass = async (req, res) => {
     console.log(error, "error");
   }
 };
+const getListWordsByClassAndByActive = async (req, res) => {
+  const { chosenClass: classmate,active } = req.body;
+  try {
+    const listWords = await ListWords.find({ class: classmate,active }).lean();
+    if (!listWords.length) {
+      return res
+        .status(400)
+        .json({ error: true, message: "no listWords who isn't active", data: null });
+    }
+    res.json({ error: false, message: "", data: listWords });
+  } catch (error) {
+    console.log(error, "error");
+  }
+};
 const getListWords = async (req, res) => {
   try {
     const { company } = req.body;
@@ -87,6 +101,7 @@ const addListWords = async (req, res) => {
         active,
         date,
         title,
+        seeWords,
         test,
         countListenToWord,
         listWord: listWords._id,
@@ -120,6 +135,7 @@ const updateListWords = async (req, res) => {
     listWords.seeWords = seeWords;
     listWords.active = active;
     listWords.data = date;
+    listWords.seeWords=seeWords
     listWords.test = test;
     const updateListWords = await listWords.save();
     //add the listWord for all students
@@ -129,6 +145,8 @@ const updateListWords = async (req, res) => {
       // testList.seeWords = seeWords;
       // testList.active = active;
       testList.active=active
+      test.active=active
+      test.seeWords=seeWords
       testList.data = date;
       testList.test = test;
       testList.countListenToWord=countListenToWord
@@ -160,6 +178,22 @@ const deleteListWords = async (req, res) => {
     console.log(error, "error");
   }
 };
+const getTestsOfAllStudentsById = async (req, res) => {
+  try {
+    const { _id } = req.body;
+    if (!_id)
+      return res
+        .status(400)
+        .json({ error: true, message: "_id is required", data: null });
+    const testsStudent = await Test.find({listWord:_id}).populate("user",{fullname:1}).lean();
+    console.log(testsStudent,"test");
+
+    res.json({ error: false, message: "", data: testsStudent });
+  } catch (error) {
+    console.log(error, "error");
+  }
+};
+
 
 module.exports = {
   getListWords,
@@ -168,4 +202,6 @@ module.exports = {
   updateListWords,
   deleteListWords,
   getListWordsByClass,
+  getListWordsByClassAndByActive,
+  getTestsOfAllStudentsById
 };

@@ -1,12 +1,16 @@
 import { useEffect } from "react"
 import useAuth from "../../../hooks/useAuth"
-import { useAddClassMutation, useGetAllClassesQuery, useGetAllSchoolsQuery } from "../CompaniesApiSlice"
+import { useAddClassMutation,useGetAllClassesBySchoolMutation, useGetAllSchoolsByTeacherMutation } from "../CompaniesApiSlice"
 import {  useNavigate } from "react-router-dom"
 
 const AddClass = () => {
     const [addClass,{data:addClassData,isSuccess}]=useAddClassMutation()
-    const {data:schools,errorschoolsisError,error:schoolsErrorData,isLoading:schoolsisLoading}=useGetAllSchoolsQuery()
+    const [getAllSchoolsByTeacher,{data:schools,errorschoolsisError,error:schoolsErrorData,isLoading:schoolsisLoading}]=useGetAllSchoolsByTeacherMutation()
     const navigate = useNavigate();
+    const {_id}=useAuth()
+    useEffect(()=>{
+        getAllSchoolsByTeacher({teacher:_id})
+    },[])
 
     useEffect(() => {
         if (isSuccess) {
@@ -19,10 +23,9 @@ const AddClass = () => {
         const classrObject = Object.fromEntries(formData.entries());
         addClass(classrObject)
     };
-    const {_id}=useAuth()
     const teacher=_id
-        const {data,isError,isLoading,error}=useGetAllClassesQuery()
-        if(schoolsisLoading||isLoading)return <h1>Loading...</h1>
+     const [getAllClassesBySchool,{data,isError,isLoading,error}]=useGetAllClassesBySchoolMutation()
+        if(schoolsisLoading||!schools)return <h1>Loading....</h1>
         if(error||schoolsErrorData)return <h1>error</h1>
     const schoolsTeacher=schools.data.filter(school=>school.teacher===teacher)
     return (

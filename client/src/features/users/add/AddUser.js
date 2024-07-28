@@ -109,14 +109,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAddUserMutation } from '../view/userApiSlice';
-import { useGetAllClassesQuery, useGetAllSchoolsQuery } from '../../companies/CompaniesApiSlice';
 import { TextField, Button, MenuItem, FormControl, InputLabel, Select, CircularProgress, Typography } from '@mui/material';
 import useSchoolAndClass from '../../../hooks/useSchoolAndClass';
 import CurrentSchoolAndClass from '../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass';
 
 const AddUserForm = ({ setShowThankYou, setOpenModal }) => {
-  const { data: classes, isError: classesIsError, isLoading: classesIsLoading, error: classesError } = useGetAllClassesQuery();
-  const { data: schools, isError: schoolsIsError, isLoading: schoolsIsLoading, error: schoolsErrorData } = useGetAllSchoolsQuery();
   const [addUser, { isError, error, isSuccess, isLoading }] = useAddUserMutation();
   //בדיקה האם המורה בחרה כיתה וב''ס ואם לא אפשרות לבחירה
 const { chosenClass, chosenSchool } = useSchoolAndClass();
@@ -160,9 +157,9 @@ const { chosenClass, chosenSchool } = useSchoolAndClass();
 if(!chosenClass)
 return <CurrentSchoolAndClass/>
 
-  if (classesIsLoading || schoolsIsLoading) return <CircularProgress />;
+  // if (classesIsLoading || schoolsIsLoading) return <CircularProgress />;
 
-  if (classesIsError || schoolsIsError) return <Typography color="error">Error: {classesError || schoolsErrorData}</Typography>;
+  // if (classesIsError || schoolsIsError) return <Typography color="error">Error: {classesError || schoolsErrorData}</Typography>;
 
   return (
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>

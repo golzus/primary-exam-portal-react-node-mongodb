@@ -34,7 +34,7 @@ const getTestById = async (req, res) => {
 
 const updateTestAfterDoing = async (req, res) => {
   try {
-    const {  test, active, _id } = req.body;
+    const { mark, test, active, _id } = req.body;
 
     if ( !_id) {
       console.log( "list");
@@ -52,9 +52,10 @@ const updateTestAfterDoing = async (req, res) => {
         .json({ error: true, message: "no test found", data: null });
     }
    updateTest.active = active;
-  if(test)
+  if(test){
     updateTest.test = test;
-
+    updateTest.mark=mark
+  }
     const updateTests = await updateTest.save();
     res.json({ error: false, message: "", data: updateTests });
   } catch (error) {
