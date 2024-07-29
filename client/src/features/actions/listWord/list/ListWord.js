@@ -372,6 +372,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
+
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -381,7 +382,6 @@ import PrintIcon from "@mui/icons-material/Print";
 import VisibilityIcon from "@mui/icons-material/Visibility"; // Added icon for viewing
 import { Link } from "react-router-dom";
 import theme from "../../../../theme"; // Import the theme
-
 import {
   useDeleteListWordsMutation,
   useGetAllListWordsByClassMutation,
@@ -392,6 +392,7 @@ import { useSelector } from "react-redux";
 import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
 import useAuth from "../../../../hooks/useAuth";
 import useSchoolAndClass from "../../../../hooks/useSchoolAndClass";
+import AssignmentIcon from '@mui/icons-material/Assignment'; // אייקון לציונים
 
 const ListWord = ({todos}) => {
   const { roles, _id: user } = useAuth(); // Retrieve roles
@@ -605,8 +606,8 @@ return <CurrentSchoolAndClass/>
                   color="info"
                   sx={{ mr: 1 }}
                 >
-                  <EditIcon />
-                </IconButton>
+          <AssignmentIcon />
+          </IconButton>
               </Tooltip>
              
               <Tooltip title="Delete">
@@ -627,8 +628,8 @@ return <CurrentSchoolAndClass/>
                 aria-label="view"
                 color="primary"
               >
-                <VisibilityIcon />
-              </IconButton>
+          <DescriptionIcon />
+          </IconButton>
             </Tooltip>
 
             

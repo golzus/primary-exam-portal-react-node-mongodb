@@ -526,7 +526,7 @@ const {chosenNameClass,chosenNameSchool}=useSchoolAndClass()
       {!isCollapsed && (
         <IconButton
           component={NavLink}
-          to="/logout"
+          to="/login"
           sx={{ color: '#9B153B', width: '100%', textAlign: 'center', marginTop: 'auto', marginBottom: '2rem' }}
         >
           <ExitToApp fontSize="large" />

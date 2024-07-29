@@ -57,3 +57,60 @@ const register = async (req, res) => {
   res.json(`user ${username} created!`);
 };
 module.exports = { login, register };
+
+
+
+
+
+
+const refresh = async (req, res) => {
+  const cookies = req.cookies
+  if (!cookies?.jwt) {
+      return res.status(401).json({
+          error: true,
+          message: "Unauthorized: No refreshToken",
+          data: null
+      })
+  }
+  const refreshToken = cookies.jwt
+
+  jwt.verify(refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      async (err, decode) => {
+          if (err) {
+              return res.status(403).json({
+                  error: true,
+                  message: "Forbidden: Invalid refresh token",
+                  data: null
+              })
+          }
+
+
+
+          const foundUser = await User.findOne({ email: decode.email, deleted: false } ).lean(); // Find user by email
+
+          if (!foundUser) {
+              return res.status(401).json({
+                  error: true,
+                  message: "Unauthorized: User not found",
+                  data: null
+              });
+          }
+          const userInfo = {
+              _id: foundUser._id,
+              firstName: foundUser.firstName,
+              lastName: foundUser.lastName,
+              email: foundUser.email,
+              phone: foundUser.phone,
+              roles: foundUser.roles,
+              image: foundUser.image,
+              active:foundUser.active
+          };
+
+
+          const accessToken = jwt.sign(userInfo, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
+
+          res.json({ accessToken })
+      })
+
+}

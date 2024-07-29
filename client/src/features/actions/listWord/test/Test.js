@@ -308,7 +308,7 @@
 
 // export default Test;
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -328,7 +328,10 @@ import { FaCheck, FaTimes } from "react-icons/fa";
 import WordComparison from "./WordComparison";
 import useAuth from "../../../../hooks/useAuth";
 import WordSpeaker from "../add/WordSpeaker";
-import { useGetSingleTestMutation, useUpdateTestMutation } from "../view/ListWordApiSlice";
+import {
+  useGetSingleTestMutation,
+  useUpdateTestMutation,
+} from "../view/ListWordApiSlice";
 
 const Test = () => {
   const { company, roles } = useAuth();
@@ -339,32 +342,43 @@ const Test = () => {
   const [wordList, setWordList] = useState([]);
   const [listenCounts, setListenCounts] = useState([]);
   const { _id } = useParams();
-  const [updateTest, { data: updatedData, error, isSuccess: isUpdateSuccess, isError, isLoading: loading }] = useUpdateTestMutation();
-  const [getSingleTest, { isSuccess, data: listWord, isLoading, isError: err }] = useGetSingleTestMutation();
+  const [
+    updateTest,
+    {
+      data: updatedData,
+      error,
+      isSuccess: isUpdateSuccess,
+      isError,
+      isLoading: loading,
+    },
+  ] = useUpdateTestMutation();
+  const [
+    getSingleTest,
+    { isSuccess, data: listWord, isLoading, isError: err },
+  ] = useGetSingleTestMutation();
 
   useEffect(() => {
     getSingleTest({ _id });
-
-    
   }, [_id]);
- useEffect(()=>{
-  if(listWord)
-  if(!listWord.data.active){
-    setSeeMark(true)
-    setSureStarting(true)
-  }
- },[listWord])
+  useEffect(() => {
+    if (listWord)
+      if (!listWord.data.active) {
+        setSeeMark(true);
+        setSureStarting(true);
+      }
+  }, [listWord]);
   useEffect(() => {
     if (isSuccess) {
       // Set the word list
       setWordList(listWord.data.test);
-  
+
       // Initialize listen counts with the correct size and values
-      const initialListenCounts = new Array(listWord.data.test.length).fill(listWord.data.countListenToWord);
+      const initialListenCounts = new Array(listWord.data.test.length).fill(
+        listWord.data.countListenToWord
+      );
       setListenCounts(initialListenCounts);
     }
   }, [isSuccess, listWord]);
-  
 
   useEffect(() => {
     if (sureStarting) {
@@ -423,7 +437,6 @@ const Test = () => {
       const updatedListenCounts = [...listenCounts];
       updatedListenCounts[index] -= 1;
       setListenCounts(updatedListenCounts);
-      console.log(updatedListenCounts,"updatelisten");
     }
   };
 
@@ -440,7 +453,12 @@ const Test = () => {
     setWordList(updatedList);
     console.log("Updated List with User Answers: ", updatedList);
 
-    updateTest({ _id: _id, active: false, test: updatedList ,mark:markStudent});
+    updateTest({
+      _id: _id,
+      active: false,
+      test: updatedList,
+      mark: markStudent,
+    });
     setSeeMark(true);
   };
 
@@ -466,6 +484,16 @@ const Test = () => {
           sx={{ mt: 2 }}
         >
           המשך
+        </Button>
+        <Button
+          component={Link} // הופך את הכפתור ללינק
+          to="/dash/actions" // כתובת היעד
+          variant="contained"
+          color="primary"
+          onClick={handleWantsStart}
+          sx={{ mt: 2 }}
+        >
+          חזור
         </Button>
       </Box>
     );
@@ -504,8 +532,8 @@ const Test = () => {
               <TableRow>
                 {seeMark && <TableCell>סימון</TableCell>}
                 <TableCell>מס'</TableCell>
-{    !seeMark&&            <TableCell>כמות השמעות</TableCell> }
-              {listWord?.data.seeWords && <TableCell>מילה</TableCell>}
+                {!seeMark && <TableCell>כמות השמעות</TableCell>}
+                {listWord?.data.seeWords && <TableCell>מילה</TableCell>}
                 <TableCell>תשובה</TableCell>
                 {seeMark && <TableCell>תשובה נכונה</TableCell>}
                 <TableCell>השמעה</TableCell>
@@ -520,7 +548,7 @@ const Test = () => {
                     </TableCell>
                   )}
                   <TableCell>{index + 1}.</TableCell>
-                {!seeMark&&  <TableCell>{listenCounts[index]}</TableCell> }
+                  {!seeMark && <TableCell>{listenCounts[index]}</TableCell>}
 
                   {listWord?.data.seeWords && (
                     <TableCell>
@@ -528,22 +556,24 @@ const Test = () => {
                     </TableCell>
                   )}
 
-                {!seeMark&&  <TableCell>
-                    <TextField
-                      size="small"
-                      variant="standard"
-                      onChange={(e) => handleChange(index, e.target.value)}
-                      sx={{
-                        width: "100px",
-                        "& .MuiInput-underline:before": {
-                          borderBottomColor: "#1976d2",
-                        },
-                        "& .MuiInput-underline:after": {
-                          borderBottomColor: "#1976d2",
-                        },
-                      }}
-                    />
-                  </TableCell>}
+                  {!seeMark && (
+                    <TableCell>
+                      <TextField
+                        size="small"
+                        variant="standard"
+                        onChange={(e) => handleChange(index, e.target.value)}
+                        sx={{
+                          width: "100px",
+                          "& .MuiInput-underline:before": {
+                            borderBottomColor: "#1976d2",
+                          },
+                          "& .MuiInput-underline:after": {
+                            borderBottomColor: "#1976d2",
+                          },
+                        }}
+                      />
+                    </TableCell>
+                  )}
                   {seeMark && (
                     <TableCell>
                       <Box name="test">{cat.answer}</Box>
@@ -553,12 +583,11 @@ const Test = () => {
                   <TableCell>
                     <IconButton
                       onClick={() => handleListen(index)}
-                      disabled={listenCounts[index]===0} // Disable if no listens left
+                      disabled={listenCounts[index] === 0} // Disable if no listens left
                     >
                       <WordSpeaker word={cat.word} />
                     </IconButton>
                   </TableCell>
-                
                 </TableRow>
               ))}
             </TableBody>
@@ -570,14 +599,12 @@ const Test = () => {
               </Button>
             </Box>
           )}
-          {seeWarning && (             
-
-            <Box mt={3} textAlign="center">     
-            <Typography variant="contained" sx={{ color: "maroon", mb: 2 }}>
-            האם הינך בטוח שברצונך להגיש?
-            <br />
-            לא יהיה אפשרות לעשות את הבוחן פעם נוספת!
-              
+          {seeWarning && (
+            <Box mt={3} textAlign="center">
+              <Typography variant="contained" sx={{ color: "maroon", mb: 2 }}>
+                האם הינך בטוח שברצונך להגיש?
+                <br />
+                לא יהיה אפשרות לעשות את הבוחן פעם נוספת!
               </Typography>
               <Box mt={2}>
                 <Button

@@ -35,60 +35,66 @@ import Todos from "./features/actions/todos/Todos";
 import WelcomePage from "./WelcomePage";
 import Words from "./features/actions/listWord/view/Words";
 import ListMarkStudents from "./features/actions/ListMarkStudents";
+import TestsYouHaveToDo from "./features/TestsYouHaveToDo";
+import ListWordToDo from "./features/actions/ListWordToDo";
+import CheckLoginNotRequired from "./features/CheckLoginNotRequired";
 function App() {
-  
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<SiteLayout />}>
-          <Route index element={    <WelcomePage />
-} />
-          <Route path="login" element={<LoginPage />} />
+        <Route element={<CheckLoginNotRequired />}>
+          <Route path="/" element={<SiteLayout />}>
+            <Route index element={<WelcomePage />} />
+            <Route path="login" element={<LoginPage />} />
 
-          <Route element={<PersistLogin />} >
+            <Route element={<PersistLogin />}>
+              <Route
+                element={<RequireAuth allowRoles={["Teacher", "Student"]} />}
+              >
+                <Route path="/dash" element={<DashLayout />}>
+                  {/* <Route index element={</>} />  */}
+                  <Route element={<RequireAuth allowRoles={["Teacher"]} />}>
+                    <Route
+                      path="dash/choose"
+                      element={<CurrentSchoolAndClass />}
+                    />
+                    <Route path="users" element={<Outlet />}>
+                      <Route index element={<UsersList />} />
 
-          <Route element={<RequireAuth allowRoles={["Teacher", "Student"]} />}>
-            <Route path="/dash" element={<DashLayout />}>
-             <Route index element={<Audio/>} /> 
-              <Route element={<RequireAuth allowRoles={["Teacher"]} />}>
-                <Route path="dash/choose" element={<CurrentSchoolAndClass />} />
-                <Route path="users" element={<Outlet />}>
-                  <Route index element={<UsersList />} />
+                      <Route path="add" element={<AddUser />} />
+                      <Route path=":userId" element={<SingleUser />} />
+                    </Route>
+                    <Route path="companies" element={<Outlet />}>
+                      <Route index element={<SchoolList />} />
+                      <Route path="add" element={<AddSchool />} />
+                      <Route path=":school" element={<SingleClass />} />
+                      <Route path="aa" element={<Students />} />
+                      <Route path="class" element={<AddClass />} />
+                    </Route>
+                    <Route path="settings" element={<AudioRecorder />} />
+                    {/* <Route path="settings"element={<Translation />}/> */}
 
-                  <Route path="add" element={<AddUser />} />
-                  <Route path=":userId" element={<SingleUser />} />
+                    <Route path="help" element={<CurrentSchoolAndClass />} />
+                  </Route>
                 </Route>
-                <Route path="companies" element={<Outlet />}>
-                  <Route index element={<SchoolList />} />
-                  <Route path="add" element={<AddSchool />} />
-                  <Route path=":school" element={<SingleClass />} />
-                  <Route path="aa" element={<Students />} />
-                  <Route path="class" element={<AddClass />} />
-                </Route>
-                <Route path="settings" element={<AudioRecorder />} />
-                {/* <Route path="settings"element={<Translation />}/> */}
+                <Route path="dash/actions" element={<LayoutActions />}>
+                  <Route index element={<h1> actions</h1>} />
+                  <Route path="choose" element={<CurrentSchoolAndClass />} />
+                  <Route path="PersonalDetails" element={<SingleUser />} />
 
-                <Route path="help" element={<CurrentSchoolAndClass />} />
+                  <Route path="wordLsList" element={<ListWord />} />
+                  <Route path="add" element={<AddWordsList />} />
+                  <Route path="todos" element={<Todos />} />
+                  <Route path="marks/:_id" element={<ListMarkStudents />} />
+
+                  <Route path="words/:_id" element={<Words />} />
+                  <Route path=":_id" element={<SingleListWord />} />
+                  <Route path="test/:_id" element={<Test />} />
+                </Route>
               </Route>
-            </Route>
-            <Route path="dash/actions" element={<LayoutActions />}>
-              <Route index element={<h1> actions</h1>} />
-              <Route path="choose" element={<CurrentSchoolAndClass />} />
-              <Route path="PersonalDetails" element={<SingleUser />} />
-
-              <Route path="wordLsList" element={<ListWord />} />
-              <Route path="add" element={<AddWordsList />} />
-              <Route path="todos" element={<Todos />} />
-              <Route path="marks/:_id" element={<ListMarkStudents />} />
-
-              <Route path="words/:_id" element={<Words />} />
-              <Route path=":_id" element={<SingleListWord />} />
-              <Route path="test/:_id" element={<Test />} />
             </Route>
           </Route>
         </Route>
-
-        </Route >
       </Routes>
     </Router>
   );

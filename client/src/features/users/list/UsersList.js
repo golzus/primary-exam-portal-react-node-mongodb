@@ -17,7 +17,7 @@ const UsersList = () => {
   const { classUser } = useAuth();
  
   const { data: users, isError, error, isLoading } = useGetAllUsersQuery();
-  const [deleteUser, { error: errorDelete, data: deletedData }] = useDeleteUserMutation();
+  const [deleteUser] = useDeleteUserMutation();
   const [rows, setRows] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [showAddUserForm, setShowAddUserForm] = useState(false);
@@ -29,6 +29,7 @@ const UsersList = () => {
         ...user,
         id: user._id,
         companyName: user.company?.name,
+        className: user.class?.name || 'לא מוגדר', // Handling potential undefined class
       }));
       setRows(usersData);
     }
@@ -43,8 +44,7 @@ const UsersList = () => {
   const handleSearch = (event) => {
     setSearchText(event.target.value);
   };
-  if(users)
-    console.log(users,"classUser");
+
   const filteredRows = rows.filter((row) => {
     return row.fullname.toLowerCase().includes(searchText.toLowerCase());
   });
@@ -52,9 +52,8 @@ const UsersList = () => {
   const columns = [
     { field: 'username', headerName: 'שם משתמש', flex: 1, headerAlign: 'center', align: 'center' },
     { field: 'fullname', headerName: 'שם מלא', flex: 1, headerAlign: 'center', align: 'center' },
-    { field: 'class.name', headerName: 'כיתה', flex: 1, headerAlign: 'center', align: 'center' },
+    { field: 'className', headerName: 'כיתה', flex: 1, headerAlign: 'center', align: 'center' }, // Changed field name to 'className'
     { field: 'email', headerName: 'מייל', flex: 1, headerAlign: 'center', align: 'center' },
-    // { field: 'active', headerName: 'פעיל', flex: 1, headerAlign: 'center', align: 'center', type: 'boolean' },
     {
       field: 'actions',
       headerName: 'פעולות',
@@ -64,7 +63,7 @@ const UsersList = () => {
       sortable: false,
       renderCell: (params) => (
         <>
-          <Link to={`/dash/users/${params.row._id}`} className='users-list-button users-list-view'>
+          <Link to={`/dash/users/${params.row.id}`} className='users-list-button users-list-view'>
             <Tooltip title="View">
               <IconButton aria-label="view">
                 <EditIcon />
@@ -96,7 +95,7 @@ const UsersList = () => {
 
   return (
     <ThemeProvider theme={theme}> 
-      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column',  }}>
         <Box className='user-list-top' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <Button
             className="users-list-add-button"
@@ -138,7 +137,7 @@ const UsersList = () => {
               rowsPerPageOptions={[5]}
               checkboxSelection
               disableSelectionOnClick
-              getRowId={(row) => row._id}
+              getRowId={(row) => row.id} // Ensuring unique row ID
             />
           </Box>
           <Box sx={{ position: 'sticky', bottom: 0, backgroundColor: '#f3f3e9', padding: '8px', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
