@@ -22,8 +22,11 @@ body, html {
     overflow-y: auto; /* לאפשר גלילה למטה */
     overflow-x: hidden; /* למנוע גלילה צדית */
     max-width: 100vw; /* מונע שהתוכן יגדל מעבר לרוחב המסך */
+    padding: 20px;
   }
-  
+  .nav{
+    margin-bottom: 20px;
+  }
   .contemt > * {
     flex: 0 1 auto; /* לכל פריט בתוכן, Flex-grow: 0, Flex-shrink: 1, Flex-basis: auto */
   }

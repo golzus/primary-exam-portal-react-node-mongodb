@@ -14,7 +14,7 @@ const DashLayout = () => {
        <SitdeBar />
       </div>
       <div className='contemt'>
-        <Navbar />
+        <Navbar className="nav" />
         <Outlet />
         <Footer />
       </div>
