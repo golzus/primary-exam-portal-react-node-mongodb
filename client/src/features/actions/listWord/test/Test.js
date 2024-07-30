@@ -526,7 +526,7 @@ const Test = () => {
           {/* {listWord?.data.date.slice(0, 10)} */}
         </Typography>
         <Divider sx={{ my: 2 }} />
-        <form onSubmit={handleSubmit}>
+        {/* כאשר הבוחן עשוי- מביא את התשובות של התלמידה והציון */}   <form onSubmit={handleSubmit}>
           <Table>
             <TableHead>
               <TableRow>

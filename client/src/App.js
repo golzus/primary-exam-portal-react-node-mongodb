@@ -38,6 +38,11 @@ import ListMarkStudents from "./features/actions/ListMarkStudents";
 import TestsYouHaveToDo from "./features/TestsYouHaveToDo";
 import ListWordToDo from "./features/actions/ListWordToDo";
 import CheckLoginNotRequired from "./features/CheckLoginNotRequired";
+import WordsGame from "./features/actions/game/WordsGame";
+import MemoryGame from "./features/actions/game/MemoryGame";
+import MultiChoiceGame from "./features/actions/game/MultiChoiceGame";
+import HangmanGame from "./features/actions/game/HangmanGame";
+// import PuzzleGame from "./features/actions/game/PuzzleGame";
 function App() {
   return (
     <Router>
@@ -83,6 +88,12 @@ function App() {
                   <Route path="PersonalDetails" element={<SingleUser />} />
 
                   <Route path="wordLsList" element={<ListWord />} />
+                  <Route path="play/:_id" element={<WordsGame />} />
+                  <Route path="play/memory/:_id" element={<MemoryGame />} />
+                  <Route path="play/multi-choice/:_id" element={<MultiChoiceGame />} />
+                  <Route path="play/hangman/:_id" element={<HangmanGame />} />
+                  {/* <Route path="play/puzzle/:_id" element={<PuzzleGame />} /> */}
+
                   <Route path="add" element={<AddWordsList />} />
                   <Route path="todos" element={<Todos />} />
                   <Route path="marks/:_id" element={<ListMarkStudents />} />

@@ -11,8 +11,7 @@ const DashLayout = () => {
   return (
     <div className='container'>
       <div className='mane'>
-        {roles === 'Teacher' && <SitdeBar />}
-        {/* {roles === 'Student' && <SideBarActions />} */}
+       <SitdeBar />
       </div>
       <div className='contemt'>
         <Navbar />

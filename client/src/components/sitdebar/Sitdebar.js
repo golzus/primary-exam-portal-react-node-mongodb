@@ -1,319 +1,24 @@
-// import React, { useState, useEffect } from 'react';
-// import { FaUser, FaBars } from "react-icons/fa";
-// import { Drawer, List, ListItem, ListItemIcon, ListItemText, Avatar, Typography, Divider, Box, IconButton, Collapse } from '@mui/material';
-// import { NavLink } from 'react-router-dom';
-// import { LuSchool2 } from "react-icons/lu";
-// import { LiaSchoolSolid } from "react-icons/lia";
-// import { PiListPlusLight } from 'react-icons/pi';
-// import { GoChecklist } from 'react-icons/go';
-// // import useAuth from "../../../../hooks/useAuth";
-// import { School as SchoolIcon, Class as ClassIcon, ExitToApp, Dashboard, Person, Business, Settings, Help, Quiz, Assignment, PendingActions } from '@mui/icons-material';
-// import { useSelector } from 'react-redux'; // ודא שהחבילה מותקנת וייבוא נכון
-// import useAuth from '../../hooks/useAuth';
-// const user = {
-//   username: "username",
-//   fullname: "שם מלא",
-//   seminary: "שם בית ספר",
-//   image: "https://via.placeholder.com/50", // Placeholder URL for image
-// };
-// const menuItems = [
-//   {
-//     title: "דפים",
-//     list: [
-//       { title: "ראשי", path: "/dash", icon: <Dashboard /> },
-//       { title: "תלמידות", path: "users", icon: <Person /> },
-//       { title: "בתי ספר", path: "companies", icon: <Business /> },
-//       { title: "פעולות", path: "#", icon: <PendingActions />, isAction: true },
-//     ],
-//   },
-//   {
-//     title: "משתמש",
-//     list: [
-//       { title: "הגדרות", path: "settings", icon: <Settings /> },
-//       { title: "לבחירת ביה''ס וכיתה", path: "help", icon: <Help /> },
-//     ],
-//   },
-// ];
-
-// const teacherMenuActions = [
-//   {
-//     title: "בחנים",
-//     list: [
-//       { title: "יצירת בוחן חדש", path: "actions/add", icon: <PiListPlusLight /> },
-//       { title: "בחנים", path: "actions/wordLsList", icon: <GoChecklist /> },
-//     ],
-//   },
-// ];
-
-// const studentMenuActions = [
-//   {
-//     title: "בחנים",
-//     list: [
-//       { title: "ראשי", path: "/dash/actions", icon: <Quiz /> },
-//       { title: "בחנים", path: "actions/wordLsList", icon: <Assignment /> },
-//       { title: "רשימת משימות", path: "actions/wordLsList", icon: <Assignment /> },
-//       { title: "גיליון ציונים", path: "actions/marks", icon: <SchoolIcon /> },
-//     ],
-//   },
-//   {
-//     title: "אישי",
-//     list: [
-//       { title: "הפרטים שלי", icon: <Person /> },
-//     ],
-//   },
-// ];
-
-// // הוסף את actionCategories כאן
-// const actionCategories = [
-//   {
-//     title: "פעולות נוספות",
-//     list: [
-//       { title: "הוספת תלמיד", path: "/actions/add-student", icon: <PiListPlusLight /> },
-//       { title: "רשימת תלמידים", path: "/actions/student-list", icon: <GoChecklist /> },
-//     ],
-//   },
-// ];
-
-// const SiteBar = () => {
-//   const { roles, company, fullname, image } = useAuth();
-//   const [classTeacher, setClassTeacher] = useState("");
-//   const [isCollapsed, setIsCollapsed] = useState(false);
-//   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
-//   const { chosenClass, chosenNameSchool,chosenNameClass } = useSelector((state) => state.schoolAndClass);
-
-//   useEffect(() => {
-//     if (chosenClass) {
-//       setClassTeacher(chosenClass);
-//     }
-//   }, [chosenClass]);
-
-//   const toggleCollapse = () => {
-//     setIsCollapsed(!isCollapsed);
-//   };
-
-//   const toggleSubMenu = () => {
-//     setIsSubMenuOpen(!isSubMenuOpen);
-//   };
-
-//   return (
-//     <Drawer
-//       variant="permanent"
-//       anchor="right"
-//       sx={{
-//         width: isCollapsed ? '4rem' : '14vw',
-//         flexShrink: 0,
-//         [`& .MuiDrawer-paper`]: {
-//           width: isCollapsed ? '4rem' : '14vw',
-//           boxSizing: 'border-box',
-//           backgroundColor: '#f3f3e9',
-//           color: '#9B153B',
-//           direction: 'rtl',
-//         },
-//       }}
-//     >
-//       <Box sx={{ padding: '1rem', textAlign: 'center', position: 'relative' }}>
-//         <IconButton onClick={toggleCollapse} sx={{ position: 'absolute', top: 0, right: 0 }}>
-//           <FaBars style={{ color: '#9B153B' }} />
-//         </IconButton>
-//         <Box sx={{ textAlign: 'center', marginBottom: '1rem' }}>
-//           <img 
-//             src='/logo.png' 
-//             style={{ 
-//               height: isCollapsed ? '50px' : '100px', 
-//               marginRight: '8px',
-//               transition: 'height 0.3s ease-in-out'
-//             }} 
-//           />
-//         </Box>
-//         {image ? (
-//           <Avatar
-//             src={image}
-//             sx={{
-//               width: '10vw',
-//               height: '10vw',
-//               maxWidth: '7rem',
-//               maxHeight: '7rem',
-//               margin: '0 auto 1rem',
-//             }}
-//           />
-//         ) : (
-//           <FaUser style={{ fontSize: '10vw', maxWidth: '40px', maxHeight: '40px', color: '#9B153B', margin: '0 auto 1rem' }} />
-//         )}
-//         {!isCollapsed && (
-//           <>
-//             <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '1.5rem', fontWeight: 'bold' }}>
-//               {fullname}
-//             </Typography>
-//             <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
-//               <LuSchool2 style={{ fontSize: '1rem' }} />
-//               <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '0.8rem', fontWeight: 'bold' }}>
-//                 {chosenNameSchool}
-//               </Typography>
-//             </Box>
-//             <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
-//               <LiaSchoolSolid style={{ fontSize: '1rem' }} />
-//               <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '0.8rem', fontWeight: 'bold' }}>
-//                 {chosenNameClass}
-//               </Typography>
-//             </Box>
-//             <Typography variant="body1" sx={{ color: '#9B153B', fontSize: '1.1rem' }}>
-//               {roles}
-//             </Typography>
-//           </>
-//         )}
-//       </Box>
-//       <Divider sx={{ borderColor: '#9B153B' }} />
-//       <List sx={{ paddingTop: '1rem' }}>
-//         {menuItems.map((cat, index) => (
-//           <div key={index}>
-//             <ListItem>
-//               {!isCollapsed && <ListItemText primary={cat.title} sx={{ color: '#9B153B', paddingRight: '1rem', fontSize: '1.5rem', fontWeight: 'bold' }} />}
-//             </ListItem>
-//             {cat.list.map((item, subIndex) => (
-//               <div key={subIndex}>
-//                 <ListItem
-//                   button
-//                   component={NavLink}
-//                   to={item.path}
-//                   exact
-//                   sx={{
-//                     paddingRight: '1rem',
-//                     marginBottom: '0.5rem',
-//                     display: 'flex',
-//                     justifyContent: isCollapsed ? 'center' : 'flex-start',
-//                     alignItems: 'center',
-//                     gap: '0.5rem',
-//                     '&:hover': {
-//                       backgroundColor: '#f8bbd0', // Light pink background on hover
-//                     },
-//                     '&.active': {
-//                       backgroundColor: '#c2185b', // Dark pink background color for active link
-//                       fontWeight: 'bold',
-//                       color: '#ffffff', // White text color when active
-//                     },
-//                   }}
-//                 >
-//                   <ListItemIcon sx={{ color: 'inherit', minWidth: 0 }}>
-//                     {item.icon}
-//                   </ListItemIcon>
-//                   {!isCollapsed && <ListItemText primary={item.title} sx={{ color: 'inherit', textAlign: 'right', fontSize: '1.2rem', fontWeight: 'bold' }} />}
-//                 </ListItem>
-//                 {item.isAction && (
-//                   <Collapse in={isSubMenuOpen} timeout="auto" unmountOnExit>
-//                     <List component="div" disablePadding>
-//                       {actionCategories.map((actionCat, actionIndex) => (
-//                         <div key={actionIndex}>
-//                           <ListItem>
-//                             {!isCollapsed && <ListItemText primary={actionCat.title} sx={{ color: '#9B153B', paddingRight: '1rem', fontSize: '1.5rem', fontWeight: 'bold' }} />}
-//                           </ListItem>
-//                           {actionCat.list.map((subItem, subIndex) => (
-//                             <ListItem
-//                               button
-//                               key={subIndex}
-//                               component={NavLink}
-//                               to={subItem.path}
-//                               sx={{
-//                                 paddingRight: '3rem',
-//                                 marginBottom: '0.5rem',
-//                                 display: 'flex',
-//                                 justifyContent: isCollapsed ? 'center' : 'flex-start',
-//                                 alignItems: 'center',
-//                                 gap: '0.5rem',
-//                                 '&:hover': {
-//                                   backgroundColor: '#f8bbd0', // Light pink background on hover
-//                                 },
-//                                 '&.active': {
-//                                   backgroundColor: '#c2185b', // Dark pink background color for active link
-//                                   fontWeight: 'bold',
-//                                   color: '#ffffff', // White text color when active
-//                                 },
-//                               }}
-//                             >
-//                               <ListItemIcon sx={{ color: 'inherit', minWidth: 0 }}>
-//                                 {React.cloneElement(subItem.icon, { fontSize: 'medium' })} {/* Adjust icon size */}
-//                               </ListItemIcon>
-//                               {!isCollapsed && <ListItemText primary={subItem.title} sx={{ color: 'inherit', textAlign: 'right', fontSize: '1.2rem', fontWeight: 'bold' }} />}
-//                             </ListItem>
-//                           ))}
-//                         </div>
-//                       ))}
-//                     </List>
-//                   </Collapse>
-//                 )}
-//               </div>
-//             ))}
-//           </div>
-//         ))}
-//         {roles.includes("מורה") && (
-//           <>
-//             <Divider sx={{ borderColor: '#9B153B', marginTop: '1rem' }} />
-//             {teacherMenuActions.map((cat, index) => (
-//               <div key={index}>
-//                 <ListItem>
-//                   {!isCollapsed && <ListItemText primary={cat.title} sx={{ color: '#9B153B', paddingRight: '1rem', fontSize: '1.5rem', fontWeight: 'bold' }} />}
-//                 </ListItem>
-//                 {cat.list.map((item, subIndex) => (
-//                   <ListItem button key={subIndex} component={NavLink} to={item.path} sx={{ color: '#9B153B' }}>
-//                     <ListItemIcon>{item.icon}</ListItemIcon>
-//                     {!isCollapsed && <ListItemText primary={item.title} />}
-//                   </ListItem>
-//                 ))}
-//               </div>
-//             ))}
-//           </>
-//         )}
-//       </List>
-//       {!isCollapsed && (
-//         <IconButton
-//           component={NavLink}
-//           to="/logout"
-//           sx={{ color: '#9B153B', width: '100%', textAlign: 'center', marginTop: 'auto', marginBottom: '2rem' }}
-//         >
-//           <ExitToApp fontSize="large" />
-//         </IconButton>
-//       )}
-//     </Drawer>
-//   );
-// };
-
-// export default SiteBar;
-
-
-
 import React, { useState, useEffect } from 'react';
-import { FaUser, FaBars } from "react-icons/fa";
+import { FaUser, FaBars, FaSchool } from "react-icons/fa";
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Avatar, Typography, Divider, Box, IconButton, Collapse } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import {
-  Dashboard,
-  Person,
-  Business,
-  PendingActions,
-  Settings,
-  Help,
-  ExitToApp,
-  Quiz,
-  Assignment,
-  School,
-  Info,
-} from '@mui/icons-material';
-import { LuSchool2 } from "react-icons/lu";
- import { LiaSchoolSolid } from "react-icons/lia";
+import { Dashboard, Person, Business, PendingActions, Settings, Help, ExitToApp, Quiz, Assignment, School, Star, ListAlt } from '@mui/icons-material';
 import { PiListPlusLight } from 'react-icons/pi';
 import { GoChecklist } from 'react-icons/go';
 import useAuth from '../../hooks/useAuth';
 import { useSelector } from 'react-redux';
-import useSchoolAndClass from '../../hooks/useSchoolAndClass'
+import useSchoolAndClass from '../../hooks/useSchoolAndClass';
+import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md'; // triangle icons
+
 const user = {
   username: "username",
   fullname: "שם מלא",
   seminary: "שם בית ספר",
-  image: "https://via.placeholder.com/50", // Placeholder URL for image
+  image: "https://via.placeholder.com/50",
 };
 
-const menuItems = [
+const teacherMenuActions = [
   {
-    title: "דפים",
     list: [
       { title: "ראשי", path: "/dash", icon: <Dashboard /> },
       { title: "תלמידות", path: "users", icon: <Person /> },
@@ -330,7 +35,7 @@ const menuItems = [
   },
 ];
 
-const teacherMenuActions = [
+const actions = [
   {
     title: "בחנים",
     list: [
@@ -344,27 +49,29 @@ const studentMenuActions = [
   {
     title: "בחנים",
     list: [
-      { title: "ראשי", path: "/dash/actions", icon: <Quiz /> },
-      { title: "בחנים", path: "actions/wordLsList", icon: <Assignment /> },
-      { title: "רשימת משימות", path: "actions/wordLsList", icon: <Assignment /> },
-      { title: "גיליון ציונים", path: "actions/marks", icon: <School /> },
+      { title: "ראשי", path: "/dash/actions", icon: <Dashboard /> },
+      { title: "בחנים", path: "wordLsList", icon: <Quiz /> },
+      { title: "רשימת משימות", path: "todos", icon: <ListAlt /> },
+      { title: "גיליון ציונים", path: "marks", icon: <Star /> },
     ],
   },
   {
     title: "אישי",
     list: [
-      { title: "הפרטים שלי", icon: <Person /> },
+      { title: "הפרטים שלי", path: "PersonalDetails", icon: <Person /> },
     ],
   },
 ];
 
 const SiteBar = () => {
-  const { roles, company, fullname, image } = useAuth();
+  const { roles, classUser, fullname, image } = useAuth();
+  const menuItems = roles === 'Teacher' ? teacherMenuActions : studentMenuActions;
   const [classTeacher, setClassTeacher] = useState("");
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const { chosenClass } = useSelector((state) => state.schoolAndClass);
-const {chosenNameClass,chosenNameSchool}=useSchoolAndClass()
+  let { chosenNameClass, chosenNameSchool } = useSchoolAndClass();
+
   useEffect(() => {
     if (chosenClass) {
       setClassTeacher(chosenClass);
@@ -379,19 +86,24 @@ const {chosenNameClass,chosenNameSchool}=useSchoolAndClass()
     setIsSubMenuOpen(!isSubMenuOpen);
   };
 
+  if (roles === "Student") {
+    chosenNameClass = classUser.name;
+  }
+
   return (
     <Drawer
       variant="permanent"
       anchor="right"
       sx={{
-        width: isCollapsed ? '4rem' : '14vw', // Adjusted width for collapsed and expanded states
+        width: isCollapsed ? '4rem' : '14vw',
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
-          width: isCollapsed ? '4rem' : '14vw', // Adjusted width for collapsed and expanded states
+          width: isCollapsed ? '4rem' : '14vw',
           boxSizing: 'border-box',
-          backgroundColor: '#f3f3e9', // Light beige background color
-          color: '#9B153B', // Dark red text color
+          backgroundColor: '#f3f3e9',
+          color: '#9B153B',
           direction: 'rtl',
+          maxHeight: '100%',
         },
       }}
     >
@@ -399,60 +111,44 @@ const {chosenNameClass,chosenNameSchool}=useSchoolAndClass()
         <IconButton onClick={toggleCollapse} sx={{ position: 'absolute', top: 0, right: 0 }}>
           <FaBars style={{ color: '#9B153B' }} />
         </IconButton>
-        <Box sx={{ textAlign: 'center', marginBottom: '1rem' }}>
-          <img 
-            src='/logo.png' 
-            style={{ 
-              height: isCollapsed ? '50px' : '100px', 
-              marginRight: '8px',
-              transition: 'height 0.3s ease-in-out'
-            }} 
-          />
-        </Box>
         {image ? (
           <Avatar
             src={image}
             sx={{
-              width: '10vw', // Width based on viewport width
-              height: '10vw', // Height based on viewport width
-              maxWidth: '7rem', // Max width to avoid being too large on large screens
-              maxHeight: '7rem', // Max height to avoid being too large on large screens
+              width: '10vw',
+              height: '10vw',
+              maxWidth: '7rem',
+              maxHeight: '7rem',
               margin: '0 auto 1rem',
             }}
           />
         ) : (
-          <FaUser style={{ fontSize: '10vw', maxWidth: '40px', maxHeight: '40px', color: '#9B153B', margin: '0 auto 1rem' }} />
+          <FaSchool style={{ fontSize: '2rem', color: '#9B153B', margin: '0 auto 1rem' }} />
         )}
         {!isCollapsed && (
           <>
-            <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '1.5rem', fontWeight: 'bold' }}>
-              {fullname}
+            <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '1rem', fontWeight: 'bold' }}>
+              {chosenNameSchool}
             </Typography>
-            <Typography variant="body1" sx={{ color: '#9B153B', fontSize: '1.1rem' }}>
-              {roles}
+            <Typography variant="h7" component="div" sx={{ color: '#9B153B', fontSize: '0.9rem', fontWeight: 'bold' }}>
+              {chosenNameClass}
             </Typography>
           </>
         )}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
-              <LuSchool2 style={{ fontSize: '1rem' }} />
-               <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '0.8rem', fontWeight: 'bold' }}>
-                 {chosenNameSchool}
-               </Typography>
-             </Box>
-             <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
-               <LiaSchoolSolid style={{ fontSize: '1rem' }} />
-               <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '0.8rem', fontWeight: 'bold' }}>
-                 {chosenNameClass}
-               </Typography>
-             </Box>
-    
+          <FaUser style={{ fontSize: '1rem', color: '#9B153B' }} />
+          <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '0.9rem', fontWeight: 'bold' }}>
+            {fullname}
+          </Typography>
+        </Box>
       </Box>
-      <Divider sx={{ borderColor: '#9B153B' }} /> {/* Burgundy line marking the end of the sidebar */}
-      <List sx={{ paddingTop: '1rem' }}>
+
+      <Divider sx={{ borderColor: '#9B153B' }} />
+      <List>
         {menuItems.map((cat, index) => (
           <div key={index}>
             <ListItem>
-              {!isCollapsed && <ListItemText primary={cat.title} sx={{ color: '#9B153B', paddingRight: '1rem', fontSize: '1.5rem', fontWeight: 'bold' }} />}
+              {!isCollapsed && <ListItemText primary={cat.title} sx={{ color: '#9B153B', paddingRight: '0rem', fontSize: '0.9rem', fontWeight: 'bold', textAlign: 'right' }} />}
             </ListItem>
             {cat.list.map((item, subIndex) => (
               <div key={subIndex}>
@@ -469,30 +165,68 @@ const {chosenNameClass,chosenNameSchool}=useSchoolAndClass()
                     alignItems: 'center',
                     gap: '0.5rem',
                     '&:hover': {
-                      backgroundColor: '#f8bbd0', // Light pink background on hover
+                      backgroundColor: '#f8bbd0',
                     },
                     '&.active': {
-                      backgroundColor: '#c2185b', // Dark pink background color for active link
                       fontWeight: 'bold',
-                      color: '#ffffff', // White text color when active
+                      fontSize: '0.9rem',
+                      color: '#fff',
+                      backgroundColor: 'transparent', // No background color for active
                     },
                   }}
                   onClick={item.isAction ? toggleSubMenu : undefined}
                 >
                   <ListItemIcon sx={{ color: 'inherit', minWidth: 0 }}>
-                    {React.cloneElement(item.icon, { fontSize: 'medium' })} {/* Adjust icon size */}
+                    {React.cloneElement(item.icon, { fontSize: 'medium' })}
                   </ListItemIcon>
-                  {!isCollapsed && <ListItemText primary={item.title} sx={{ color: 'inherit', textAlign: 'right', fontSize: '1.5rem', fontWeight: 'bold' }} />}
+                  {!isCollapsed && <ListItemText primary={item.title} sx={{ color: 'inherit', textAlign: 'right', fontSize: '0.9rem', fontWeight: 'bold' }} />}
+                  {item.isAction && (
+                    <IconButton
+                      onClick={toggleSubMenu}
+                      sx={{ 
+                        marginLeft: 'auto', 
+                        color: '#9B153B', 
+                        fontSize: '1rem' 
+                      }}
+                    >
+                      {isSubMenuOpen ? <MdArrowDropUp /> : <MdArrowDropDown />}
+                    </IconButton>
+                  )}
                 </ListItem>
                 {item.isAction && (
                   <Collapse in={isSubMenuOpen} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      {teacherMenuActions.map((actionCat, actionIndex) => (
+                    <List component="div" disablePadding sx={{ backgroundColor: '#f3f3e9', color: '#9B153B', paddingLeft: '1rem' }}>
+                      {actions.map((actionCat, actionIndex) => (
                         <div key={actionIndex}>
                           {actionCat.list.map((actionItem, actionIndex) => (
-                            <ListItem button key={actionIndex} component={NavLink} to={actionItem.path} sx={{ color: '#9B153B', paddingLeft: 4 }}>
-                              <ListItemIcon>{actionItem.icon}</ListItemIcon>
-                              {!isCollapsed && <ListItemText primary={actionItem.title} />}
+                            <ListItem
+                              button
+                              key={actionIndex}
+                              component={NavLink}
+                              to={actionItem.path}
+                              exact
+                              sx={{
+                                paddingRight: '1rem',
+                                marginBottom: '0.5rem',
+                                display: 'flex',
+                                justifyContent: isCollapsed ? 'center' : 'flex-start',
+                                alignItems: 'center',
+                                gap: '0.5rem',
+                                '&:hover': {
+                                  backgroundColor: '#f8bbd0',
+                                },
+                                '&.active': {
+                                  fontWeight: 'bold',
+                                  fontSize: '0.9rem',
+                                  color: '#fff',
+                                  backgroundColor: 'transparent', // No background color for active
+                                },
+                              }}
+                            >
+                              <ListItemIcon sx={{ color: 'inherit', minWidth: 0 }}>
+                                {React.cloneElement(actionItem.icon, { fontSize: 'medium' })}
+                              </ListItemIcon>
+                              {!isCollapsed && <ListItemText primary={actionItem.title} sx={{ color: 'inherit', textAlign: 'right', fontSize: '0.9rem', fontWeight: 'bold' }} />}
                             </ListItem>
                           ))}
                         </div>
@@ -502,38 +236,19 @@ const {chosenNameClass,chosenNameSchool}=useSchoolAndClass()
                 )}
               </div>
             ))}
+            <Divider sx={{ borderColor: '#9B153B', margin: '1rem 0' }} />
           </div>
         ))}
-        {roles.includes("מורה") && (
-          <>
-            <Divider sx={{ borderColor: '#9B153B', marginTop: '1rem' }} />
-            {teacherMenuActions.map((cat, index) => (
-              <div key={index}>
-                <ListItem>
-                  {!isCollapsed && <ListItemText primary={cat.title} sx={{ color: '#9B153B', paddingRight: '1rem', fontSize: '1.5rem', fontWeight: 'bold' }} />}
-                </ListItem>
-                {cat.list.map((item, subIndex) => (
-                  <ListItem button key={subIndex} component={NavLink} to={item.path} sx={{ color: '#9B153B' }}>
-                    <ListItemIcon>{item.icon}</ListItemIcon>
-                    {!isCollapsed && <ListItemText primary={item.title} />}
-                  </ListItem>
-                ))}
-              </div>
-            ))}
-          </>
-        )}
       </List>
-      {!isCollapsed && (
-        <IconButton
-          component={NavLink}
-          to="/login"
-          sx={{ color: '#9B153B', width: '100%', textAlign: 'center', marginTop: 'auto', marginBottom: '2rem' }}
-        >
+      <Box sx={{ textAlign: 'center', marginTop: 'auto', marginBottom: '1rem' }}>
+        <IconButton component={NavLink} to="/logout" sx={{ color: '#9B153B' }}>
           <ExitToApp fontSize="large" />
         </IconButton>
-      )}
+      </Box>
     </Drawer>
   );
 };
 
 export default SiteBar;
+
+

@@ -386,65 +386,66 @@ import {
   useDeleteListWordsMutation,
   useGetAllListWordsByClassMutation,
   useGetTestByClassAndUserMutation,
-  useGetAllTestsDoneMutation
+  useGetAllTestsDoneMutation,
 } from "../view/ListWordApiSlice";
 import { useSelector } from "react-redux";
 import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
 import useAuth from "../../../../hooks/useAuth";
 import useSchoolAndClass from "../../../../hooks/useSchoolAndClass";
-import AssignmentIcon from '@mui/icons-material/Assignment'; // אייקון לציונים
+import AssignmentIcon from "@mui/icons-material/Assignment"; // אייקון לציונים
+import WordsGame from "../../game/WordsGame";
 
-const ListWord = ({todos}) => {
+const ListWord = ({ todos }) => {
   const { roles, _id: user } = useAuth(); // Retrieve roles
 
-// הגדרת mutations לצורך קבלת נתונים
-const [getAllTestsDone, doneResponse] =   useGetAllTestsDoneMutation();
-const [getTestByClassAndUser, studentResponse] = useGetTestByClassAndUserMutation();
-const [getAllListWordsByClass, teacherResponse] = useGetAllListWordsByClassMutation();
+  // הגדרת mutations לצורך קבלת נתונים
+  const [getAllTestsDone, doneResponse] = useGetAllTestsDoneMutation();
+  const [getTestByClassAndUser, studentResponse] =
+    useGetTestByClassAndUserMutation();
+  const [getAllListWordsByClass, teacherResponse] =
+    useGetAllListWordsByClassMutation();
 
-// הגדרת משתנים עבור נתוני המילים, שגיאות וסטטוס טעינה
-let wordLsList, isError, error, isLoading;
+  // הגדרת משתנים עבור נתוני המילים, שגיאות וסטטוס טעינה
+  let wordLsList, isError, error, isLoading;
 
-// קבלת נתוני המילים בהתאם לפרופס todos ולתפקיד של המשתמש
-if (todos) {
-  wordLsList = doneResponse.data;
-  isError = doneResponse.isError;
-  error = doneResponse.isError;
-  isLoading = doneResponse.isLoading;
-  console.log(wordLsList, "word", isLoading);
-} else if (roles === 'Student') {
-  wordLsList = studentResponse.data;
-  isError = studentResponse.isError;
-  error = studentResponse.isStudentError;
-  isLoading = studentResponse.isStudentisLoading;
-} else if (roles === 'Teacher') {
-  wordLsList = teacherResponse.data;
-  isError = teacherResponse.isError;
-  error = teacherResponse.error;
-  isLoading = teacherResponse.isLoading;
-}
+  // קבלת נתוני המילים בהתאם לפרופס todos ולתפקיד של המשתמש
+  if (todos) {
+    wordLsList = doneResponse.data;
+    isError = doneResponse.isError;
+    error = doneResponse.isError;
+    isLoading = doneResponse.isLoading;
+    console.log(wordLsList, "word", isLoading);
+  } else if (roles === "Student") {
+    wordLsList = studentResponse.data;
+    isError = studentResponse.isError;
+    error = studentResponse.isStudentError;
+    isLoading = studentResponse.isStudentisLoading;
+  } else if (roles === "Teacher") {
+    wordLsList = teacherResponse.data;
+    isError = teacherResponse.isError;
+    error = teacherResponse.error;
+    isLoading = teacherResponse.isLoading;
+  }
 
-
-//בדיקה האם המורה בחרה כיתה וב''ס ואם לא אפשרות לבחירה
-const { chosenClass, chosenSchool } = useSchoolAndClass();
+  //בדיקה האם המורה בחרה כיתה וב''ס ואם לא אפשרות לבחירה
+  const { chosenClass, chosenSchool } = useSchoolAndClass();
 
   const [searchText, setSearchText] = useState("");
   useEffect(() => {
-    if (roles === "Student"&&!todos) {
+    if (roles === "Student" && !todos) {
       getTestByClassAndUser({ user });
+    } else if (todos) {
+      getAllTestsDone({ user });
     }
-   else if(todos)
-     { getAllTestsDone({user})
-  }  }, []);
+  }, []);
   useEffect(() => {
     if (roles === "Teacher" && chosenClass) getAllListWordsByClass(classObj);
   }, [chosenClass]);
 
   const [deleteListWords] = useDeleteListWordsMutation();
 
-if(!chosenClass&&roles==='Teacher')
-return <CurrentSchoolAndClass/> 
- let classObj;
+  if (!chosenClass && roles === "Teacher") return <CurrentSchoolAndClass />;
+  let classObj;
   if (chosenClass) classObj = { chosenClass: chosenClass };
 
   if (error) {
@@ -469,7 +470,8 @@ return <CurrentSchoolAndClass/>
     if (isLoading) return <h1>Loading...</h1>;
     if (isError) console.log(isError, "error");
     if (wordLsList) {
-      console.log(wordLsList, "testStudent")};
+      console.log(wordLsList, "testStudent");
+    }
   }
   const printTest = (testId) => {
     const test = wordLsList?.data.find((list) => list._id === testId);
@@ -545,7 +547,7 @@ return <CurrentSchoolAndClass/>
       headerAlign: "center",
       align: "center",
     },
-  {
+    {
       field: "wordCount",
       headerName: "מספר מילים",
       flex: 1,
@@ -561,17 +563,72 @@ return <CurrentSchoolAndClass/>
       sortable: false,
       renderCell: (params) => (
         <>
-         <Tooltip title="words">
-                <IconButton
-                  component={Link}
-                  to={`/dash/actions/words/${params.row.id}`}
-                  aria-label="update"
-                  color="info"
-                  sx={{ mr: 1 }}
-                >
-                  <VisibilityIcon />
-                </IconButton>
-              </Tooltip>
+          <Tooltip title="words">
+            <IconButton
+              component={Link}
+              to={`/dash/actions/words/${params.row.id}`}
+              aria-label="update"
+              color="info"
+              sx={{ mr: 1 }}
+            >
+              <VisibilityIcon />
+            </IconButton>
+          </Tooltip>
+          {/* <Tooltip title="Puzzle-Game">
+            <IconButton
+              component={Link}
+              to={`/dash/actions/play/puzzle/${params.row.id}`}
+              aria-label="puzzle-game"
+              color="info"
+              sx={{ mr: 1 }}
+            >
+              <VisibilityIcon />
+            </IconButton>
+          </Tooltip> */}
+          <Tooltip title="play">
+            <IconButton
+              component={Link}
+              to={`/dash/actions/play/${params.row.id}`}
+              aria-label="play"
+              color="info"
+              sx={{ mr: 1 }}
+            >
+              <VisibilityIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="memory-play">
+            <IconButton
+              component={Link}
+              to={`/dash/actions/play/memory/${params.row.id}`}
+              aria-label="play-memory"
+              color="info"
+              sx={{ mr: 1 }}
+            >
+              <VisibilityIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="multi-choice-play">
+            <IconButton
+              component={Link}
+              to={`/dash/actions/play/multi-choice/${params.row.id}`}
+              aria-label="play-memory"
+              color="info"
+              sx={{ mr: 1 }}
+            >
+              <VisibilityIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Hangman-play">
+            <IconButton
+              component={Link}
+              to={`/dash/actions/play/hangman/${params.row.id}`}
+              aria-label="play-memory"
+              color="info"
+              sx={{ mr: 1 }}
+            >
+              <VisibilityIcon />
+            </IconButton>
+          </Tooltip>
           {roles === "Teacher" ? (
             <>
               <Tooltip title="Print">
@@ -581,7 +638,6 @@ return <CurrentSchoolAndClass/>
                   color="info"
                   sx={{ mr: 1 }}
                 >
-                
                   <PrintIcon />
                 </IconButton>
               </Tooltip>
@@ -597,7 +653,6 @@ return <CurrentSchoolAndClass/>
                 </IconButton>
               </Tooltip>
 
-
               <Tooltip title="marks">
                 <IconButton
                   component={Link}
@@ -606,10 +661,10 @@ return <CurrentSchoolAndClass/>
                   color="info"
                   sx={{ mr: 1 }}
                 >
-          <AssignmentIcon />
-          </IconButton>
+                  <AssignmentIcon />
+                </IconButton>
               </Tooltip>
-             
+
               <Tooltip title="Delete">
                 <IconButton
                   aria-label="delete"
@@ -628,11 +683,9 @@ return <CurrentSchoolAndClass/>
                 aria-label="view"
                 color="primary"
               >
-          <DescriptionIcon />
-          </IconButton>
+                <DescriptionIcon />
+              </IconButton>
             </Tooltip>
-
-            
           ) : null}
         </>
       ),
