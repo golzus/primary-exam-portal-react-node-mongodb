@@ -33,8 +33,13 @@ ref:ListWords
     type:Boolean,
     default:false
         },
+    complete:{
+      type:Boolean,
+      default:false
+    },
   mark:{
-    type:Number
+    type:Number,
+    default:0
   },
   seeWords:{
     type:Boolean,

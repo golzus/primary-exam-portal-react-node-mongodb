@@ -22,8 +22,6 @@
 
 // export default WordSpeaker;
 
-
-
 import React from 'react';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
@@ -35,8 +33,20 @@ const WordSpeaker = ({ word }) => {
   const handleClick = (e) => {
     e.stopPropagation();
     const voices = window.speechSynthesis.getVoices();
-    const voice = voices.find(voice => voice.name === 'Google US English Female');
-    speak({ text: word, voice });
+
+    // Try to find a US English female voice (priority)
+    const preferredVoice = voices.find(voice => voice.lang === 'en-US' && voice.name.includes('Female'));
+
+    // Fallback to any US English voice
+    const fallbackVoice = voices.find(voice => voice.lang === 'en-US');
+
+    const voice = preferredVoice || fallbackVoice;
+
+    if (voice) {
+      speak({ text: word, voice });
+    } else {
+      console.warn('No US English voice found');
+    }
   };
 
   return (

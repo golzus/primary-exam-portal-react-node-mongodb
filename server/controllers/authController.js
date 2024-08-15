@@ -74,6 +74,7 @@ const login = async (req, res) => {
 //   }}
 const refresh = async (req, res) => {
   const cookies = req.cookies;
+ // console.log("ftydc");
   if (!cookies?.jwt) {
     return res.status(401).json({
       error: true,
@@ -85,6 +86,7 @@ const refresh = async (req, res) => {
 
   jwt.verify(
     refreshToken,
+
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decode) => {
       if (err) {

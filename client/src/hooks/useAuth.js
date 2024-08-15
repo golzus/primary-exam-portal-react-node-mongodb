@@ -11,7 +11,6 @@ const {_id,username,roles,class:classUser,fullname}=userDecoded
 isAdmin=roles==="Teacher"
 isUser=roles==="Student"
 if(classUser)
-console.log(classUser,"class");
 return {username,roles,fullname,isAdmin,isUser,classUser,_id}
 }
 return {username:"",isAdmin,isUser,fullname:"",_id:""}

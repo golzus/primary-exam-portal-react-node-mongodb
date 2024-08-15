@@ -40,9 +40,9 @@ const ListMarkStudents = () => {
     };
     fetchData();
   }, [_id, getAlltestsByListWordId]);
-// useEffect(()=>{
-//     getAlltestsByListWordId({_id})
-// },[])
+  // useEffect(()=>{
+  //     getAlltestsByListWordId({_id})
+  // },[])
   useEffect(() => {
     setFilteredRows(
       rows.filter((row) =>
@@ -65,7 +65,7 @@ const ListMarkStudents = () => {
       headerAlign: 'center',
       align: 'center',
       renderCell: (params) => (
-        <Link to={`/dash/actions/test/${params.value}`} style={{ textDecoration: 'none', color: '#9B153B' }}>
+        <Link to={`/dash/test/${params.value}`} style={{ textDecoration: 'none', color: '#9B153B' }}>
           <DescriptionIcon />
         </Link>
       ),
@@ -82,10 +82,10 @@ const ListMarkStudents = () => {
           ציונים ובחנים של תלמידות
         </Typography>
         <Typography variant="h6" align="center" gutterBottom>
-{data.data[0].title}
+          {data.data[0].title}
         </Typography>
         <Typography variant="h6" align="center" gutterBottom>
-{data.data[0].date.slice(0, 10)}
+          {data.data[0].date.slice(0, 10)}
         </Typography>
         <Box className='user-list-top' sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '8px' }}>
           <TextField

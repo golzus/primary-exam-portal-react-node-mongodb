@@ -98,12 +98,13 @@ const SingleUser = ({notForATeacher}) => {
   useEffect(()=>{
     if(roles==='Student')
       setUserId(_id)
-  else
-    setUserId(id)
-    console.log(_id,"rr");
-      console.log(userId,"rol");
-      getUserById({_id})
-  },[roles])
+  else if(notForATeacher)
+    setUserId(_id)
+  else 
+  setUserId(id)
+console.log(userId,"uu");
+      getUserById({_id:userId})
+  },[userId])
   // const { error, data, isLoading, isError } = useGetAllUsersQuery();
   // const { data: companies, isLoading: companiesLoading, error: companiesError } = useGetAllCompaniesQuery();
   const [updateUser, { error: updateError, isSuccess: updateSuccess }] = useUpdateUserMutation();

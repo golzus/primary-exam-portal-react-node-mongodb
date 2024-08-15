@@ -45,6 +45,7 @@ import {
   Box,
   CircularProgress,
 } from "@mui/material";
+import useAuth from "../../hooks/useAuth";
 
 const ListWordToDo = ({ onNumChange }) => {
   const [getAllListWordsByClassAndByActive, { data, error, isLoading }] =
@@ -57,7 +58,7 @@ const ListWordToDo = ({ onNumChange }) => {
       getAllListWordsByClassAndByActive({ active: false, chosenClass });
     }
   }, [chosenClass]);
-
+const {roles}=useAuth()
   useEffect(() => {
     if (data) {
       const count = data.data.length;
@@ -68,8 +69,8 @@ const ListWordToDo = ({ onNumChange }) => {
     }
   }, [data]);
 
-  if (!chosenClass)
-    return <Typography variant="h5">עליך לבחור בית ספר וכיתה.</Typography>;
+  if (!chosenClass&&roles==='Teacher')
+    return <Typography variant="h5">אין התראות</Typography>;
 
   if (isLoading) return <CircularProgress />; // הצגת לולאת טעינה
   if (error)
@@ -91,7 +92,7 @@ const ListWordToDo = ({ onNumChange }) => {
       }}
     >
       {itemCount === 0 ? (
-        <Typography variant="h5">הידד עשית את כל המבחנים!</Typography>
+        <Typography variant="h5">הידד עדכנת את כל המבחנים!</Typography>
       ) : (
         <>
           <Typography variant="h5">
@@ -102,7 +103,7 @@ const ListWordToDo = ({ onNumChange }) => {
               <Button
                 key={item._id}
                 component={Link}
-                to={`/dash/actions/${item._id}`}
+                to={`/dash/${item._id}`}
                 variant="contained"
                 color="primary"
                 sx={{ width: "100%", textAlign: "center", overflow: "hidden" }}

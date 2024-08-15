@@ -99,7 +99,7 @@ const TestsYouHaveToDo = () => {
             <Button
                 key={test._id}
                 component={Link}
-                to={`/dash/actions/test/${test._id}`}
+                to={`/dash/test/${test._id}`}
                 variant="contained"
                 color="primary"
                 sx={{ width: '100%', textAlign: 'center', overflow: 'hidden' }}

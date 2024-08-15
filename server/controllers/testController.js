@@ -34,11 +34,9 @@ const getTestById = async (req, res) => {
 
 const updateTestAfterDoing = async (req, res) => {
   try {
-    const { mark, test, active, _id } = req.body;
+    const { mark, test, active, _id ,complete} = req.body;
 
     if ( !_id) {
-      console.log( "list");
-
       return res.status(400).json({
         error: true,
         message: "test and_id  are required!",
@@ -54,6 +52,7 @@ const updateTestAfterDoing = async (req, res) => {
    updateTest.active = active;
   if(test){
     updateTest.test = test;
+    updateTest.complete=complete
     updateTest.mark=mark
   }
     const updateTests = await updateTest.save();

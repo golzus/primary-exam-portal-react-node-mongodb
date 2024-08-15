@@ -17,7 +17,13 @@ const getUsers = async (req, res) => {
 
 
 const getUserById = async (req, res) => {
+try {
+  
+
+
   const {_id}=req.body
+  console.log("jjjjjj",_id);
+
   console.log(_id,"id");
   if(!_id) return res
   .status(400)
@@ -33,6 +39,9 @@ console.log(_id);
   }
   console.log(user,"user");
   res.json({ error: false, message: "", data: user[0] });
+} catch (error) {
+  console.log(error);
+}
 };
 // const getUsersByCompany = async (req, res) => {
 //   const {_id}=
@@ -111,6 +120,9 @@ if(duplicateUser){
 };
 
 const updateUser = async (req, res) => {
+  try {
+    
+ 
   const {_id, fullname, username, password, active, roles,email} = req.body;
   // if (!username  || !fullname || !company || !type||!_id) {
     if (!username  || !fullname||!_id) {
@@ -140,6 +152,9 @@ user.password=hashpwd
   user.email=email;
   const updateUser = await user.save();
   res.json({ error: false, message: "", data:  {username:updateUser.username,_id:updateUser._id} });
+} catch (error) {
+    console.log(error);
+}
 };
 
 const deleteUser = async (req, res) => {

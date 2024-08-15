@@ -115,6 +115,7 @@ const addListWords = async (req, res) => {
 };
 
 const updateListWords = async (req, res) => {
+  
   try {
     const { title, date, test, seeWords,countListenToWord, active, _id } = req.body;
     if (!test || !_id) {
