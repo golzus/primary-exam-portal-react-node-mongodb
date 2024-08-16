@@ -1,99 +1,3 @@
-// // // theme.js
-// // import { createTheme } from '@mui/material/styles';
-
-// // const theme = createTheme({
-// //   palette: {
-// //     primary: {
-// //       main: '#283593',
-// //       light: '#5c6bc0',
-// //       dark: '#1a237e',
-// //     },
-// //     secondary: {
-// //       main: '#9B153B',
-// //     },
-// //   },
-// //   components: {
-// //     MuiDataGrid: {
-// //       styleOverrides: {
-// //         root: {
-// //           border: 'none',
-// //           borderRadius: '8px',
-// //           padding: '16px',
-// //           '& .MuiDataGrid-columnHeaders': {
-// //             backgroundColor: '#f3f3e9',
-// //             fontWeight: 'bold',
-// //             color: '#9B153B',
-// //           },
-// //           '& .MuiDataGrid-cell': {
-// //             padding: '8px 16px',
-// //             color: '#9B153B',
-// //           },
-// //           '& .MuiDataGrid-footerContainer': {
-// //             backgroundColor: '#f3f3e9',
-// //             boxShadow: '0 -1px 5px rgba(0, 0, 0, 0.1)',
-// //           },
-// //           '& .MuiCheckbox-root': {
-// //             color: '#9B153B',
-// //           },
-// //         },
-// //       },
-// //     },
-// //     MuiTextField: {
-// //       styleOverrides: {
-// //         root: {
-// //           '& .MuiOutlinedInput-root': {
-// //             '& fieldset': {
-// //               borderColor: '#9B153B',
-// //             },
-// //             '&:hover fieldset': {
-// //               borderColor: '#9B153B',
-// //             },
-// //             '&.Mui-focused fieldset': {
-// //               borderColor: '#9B153B',
-// //             },
-// //           },
-// //           '& .MuiInputAdornment-root': {
-// //             color: '#9B153B',
-// //           },
-// //           '& .MuiInputLabel-root': {
-// //             color: '#9B153B',
-// //             '&.Mui-focused': {
-// //               color: '#9B153B',
-// //             },
-// //           },
-// //           '& .MuiInputBase-input': {
-// //             backgroundColor: '#f3f3e9',
-// //             padding: '8px',
-// //           },
-// //         },
-// //       },
-// //     },
-// //     MuiButton: {
-// //       styleOverrides: {
-// //         root: {
-// //           backgroundColor: '#ff7043',
-// //           color: '#ffffff',
-// //           '&:hover': {
-// //             backgroundColor: '#f4511e',
-// //           },
-// //         },
-// //       },
-// //     },
-// //     MuiIconButton: {
-// //       styleOverrides: {
-// //         root: {
-// //           color: '#9B153B',
-// //           '&:hover': {
-// //             color: '#9B153B',
-// //           },
-// //         },
-// //       },
-// //     },
-// //   },
-// // });
-
-// // export default theme;
-
 
 
 
@@ -163,9 +67,9 @@
 //             '& fieldset': {
 //               borderColor: '#9B153B',
 //             },
-//             '&:hover fieldset': {
-//               borderColor: '#9B153B',
-//             },
+//             // '&:hover fieldset': {
+//             //   borderColor: '#9B153B',
+//             // },
 //             '&.Mui-focused fieldset': {
 //               borderColor: '#9B153B',
 //             },
@@ -191,9 +95,9 @@
 //         root: {
 //           backgroundColor: '#9B153B',
 //           color: '#ffffff',
-//           '&:hover': {
-//             backgroundColor: '#7f0e2e',
-//           },
+//           // '&:hover': {
+//           //   backgroundColor: '#7f0e2e',
+//           // },
 //         },
 //       },
 //     },
@@ -201,9 +105,9 @@
 //       styleOverrides: {
 //         root: {
 //           color: '#9B153B',
-//           '&:hover': {
-//             color: '#7f0e2e',
-//           },
+//           // '&:hover': {
+//           //   color: '#7f0e2e',
+//           // },
 //         },
 //       },
 //     },
@@ -220,12 +124,19 @@
 //           '& .MuiOutlinedInput-notchedOutline': {
 //             borderColor: '#9B153B',
 //           },
-//           '&:hover .MuiOutlinedInput-notchedOutline': {
-//             borderColor: '#9B153B',
-//           },
+//           // '&:hover .MuiOutlinedInput-notchedOutline': {
+//           //   borderColor: '#9B153B',
+//           // },
 //           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
 //             borderColor: '#9B153B',
 //           },
+//         },
+//       },
+//     },
+//     MuiPopover: {
+//       styleOverrides: {
+//         paper: {
+//           backgroundColor: '#ffffff', // צבע רקע לבן עבור ה-Popover
 //         },
 //       },
 //     },
@@ -235,61 +146,63 @@
 // export default theme;
 
 
-import { createTheme } from '@mui/material/styles';
 
+import { createTheme } from '@mui/material/styles';  // מייבא את הפונקציה createTheme מ-MUI ליצירת נושא מותאם אישית
+
+// יצירת נושא מותאם אישית באמצעות הפונקציה createTheme
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#9B153B',  // בורדו
-      light: '#ff5252',  // גוון בהיר יותר של בורדו
-      dark: '#d50000',  // גוון כהה יותר של בורדו
+      main: '#9B153B',  // מגדיר את הצבע הראשי עבור כל הרכיבים כנושא בורדו
+      light: '#ff5252',  // מגדיר גוון בהיר יותר של הצבע הראשי
+      dark: '#d50000',  // מגדיר גוון כהה יותר של הצבע הראשי
     },
     secondary: {
-      main: '#9B153B',
+      main: '#9B153B',  // מגדיר את הצבע המשני שיהיה זהה לצבע הראשי (בורדו)
     },
   },
   typography: {
     h1: {
-      color: '#9B153B',
+      color: '#9B153B',  // מגדיר את צבע הכותרת h1 כבורדו
     },
     h2: {
-      color: '#9B153B',
+      color: '#9B153B',  // מגדיר את צבע הכותרת h2 כבורדו
     },
     h3: {
-      color: '#9B153B',
+      color: '#9B153B',  // מגדיר את צבע הכותרת h3 כבורדו
     },
     h4: {
-      color: '#9B153B',
+      color: '#9B153B',  // מגדיר את צבע הכותרת h4 כבורדו
     },
     h5: {
-      color: '#9B153B',
+      color: '#9B153B',  // מגדיר את צבע הכותרת h5 כבורדו
     },
     h6: {
-      color: '#9B153B',
+      color: '#9B153B',  // מגדיר את צבע הכותרת h6 כבורדו
     },
   },
   components: {
     MuiDataGrid: {
       styleOverrides: {
         root: {
-          border: 'none',
-          borderRadius: '8px',
-          padding: '16px',
+          border: 'none',  // מבטל את גבולות ברירת המחדל של הרכיב
+          borderRadius: '8px',  // מגדיר רדיוס פינות עבור הרכיב (קצוות מעוגלים)
+          padding: '16px',  // מוסיף מרווח פנימי (padding) סביב הרכיב
           '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: '#f3f3e9',
-            fontWeight: 'bold',
-            color: '#9B153B',
+            backgroundColor: '#f3f3e9',  // מגדיר צבע רקע עבור כותרות העמודות
+            fontWeight: 'bold',  // מגדיר את משקל הטקסט כמודגש (bold)
+            color: '#9B153B',  // מגדיר את צבע הטקסט בכותרות כבורדו
           },
           '& .MuiDataGrid-cell': {
-            padding: '8px 16px',
-            color: '#9B153B',
+            padding: '8px 16px',  // מגדיר מרווח פנימי בתוך תאי ה-DataGrid
+            color: '#9B153B',  // מגדיר את צבע הטקסט בתאים כבורדו
           },
           '& .MuiDataGrid-footerContainer': {
-            backgroundColor: '#f3f3e9',
-            boxShadow: '0 -1px 5px rgba(0, 0, 0, 0.1)',
+            backgroundColor: '#f3f3e9',  // מגדיר צבע רקע עבור החלק התחתון של ה-DataGrid
+            boxShadow: '0 -1px 5px rgba(0, 0, 0, 0.1)',  // מוסיף צל עדין לחלק התחתון
           },
           '& .MuiCheckbox-root': {
-            color: '#9B153B',
+            color: '#9B153B',  // מגדיר את צבע תיבת הסימון כבורדו
           },
         },
       },
@@ -299,27 +212,24 @@ const theme = createTheme({
         root: {
           '& .MuiOutlinedInput-root': {
             '& fieldset': {
-              borderColor: '#9B153B',
+              borderColor: '#9B153B',  // מגדיר את צבע הגבול של שדה הטקסט כבורדו
             },
-            // '&:hover fieldset': {
-            //   borderColor: '#9B153B',
-            // },
             '&.Mui-focused fieldset': {
-              borderColor: '#9B153B',
+              borderColor: '#9B153B',  // מגדיר את צבע הגבול במצב ממוקד (focused) כבורדו
             },
           },
           '& .MuiInputAdornment-root': {
-            color: '#9B153B',
+            color: '#9B153B',  // מגדיר את צבע רכיבי עיטור שדה הטקסט (adornment) כבורדו
           },
           '& .MuiInputLabel-root': {
-            color: '#9B153B',
+            color: '#9B153B',  // מגדיר את צבע התווית של שדה הטקסט כבורדו
             '&.Mui-focused': {
-              color: '#9B153B',
+              color: '#9B153B',  // מגדיר את צבע התווית במצב ממוקד כבורדו
             },
           },
           '& .MuiInputBase-input': {
-            backgroundColor: '#ffffff',
-            padding: '8px',
+            backgroundColor: '#ffffff',  // מגדיר צבע רקע לבן עבור שדה הקלט
+            padding: '8px',  // מוסיף מרווח פנימי לשדה הקלט
           },
         },
       },
@@ -327,28 +237,22 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          backgroundColor: '#9B153B',
-          color: '#ffffff',
-          // '&:hover': {
-          //   backgroundColor: '#7f0e2e',
-          // },
+          backgroundColor: '#9B153B',  // מגדיר צבע רקע של הכפתור כבורדו
+          color: '#ffffff',  // מגדיר את צבע הטקסט של הכפתור כלבן
         },
       },
     },
     MuiIconButton: {
       styleOverrides: {
         root: {
-          color: '#9B153B',
-          // '&:hover': {
-          //   color: '#7f0e2e',
-          // },
+          color: '#9B153B',  // מגדיר את צבע האיקונים בכפתור האיקונים כבורדו
         },
       },
     },
     MuiTableCell: {
       styleOverrides: {
         root: {
-          borderColor: '#9B153B',
+          borderColor: '#9B153B',  // מגדיר את צבע הגבול של תאי הטבלה כבורדו
         },
       },
     },
@@ -356,13 +260,10 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#9B153B',
+            borderColor: '#9B153B',  // מגדיר את צבע הגבול של תיבת הבחירה כבורדו
           },
-          // '&:hover .MuiOutlinedInput-notchedOutline': {
-          //   borderColor: '#9B153B',
-          // },
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#9B153B',
+            borderColor: '#9B153B',  // מגדיר את צבע הגבול במצב ממוקד כבורדו
           },
         },
       },
@@ -370,11 +271,12 @@ const theme = createTheme({
     MuiPopover: {
       styleOverrides: {
         paper: {
-          backgroundColor: '#ffffff', // צבע רקע לבן עבור ה-Popover
+          backgroundColor: '#ffffff',  // מגדיר צבע רקע לבן עבור ה-Popover
+           
         },
       },
     },
   },
 });
 
-export default theme;
+export default theme;  // מייצא את הנושא המותאם לשימוש באפליקציה

@@ -6,6 +6,7 @@ import { Box, Typography, CircularProgress, ThemeProvider, TextField, InputAdorn
 import SearchIcon from '@mui/icons-material/Search';
 import DescriptionIcon from '@mui/icons-material/Description'; // אייקון למבחן
 import theme from '../../theme';
+import LockIcon from '@mui/icons-material/Lock';
 
 const ListMarkStudents = () => {
   const [getAlltestsByListWordId, { error, data, isLoading }] = useGetAlltestsByListWordIdMutation();
@@ -24,9 +25,10 @@ const ListMarkStudents = () => {
           const testsArray = response.data.data;
           const formattedRows = testsArray.map(item => ({
             id: item._id,
-            mark: item.countListenToWord,
+            mark: item.mark.toFixed(2),
             user: item.user.fullname,
-            actions: item._id
+            actions: item._id,
+            complete: item.complete
           }));
           console.log('Formatted Rows:', formattedRows);
           setRows(formattedRows);
@@ -56,20 +58,33 @@ const ListMarkStudents = () => {
   };
 
   const columns = [
+    { field: 'complete', headerName: 'הושלם', width: 200, headerAlign: 'center', align: 'center' },
     { field: 'mark', headerName: 'ציון', width: 150, headerAlign: 'center', align: 'center' },
-    { field: 'user', headerName: 'כותרת', width: 200, headerAlign: 'center', align: 'center' },
+    { field: 'user', headerName: 'תלמידה', width: 200, headerAlign: 'center', align: 'center' },
     {
       field: 'actions',
-      headerName: 'פעולות',
+      headerName: 'מבחן',
       width: 100,
       headerAlign: 'center',
       align: 'center',
-      renderCell: (params) => (
-        <Link to={`/dash/test/${params.value}`} style={{ textDecoration: 'none', color: '#9B153B' }}>
-          <DescriptionIcon />
-        </Link>
-      ),
-    },
+      renderCell: (params) => {
+        // בדיקת תנאי אם השדה complete שווה ל-true
+        if (params.row.complete) {
+          return (
+            <Link to={`/dash/test/${params.value}`} style={{ textDecoration: 'none', color: '#9B153B' }}>
+              <DescriptionIcon />
+            </Link>
+          );
+        } else {
+          return (
+            <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+              <DescriptionIcon  />
+              <LockIcon sx={{ color:'#ff5252', position: 'absolute', top: 0, right: 0, fontSize: '0.9rem' }} />
+            </Box>
+          );
+        }
+      }}
+
   ];
 
   if (isLoading) return <CircularProgress />;

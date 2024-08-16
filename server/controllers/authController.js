@@ -84,12 +84,57 @@ const refresh = async (req, res) => {
   }
   const refreshToken = cookies.jwt;
 
+//   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, decode) => {
+//     if (err) {
+//       console.log("Refresh token verification error:", err);
+//       return res.status(403).json({
+//         error: true,
+//         message: "Forbidden: Invalid refresh token",
+//         data: null,
+//       });
+//     }
+
+//     const foundUser = await User.findOne({
+//       username: decode.username,
+//       deleted: false,
+//       active: true,
+//     })
+//       .populate("class", { name: 1, image: 1 })
+//       .lean();
+
+//     if (!foundUser) {
+//       return res.status(401).json({
+//         error: true,
+//         message: "Unauthorized: User not found",
+//         data: null,
+//       });
+//     }
+
+//     const userInfo = {
+//       _id: foundUser._id,
+//       username: foundUser.username,
+//       fullname: foundUser.fullname,
+//       roles: foundUser.roles,
+//       class: foundUser.class,
+//     };
+
+//     // Create new access token
+//     const accessToken = jwt.sign(userInfo, process.env.ACCES_TOKEN_SECRET, {
+//       expiresIn: "15m",
+//     });
+
+//     res.json({ accessToken });
+//   });
+// };
+
+
   jwt.verify(
     refreshToken,
 
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decode) => {
       if (err) {
+        console.log(refreshToken,"fff")
         return res.status(403).json({
           error: true,
           message: "Forbiddenבבב",
@@ -120,7 +165,7 @@ const refresh = async (req, res) => {
         // company: foundUser.class
       };
 
-      const accessToken = jwt.sign(userInfo, process.env.ACCESS_TOKEN_SECRET, {
+      const accessToken = jwt.sign(userInfo, process.env.ACCES_TOKEN_SECRET, {
         expiresIn: "15m",
       });
 
@@ -148,3 +193,5 @@ const logout = async (req, res) => {
   });
 };
 module.exports = { login, refresh, logout };
+
+

@@ -13,7 +13,7 @@ const DashLayout = () => {
       <div className='mane'>
        <SitdeBar />
       </div>
-      <div className='contemt'>
+      <div className='content'>
         <Navbar className="nav" />
         <Outlet />
         <Footer />

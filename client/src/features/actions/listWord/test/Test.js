@@ -16,6 +16,8 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
+import { useSpeechSynthesis } from 'react-speech-kit';
+import { HiOutlineSpeakerWave } from "react-icons/hi2";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import WordComparison from "./WordComparison";
 import useAuth from "../../../../hooks/useAuth";
@@ -26,6 +28,7 @@ import {
 } from "../view/ListWordApiSlice";
 
 const Test = () => {
+  const { speak } = useSpeechSynthesis();
   const { company, roles } = useAuth();
   const [markStudent, setMarkStudent] = useState(0);
   const [seeMark, setSeeMark] = useState(false);
@@ -53,13 +56,15 @@ const Test = () => {
     getSingleTest({ _id });
   }, [_id]);
   useEffect(() => {
-    if (listWord)
-      if (!listWord.data.active) {
+    if (listWord) {
+      if (listWord.data.complete) {
         setSeeMark(true);
         setSureStarting(true);
         setMarkStudent(listWord.data.mark)
-        console.log(listWord.data.mark,"jjj");
+        console.log(listWord.data.mark, "jjj");
       }
+      // setSureStarting(true);
+    }
   }, [listWord]);
   useEffect(() => {
     if (isSuccess) {
@@ -76,7 +81,7 @@ const Test = () => {
 
   useEffect(() => {
     if (sureStarting) {
-      updateTest({ _id: _id, active: false });
+      updateTest({ _id: _id, active: false, complete: true });
     }
   }, [sureStarting, _id, isUpdateSuccess, isError, loading, updateTest]);
 
@@ -125,13 +130,35 @@ const Test = () => {
     });
   };
 
-  const handleListen = (index) => {
+  const handleListen = (index, word) => {
+
     // Decrement the listen count if greater than zero
     if (listenCounts[index] > 0) {
       const updatedListenCounts = [...listenCounts];
       updatedListenCounts[index] -= 1;
       setListenCounts(updatedListenCounts);
     }
+
+
+    // e.stopPropagation();
+    const voices = window.speechSynthesis.getVoices();
+
+    // Try to find a US English female voice (priority)
+    const preferredVoice = voices.find(voice => voice.lang === 'en-US' && voice.name.includes('Female'));
+
+    // Fallback to any US English voice
+    const fallbackVoice = voices.find(voice => voice.lang === 'en-US');
+
+    const voice = preferredVoice || fallbackVoice;
+
+    if (voice) {
+      speak({ text: word, voice });
+    } else {
+      console.warn('No US English voice found');
+    }
+
+
+
   };
 
   const checkTest = (e) => {
@@ -146,12 +173,12 @@ const Test = () => {
     setMarkStudent(mark);
     setWordList(updatedList);
     console.log("Updated List with User Answers: ", updatedList);
-    console.log(mark,"gg");
+    console.log(mark, "gg");
     updateTest({
       _id: _id,
       active: false,
       test: updatedList,
-      complete:true,
+      complete: true,
       mark
     });
     setSeeMark(true);
@@ -275,14 +302,19 @@ const Test = () => {
                     </TableCell>
                   )}
                   {seeMark && <TableCell>{cat.translate}</TableCell>}
+                 
+                
                   <TableCell>
-                    <IconButton
-                      onClick={() => handleListen(index)}
+                    <IconButton onClick={() => handleListen(index, cat.word)}
+                      className='wordSpeakerButton'
                       disabled={listenCounts[index] === 0} // Disable if no listens left
                     >
-                      <WordSpeaker word={cat.word} />
+                      <HiOutlineSpeakerWave />
                     </IconButton>
                   </TableCell>
+
+
+
                 </TableRow>
               ))}
             </TableBody>
