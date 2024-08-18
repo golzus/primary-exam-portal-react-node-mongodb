@@ -395,7 +395,7 @@ const SchoolList = () => {
 
   useEffect(() => {
     if (Schools) {
-      const schoolsData = Schools.data.map(school => ({
+      const schoolsData = Schools.data?.map(school => ({
         ...school,
         id: school._id,
         createedAt: school.createedAt?.toString().slice(4, 16),
@@ -415,7 +415,7 @@ const SchoolList = () => {
     setSearchText(event.target.value);
   };
 
-  const filteredRows = rows.filter((row) => {
+  const filteredRows = rows?.filter((row) => {
     return row.name.toLowerCase().includes(searchText.toLowerCase());
   });
 

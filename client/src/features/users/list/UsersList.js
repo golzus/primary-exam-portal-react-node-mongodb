@@ -15,7 +15,7 @@
 
 // const UsersList = () => {
 //   const { classUser } = useAuth();
- 
+
 //   const { data: users, isError, error, isLoading } = useGetAllUsersQuery();
 //   const [deleteUser] = useDeleteUserMutation();
 //   const [rows, setRows] = useState([]);
@@ -170,6 +170,7 @@
 
 // export default UsersList;
 import React, { useState, useEffect } from 'react';
+import AssignmentIcon from "@mui/icons-material/Assignment";
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, TextField, InputAdornment, IconButton, Tooltip, Button, Modal, Paper, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
@@ -180,13 +181,13 @@ import { IoPersonAddSharp } from "react-icons/io5";
 import { useDeleteUserMutation, useGetAllUsersQuery } from '../view/userApiSlice';
 import useAuth from '../../../hooks/useAuth';
 import AddUserForm from '../add/AddUser';
-import theme from '../../../theme'; 
-import { ThemeProvider } from '@mui/material/styles'; 
+import theme from '../../../theme';
+import { ThemeProvider } from '@mui/material/styles';
 import './users-list.css';
 
 const UsersList = () => {
   const { classUser } = useAuth();
- 
+
   const { data: users, isError, error, isLoading } = useGetAllUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   const [rows, setRows] = useState([]);
@@ -195,13 +196,19 @@ const UsersList = () => {
   const [showThankYou, setShowThankYou] = useState(false);
 
   useEffect(() => {
+    let usersData
     if (users) {
-      const usersData = users.data.map(user => ({
-        ...user,
-        id: user._id,
-        companyName: user.company?.name,
-        className: user.class?.name || 'לא מוגדר', // Handling potential undefined class
-      }));
+      if (!users.data && users.message)
+        usersData = []
+      else {
+        usersData = users.data.map(user => ({
+          ...user,
+          id: user._id,
+          companyName: user.company?.name,
+          className: user.class?.name || '--', // Handling potential undefined class
+          email:user.email||"--"
+        }));
+      }
       setRows(usersData);
     }
   }, [users]);
@@ -215,16 +222,35 @@ const UsersList = () => {
   const handleSearch = (event) => {
     setSearchText(event.target.value);
   };
-
-  const filteredRows = rows.filter((row) => {
-    return row.fullname.toLowerCase().includes(searchText.toLowerCase());
-  });
-
+  let filteredRows
+  if (rows) {
+    console.log(rows, "ee");
+    filteredRows = rows?.filter((row) => {
+      return row.fullname.toLowerCase().includes(searchText.toLowerCase());
+    });
+  }
+  else
+    filteredRows = []
   const columns = [
     { field: 'username', headerName: 'שם משתמש', flex: 1, headerAlign: 'center', align: 'center' },
     { field: 'fullname', headerName: 'שם מלא', flex: 1, headerAlign: 'center', align: 'center' },
     { field: 'className', headerName: 'כיתה', flex: 1, headerAlign: 'center', align: 'center' }, // Changed field name to 'className'
     { field: 'email', headerName: 'מייל', flex: 1, headerAlign: 'center', align: 'center' },
+    {
+      field: 'marks', headerName: 'ציונים', flex: 1, headerAlign: 'center', align: 'center', sortable: false,
+      renderCell: (params) => (
+        <>
+          <Link to={`/dash/users/markbystudent/${params.row.id}`} className='users-list-marks'>
+            <Tooltip title="mark">
+              <IconButton aria-label="mark">
+              <AssignmentIcon />
+               </IconButton>
+            </Tooltip>
+          </Link>
+
+        </>
+      ),
+    },
     {
       field: 'actions',
       headerName: 'פעולות',
@@ -265,7 +291,7 @@ const UsersList = () => {
   if (isError) return <h1>Error: {JSON.stringify(error)}</h1>;
 
   return (
-    <ThemeProvider theme={theme}> 
+    <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '93vh' }}>
         <Box className='user-list-top' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <Button
@@ -297,7 +323,7 @@ const UsersList = () => {
               ),
             }}
             // sx={{ margin: '4px', fontSize: '0.75rem', flexGrow: 1 }} // Ensure search field grows to fit available space
-            sx={{ width: "20%" ,margin: '9px'}} // Ensure the search input takes full width
+            sx={{ width: "20%", margin: '9px' }} // Ensure the search input takes full width
 
           />
         </Box>
@@ -312,12 +338,12 @@ const UsersList = () => {
               disableSelectionOnClick
 
               sx={{
-                height: "calc(100% - 56px)", // Adjust height to ensure sticky footer space
+                height: "calc(100% - 2px)", // Adjust height to ensure sticky footer space
                 width: "100%",
                 "& .MuiDataGrid-columnHeader": {
                   // backgroundColor: "#f3f3e9", // Beige background for the header
                   fontWeight: "bolder", // Bold header text
-                  fontSize:"larger"
+                  fontSize: "larger"
                 },
                 "& .MuiDataGrid-cell": {
                   overflow: "hidden",
@@ -343,9 +369,9 @@ const UsersList = () => {
             <Typography id="modal-title" variant="h6" component="h2">
               הוספת תלמידה חדשה
             </Typography>
-            <AddUserForm 
-              setShowThankYou={setShowThankYou} 
-              setOpenModal={setShowAddUserForm} 
+            <AddUserForm
+              setShowThankYou={setShowThankYou}
+              setOpenModal={setShowAddUserForm}
             />
           </Paper>
         </Modal>

@@ -1,10 +1,11 @@
 const School=require("../models/School")
 const Class=require('../models/Class')
 const getSchools = async (req, res) => {
+ 
 const {teacher}=req.body
     const schools=await School.find({deleted:false,teacher})
     if(!schools.length){
-        return res.status(400).json({error:true,message:"no schools",data:null})
+        return res.status(200).json({error:false,message:"no schools",data:null})
     }
     res.json(({error:false,message:"",data:schools}))
 };
@@ -17,7 +18,7 @@ const addSchool = async (req, res) => {
     try {
         const school=await School.create({name,teacher})
         if(!school){
-            return res.status(400).json({error:true,message:"something wrong",data:null})
+            return res.status(200).json({error:true,message:"no schools for this teacher",data:null})
         }
         res.json(({error:false,message:"",data:school}))
     
@@ -42,7 +43,7 @@ const getAllClassesBySchool=async (req,res)=>{
      if (!school)return res.status(400).json({error:true,message:"school is required!",data:null})
 
     const classes=await Class.find({deleted:false,school});
-    if(!classes)  return   res.status(400).json({error:true,message:"name  and school are required!",data:null})
+    if(!classes)  return   res.status(200).json({error:true,message:"no classes at this school!",data:null})
     res.json({error:false,message:"",data:classes})
 }
 

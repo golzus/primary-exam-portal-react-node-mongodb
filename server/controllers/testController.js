@@ -1,4 +1,5 @@
-const Test =require("../models/Test")
+const Test =require("../models/Test");
+const User = require("../models/User");
 
 const getTestByClassAndUser = async (req, res) => {
     const {user}=req.body
@@ -13,6 +14,16 @@ const getAllTestsDone = async (req, res) => {
   const {user}=req.body
   try {  
   const test=await Test.find({user:user,active:false})
+  res.json(({error:false,message:"",data:test}))
+} catch (error) {
+console.log(error,"error");      
+}
+};
+const getAllTests = async (req, res) => {
+  
+  const {user}=req.body
+  try {  
+  const test=await Test.find({user:user}).populate("user").lean()
   res.json(({error:false,message:"",data:test}))
 } catch (error) {
 console.log(error,"error");      
@@ -62,4 +73,4 @@ const updateTestAfterDoing = async (req, res) => {
   }
 };
 
-module.exports={getTestByClassAndUser,getTestById,updateTestAfterDoing,getAllTestsDone}
+module.exports={getTestByClassAndUser,getTestById,updateTestAfterDoing,getAllTestsDone,getAllTests}

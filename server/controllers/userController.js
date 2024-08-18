@@ -9,7 +9,7 @@ const getUsers = async (req, res) => {
   // const users = await User.find().lean({username:false},{password:0});
   if (!users) {
     return res
-      .status(400)
+      .status(200)
       .json({ error: true, message: "no users", data: null });
   }
   res.json({ error: false, message: "", data: users });
@@ -22,9 +22,7 @@ try {
 
 
   const {_id}=req.body
-  console.log("jjjjjj",_id);
 
-  console.log(_id,"id");
   if(!_id) return res
   .status(400)
   .json({ error: true, message: "no id", data: null });

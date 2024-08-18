@@ -163,6 +163,8 @@ import MultiChoiceGame from "./features/actions/game/MultiChoiceGame";
 import HangmanGame from "./features/actions/game/HangmanGame";
 import MainPage from "./MainPage";
 import Instructions from "./features/instructions/Instructions";
+import MarksByStudent from "./features/actions/MarksByStudent";
+
 // import PuzzleGame from "./features/actions/game/PuzzleGame";
 function App() {
   return (
@@ -186,9 +188,10 @@ function App() {
                     />
                     <Route path="users" element={<Outlet />}>
                       <Route index element={<UsersList />} />
-
+                    
                       <Route path="add" element={<AddUser />} />
                       <Route path=":userId" element={<SingleUser />} />
+                      <Route path="markbystudent/:_id" element={<MarksByStudent/>}/>
                     </Route>
                     <Route path="companies" element={<Outlet />}>
                       <Route index element={<SchoolList />} />

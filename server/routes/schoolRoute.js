@@ -23,7 +23,6 @@ const schoolController=require('../controllers/schoolController')
 // router.use(verifyAdmin)
 router.post("/list",schoolController.getSchools)
 router.post("/list/class",schoolController.getAllClassesBySchool)
-
 //  router.get("/:id",companyController.getCompany)
 // router.post("/",upload.single('image'),companyController.addCompany)
  router.post("/",schoolController.addSchool)

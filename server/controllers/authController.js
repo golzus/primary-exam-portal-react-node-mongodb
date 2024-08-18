@@ -74,7 +74,6 @@ const login = async (req, res) => {
 //   }}
 const refresh = async (req, res) => {
   const cookies = req.cookies;
- // console.log("ftydc");
   if (!cookies?.jwt) {
     return res.status(401).json({
       error: true,
@@ -134,7 +133,7 @@ const refresh = async (req, res) => {
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decode) => {
       if (err) {
-        console.log(refreshToken,"fff")
+        console.log("fff")
         return res.status(403).json({
           error: true,
           message: "Forbiddenבבב",

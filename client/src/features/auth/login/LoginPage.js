@@ -468,17 +468,14 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      // if (roles === 'Teacher') {
-        navigate('/dash');
-      // } else {
-        // navigate('/dash/actions');
-      // }
+           navigate('/dash');
     }
-  }, [isSuccess, navigate, roles]);
+  }, [isSuccess]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     login({ username, password });
+    
   };
 
   return (
@@ -586,10 +583,11 @@ const LoginPage = () => {
                   התחבר
                 </Button>
                 {isError && (
-                  <Typography color="error" sx={{ mt: 2 }}>
+                  <Typography variant="contained" color="error" sx={{ mt: 2,justifyContent:"center",alignContent:"center",alignSelf:"center" ,alignItems:"center"}}>
                     {error?.data?.message || 'התרחשה שגיאה בהתחברות'}
                   </Typography>
                 )}
+                
               </Box>
             </Box>
           </Paper>
