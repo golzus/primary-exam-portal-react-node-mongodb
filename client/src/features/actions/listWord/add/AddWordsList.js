@@ -23,7 +23,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  CircularProgress,
+  // CircularProgress,
   Grid,
 } from "@mui/material";
 import { VolumeUp } from "@mui/icons-material";
@@ -36,7 +36,7 @@ import { useAddListWordsMutation, useUpdateListWordsMutation } from "../view/Lis
 const AddWordsList = ({ WORDLIST }) => {
   const { company } = useAuth();
   const { _id } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [addListWords, { isError: addError, error: addApiError, isSuccess: addSuccess, isLoading: addLoading }] = useAddListWordsMutation();
   const [updateListWords, { isError: updateError, error: updateApiError, isSuccess: updateSuccess, isLoading: updateLoading }] = useUpdateListWordsMutation();
   const [seeWords, setSeeWords] = useState(false);
