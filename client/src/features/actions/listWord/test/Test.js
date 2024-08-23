@@ -16,7 +16,7 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-import { useSpeechSynthesis } from 'react-speech-kit';
+import { Speech } from 'react-speech';
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import WordComparison from "./WordComparison";
@@ -28,7 +28,6 @@ import {
 } from "../view/ListWordApiSlice";
 
 const Test = () => {
-  const { speak } = useSpeechSynthesis();
   const { company, roles } = useAuth();
   const [markStudent, setMarkStudent] = useState(0);
   const [seeMark, setSeeMark] = useState(false);
@@ -152,7 +151,13 @@ const Test = () => {
     const voice = preferredVoice || fallbackVoice;
 
     if (voice) {
-      speak({ text: word, voice });
+      <Speech 
+      text={word}
+      voice="Google UK English Female" // ניתן לשנות לקול המועדף עליך
+      rate="1" // מהירות ההקראה
+      pitch="1" // גובה הצליל
+      volume="1" // עוצמת הקול
+    />
     } else {
       console.warn('No US English voice found');
     }
