@@ -22,6 +22,7 @@ console.log(error,"error");
 const getAllTests = async (req, res) => {
   
   const {user}=req.body
+  console.log(user,"user");
   try {  
   const test=await Test.find({user:user}).populate("user").lean()
   res.json(({error:false,message:"",data:test}))

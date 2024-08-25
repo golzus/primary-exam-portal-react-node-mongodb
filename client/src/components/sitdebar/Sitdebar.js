@@ -10,6 +10,8 @@ import useAuth from '../../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import useSchoolAndClass from '../../hooks/useSchoolAndClass';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
+import { FaChartLine } from 'react-icons/fa';
+
 
 const user = {
   username: "username",
@@ -53,7 +55,12 @@ const studentMenuActions = [
       { title: "בחנים", path: "wordLsList", icon: <Quiz /> },
       { title: "בחנים שהושלמו", path: "todos", icon: <ListAlt /> },
       { title: "גיליון ציונים", path: "marks", icon: <Star /> },
+      { title: "משחקים", path: "play", icon: <FaChartLine /> },
+      { title: "גרפים", path: "graphs", icon: <FaChartLine /> },
     ],
+
+  
+    
   },
   {
     title: "אישי",

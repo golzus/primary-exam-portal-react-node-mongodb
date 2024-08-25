@@ -1,0 +1,66 @@
+.graphsContent{
+    display: flex;
+    flex-direction: column;
+}
+.headers{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* שלוש עמודות ברוחב שווה */
+    gap: 10px; /* מרווח בין העמודות */
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    box-sizing: border-box; /* כולל את הריפוד בגובה הכללי */
+}
+.headers h1{
+    color: #4e0623;;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    padding: 10px; /* הוספת ריפוד בתוך התיבה */
+    box-sizing: border-box; /* כולל את הריפוד בגובה הכללי */
+    overflow: hidden; /* למנוע חריגה מתוך התיבה */
+}
+/* קונטיינר עבור הגרפים */
+.graphs {
+    display: grid;
+    gap: 10px; /* מרווח בין הגרפים */
+    margin-top: 10px;
+    justify-content: space-between;
+    align-items: center;
+    /* grid-template-rows: repeat(3,1fr); */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* עמודות רספונסיביות ברירת מחדל */
+    width: 100%;
+    box-sizing: border-box; /* כולל את הריפוד והמרווחים בגובה הכללי */
+   
+}
+
+/* הגדרת התנהגות גרפים כך שלא ייחתכו */
+.chart {
+    height: 40vh; /* גובה של 40% מגובה החלון */
+    width: 22vw;
+    background-color: slategray; /* צבע אפור מבריק */
+    border-radius: 5px; 
+    padding: 2px;
+    box-sizing: border-box; /* כולל את הריפוד בגובה הכללי */
+    overflow: hidden; /* למנוע גלילה בתוך הגרף */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.avgChart{
+    width:50vw;
+}
+/* עבור מסכים קטנים */
+@media (max-width: 600px) {
+    .graphs {
+        grid-template-columns: 1fr; /* גרף יחיד בכל שורה */
+    }
+}
+
+/* עבור מסכים בינוניים וגדולים */
+@media (min-width: 601px) {
+    .graphs {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 20vw)); /* עמודות עם רוחב מינימלי של 200px ועד 20VW */
+    }
+}

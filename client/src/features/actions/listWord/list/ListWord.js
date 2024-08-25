@@ -10,13 +10,12 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-
+import { MdSportsEsports } from 'react-icons/md';
 import SearchIcon from "@mui/icons-material/Search";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+// import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DescriptionIcon from "@mui/icons-material/Description";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import PrintIcon from "@mui/icons-material/Print";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { Link } from "react-router-dom";
@@ -27,12 +26,10 @@ import {
   useGetTestByClassAndUserMutation,
   useGetAllTestsDoneMutation,
 } from "../view/ListWordApiSlice";
-import { useSelector } from "react-redux";
 import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
 import useAuth from "../../../../hooks/useAuth";
 import useSchoolAndClass from "../../../../hooks/useSchoolAndClass";
-import WordsGame from "../../game/WordsGame";
-import { MdFlip, MdLanguage, MdQuestionAnswer } from "react-icons/md";
+// import WordsGame from "../../game/WordsGame";
 import { FaUserSecret } from "react-icons/fa";
 
 const ListWord = ({ todos }) => {
@@ -64,7 +61,7 @@ const ListWord = ({ todos }) => {
   }
 
   const { chosenClass, chosenSchool } = useSchoolAndClass();
-
+  const [playId,setPlayId]=useState(null)
   const [searchText, setSearchText] = useState("");
   useEffect(() => {
     if (roles === "Student" && !todos) {
@@ -108,49 +105,10 @@ const ListWord = ({ todos }) => {
       console.log(wordLsList, "testStudent");
     }
   }
-  const printTest = (testId) => {
-    const test = wordLsList?.data.find((list) => list._id === testId);
+  
 
-    if (test) {
-      const printWindow = window.open("", "", "width=800,height=600");
-
-      const content = `
-        <html>
-        <head>
-          <title>${test.title} - Print Preview</title>
-          <style>
-            body { font-family: Arial, sans-serif; margin: 20px; }
-            .container { max-width: 700px; margin: 0 auto; }
-            h1 { text-align: center; margin-bottom: 20px; }
-            ul { padding-left: 20px; }
-            li { margin-bottom: 10px; }
-            .no-print { text-align: center; margin-top: 20px; }
-            @media print {
-              .no-print { display: none; }
-            }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <h1>${test.title}</h1>
-            <ul>
-              ${test.test.map((word) => `<li>${word}</li>`).join("")}
-            </ul>
-            <div class="no-print">
-              <button onclick="window.print()">Print</button>
-            </div>
-          </div>
-        </body>
-        </html>
-      `;
-
-      printWindow.document.write(content);
-      printWindow.document.close();
-      printWindow.focus();
-    } else {
-      alert("Test not found!");
-    }
-  };
+  // אם playId לא null, מחזירים את הקומפוננטה Play בלבד
+ 
   const filteredRows = (wordLsList?.data || [])
     .filter((list) =>
       list.title.toLowerCase().includes(searchText.toLowerCase())
@@ -188,7 +146,7 @@ const ListWord = ({ todos }) => {
       sortable: false,
       renderCell: (params) => (
         <>
-    <Tooltip title="play-translate">
+    {/* <Tooltip title="play-translate">
     <IconButton
       component={Link}
       to={`/dash/play/${params.row.id}`}
@@ -220,7 +178,20 @@ const ListWord = ({ todos }) => {
     >
       <MdQuestionAnswer />
     </IconButton>
+  </Tooltip> */}
+
+  <Tooltip title="plays">
+    <IconButton
+       component={Link}
+       to={`/dash/play/${params.row.id}`}
+      aria-label="play-memory"
+      color="info"
+      sx={{ mr: 1 }}
+    >
+      <MdSportsEsports/>
+    </IconButton>
   </Tooltip>
+
   <Tooltip title="Hangman-play">
     <IconButton
       component={Link}
@@ -405,377 +376,3 @@ const ListWord = ({ todos }) => {
 export default ListWord;
 
 
-
-// import React, { useState, useEffect } from "react";
-// import { DataGrid } from "@mui/x-data-grid";
-// import {
-//   ThemeProvider,
-//   CssBaseline,
-//   Box,
-//   TextField,
-//   InputAdornment,
-//   IconButton,
-//   Tooltip,
-//   Typography,
-// } from "@mui/material";
-
-// import SearchIcon from "@mui/icons-material/Search";
-// import AddCircleIcon from "@mui/icons-material/AddCircle";
-// import DescriptionIcon from "@mui/icons-material/Description";
-// import EditIcon from "@mui/icons-material/Edit";
-// import DeleteIcon from "@mui/icons-material/Delete";
-// import PrintIcon from "@mui/icons-material/Print";
-// import VisibilityIcon from "@mui/icons-material/Visibility";
-// import AssignmentIcon from "@mui/icons-material/Assignment";
-// import { Link } from "react-router-dom";
-// import theme from "../../../../theme";
-// import {
-//   useDeleteListWordsMutation,
-//   useGetAllListWordsByClassMutation,
-//   useGetTestByClassAndUserMutation,
-//   useGetAllTestsDoneMutation,
-// } from "../view/ListWordApiSlice";
-// import { useSelector } from "react-redux";
-// import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
-// import useAuth from "../../../../hooks/useAuth";
-// import useSchoolAndClass from "../../../../hooks/useSchoolAndClass";
-// import { MdFlip, MdLanguage, MdQuestionAnswer } from "react-icons/md";
-// import { FaUserSecret } from "react-icons/fa";
-
-// const ListWord = ({ todos }) => {
-//   const { roles, _id: user } = useAuth(); // Retrieve roles
-
-//   const [getAllTestsDone, doneResponse] = useGetAllTestsDoneMutation();
-//   const [getTestByClassAndUser, studentResponse] =
-//     useGetTestByClassAndUserMutation();
-//   const [getAllListWordsByClass, teacherResponse] =
-//     useGetAllListWordsByClassMutation();
-
-//   let wordLsList, isError, error, isLoading;
-
-//   if (todos) {
-//     wordLsList = doneResponse.data;
-//     isError = doneResponse.isError;
-//     error = doneResponse.isError;
-//     isLoading = doneResponse.isLoading;
-//   } else if (roles === "Student") {
-//     wordLsList = studentResponse.data;
-//     isError = studentResponse.isError;
-//     error = studentResponse.isStudentError;
-//     isLoading = studentResponse.isStudentisLoading;
-//   } else if (roles === "Teacher") {
-//     wordLsList = teacherResponse.data;
-//     isError = teacherResponse.isError;
-//     error = teacherResponse.error;
-//     isLoading = teacherResponse.isLoading;
-//   }
-
-//   const { chosenClass, chosenSchool } = useSchoolAndClass();
-
-//   const [searchText, setSearchText] = useState("");
-//   useEffect(() => {
-//     if (roles === "Student" && !todos) {
-//       getTestByClassAndUser({ user });
-//     } else if (todos) {
-//       getAllTestsDone({ user });
-//     }
-//   }, []);
-//   useEffect(() => {
-//     if (roles === "Teacher" && chosenClass) getAllListWordsByClass(classObj);
-//   }, [chosenClass]);
-
-//   const [deleteListWords] = useDeleteListWordsMutation();
-
-//   if (!chosenClass && roles === "Teacher") return <CurrentSchoolAndClass />;
-//   let classObj;
-//   if (chosenClass) classObj = { chosenClass: chosenClass };
-
-//   if (error) {
-//     return (
-//       <Typography color="error" variant="h5">
-//         {error.data.message}
-//       </Typography>
-//     );
-//   }
-
-//   if (isLoading) return <Typography variant="h5">Loading...</Typography>;
-
-//   const handleDeleteClick = (list) => {
-//     if (window.confirm("בטוח שברצונך למחוק את המבחן?")) {
-//       deleteListWords({ _id: list._id });
-//     }
-//   };
-//   const handleSearch = (event) => {
-//     setSearchText(event.target.value);
-//   };
-//   if (roles === "Student") {
-//     if (isLoading) return <h1>Loading...</h1>;
-//     if (isError) console.log(isError, "error");
-//     if (wordLsList) {
-//       console.log(wordLsList, "testStudent");
-//     }
-//   }
-//   const printTest = (testId) => {
-//     const test = wordLsList?.data.find((list) => list._id === testId);
-
-//     if (test) {
-//       const printWindow = window.open("", "", "width=800,height=600");
-
-//       const content = `
-//         <html>
-//         <head>
-//           <title>${test.title} - Print Preview</title>
-//           <style>
-//             body { font-family: Arial, sans-serif; margin: 20px; }
-//             .container { max-width: 700px; margin: 0 auto; }
-//             h1 { text-align: center; margin-bottom: 20px; }
-//             ul { padding-left: 20px; }
-//             li { margin-bottom: 10px; }
-//             .no-print { text-align: center; margin-top: 20px; }
-//             @media print {
-//               .no-print { display: none; }
-//             }
-//           </style>
-//         </head>
-//         <body>
-//           <div class="container">
-//             <h1>${test.title}</h1>
-//             <ul>
-//               ${test.test.map((word) => `<li>${word}</li>`).join("")}
-//             </ul>
-//             <div class="no-print">
-//               <button onclick="window.print()">Print</button>
-//             </div>
-//           </div>
-//         </body>
-//         </html>
-//       `;
-
-//       printWindow.document.write(content);
-//       printWindow.document.close();
-//       printWindow.focus();
-//     } else {
-//       alert("Test not found!");
-//     }
-//   };
-//   const filteredRows = (wordLsList?.data || [])
-//     .filter((list) =>
-//       list.title.toLowerCase().includes(searchText.toLowerCase())
-//     )
-//     .map((list) => {
-//       console.log(list); // Check the data here
-//       return {
-//         id: list._id,
-//         title: list.title,
-//         date: list.date ? list.date.slice(0, 10) : "",
-//         wordCount: list.test.length,
-//         mark: list.mark || "N/A", // Ensure mark is added to the mapped list
-//       };
-//     });
-
-//   const columns = [
-//     {
-//       field: "title",
-//       headerName: "כותרת",
-//       flex: 1,
-//       headerAlign: "center",
-//       align: "center",
-//     },
-//     {
-//       field: "mark",
-//       headerName: "ציון",
-//       flex: 1,
-//       headerAlign: "center",
-//       align: "center",
-//     },
-//     {
-//       field: "plays",
-//       headerName: "משחקים",
-//       flex: 1,
-//       headerAlign: "center",
-//       align: "center",
-//       sortable: false,
-//       renderCell: (params) => (
-//         <>
-//           <Tooltip title="play-translate">
-//             <IconButton
-//               component={Link}
-//               to={`/dash/play/${params.row.id}`}
-//               aria-label="play"
-//               color="info"
-//               sx={{ mr: 1 }}
-//             >
-//               <MdLanguage />
-//             </IconButton>
-//           </Tooltip>
-//           <Tooltip title="memory-play">
-//             <IconButton
-//               component={Link}
-//               to={`/dash/play/memory/${params.row.id}`}
-//               aria-label="play-memory"
-//               color="info"
-//               sx={{ mr: 1 }}
-//             >
-//               <MdFlip />
-//             </IconButton>
-//           </Tooltip>
-//           <Tooltip title="multi-choice-play">
-//             <IconButton
-//               component={Link}
-//               to={`/dash/play/multi-choice/${params.row.id}`}
-//               aria-label="play-memory"
-//               color="info"
-//               sx={{ mr: 1 }}
-//             >
-//               <MdQuestionAnswer />
-//             </IconButton>
-//           </Tooltip>
-//           <Tooltip title="Hangman-play">
-//             <IconButton
-//               component={Link}
-//               to={`/dash/play/hangman/${params.row.id}`}
-//               aria-label="play-memory"
-//               color="info"
-//               sx={{ mr: 1 }}
-//             >
-//               <FaUserSecret />
-//             </IconButton>
-//           </Tooltip>
-//         </>
-//       ),
-//     },
-//     {
-//       field: "actions",
-//       headerName: "פעולות",
-//       flex: 1,
-//       headerAlign: "center",
-//       align: "center",
-//       sortable: false,
-//       renderCell: (params) => (
-//         <>
-//           <Tooltip title="words">
-//             <IconButton
-//               component={Link}
-//               to={`/dash/words/${params.row.id}`}
-//               aria-label="words"
-//               color="info"
-//             >
-//               <AssignmentIcon />
-//             </IconButton>
-//           </Tooltip>
-//           <Tooltip title="edit">
-//             <IconButton
-//               component={Link}
-//               to={`/dash/edit-word/${params.row.id}`}
-//               aria-label="edit"
-//               color="primary"
-//             >
-//               <EditIcon />
-//             </IconButton>
-//           </Tooltip>
-//           <Tooltip title="print">
-//             <IconButton
-//               aria-label="print"
-//               onClick={() => printTest(params.row.id)}
-//               color="success"
-//             >
-//               <PrintIcon />
-//             </IconButton>
-//           </Tooltip>
-//           <Tooltip title="delete">
-//             <IconButton
-//               aria-label="delete"
-//               onClick={() => handleDeleteClick(params.row)}
-//               color="error"
-//             >
-//               <DeleteIcon />
-//             </IconButton>
-//           </Tooltip>
-//         </>
-//       ),
-//     },
-//   ];
-
-//   return (
-//     <ThemeProvider theme={theme}>
-//       <CssBaseline />
-//       <Box
-//         sx={{
-//           display: "flex",
-//           flexDirection: "column",
-//           alignItems: "center",
-//           height: "100vh",
-//           backgroundColor: theme.palette.background.paper,
-//           padding: theme.spacing(2),
-//         }}
-//       >
-//         <Typography variant="h3" gutterBottom color="primary">
-//           {roles === "Teacher" ? "רשימת מבחנים לכיתה" : "רשימת מבחנים"}
-//         </Typography>
-//         <Box sx={{ mb: 2, width: "100%" }}>
-//           <TextField
-//             variant="outlined"
-//             fullWidth
-//             value={searchText}
-//             onChange={handleSearch}
-//             placeholder="חיפוש לפי כותרת..."
-//             InputProps={{
-//               startAdornment: (
-//                 <InputAdornment position="start">
-//                   <SearchIcon />
-//                 </InputAdornment>
-//               ),
-//             }}
-//           />
-//         </Box>
-//         <Box
-//           sx={{
-//             height: "calc(100vh - 200px)",
-//             width: "100%",
-//             "& .MuiDataGrid-root": {
-//               border: "none",
-//               borderRadius: "8px",
-//               backgroundColor: theme.palette.background.paper,
-//             },
-//             "& .MuiDataGrid-cell": {
-//               textAlign: "center",
-//             },
-//             "& .MuiDataGrid-columnHeaders": {
-//               backgroundColor: "#f3f3e9",
-//               fontWeight: "bold",
-//             },
-//             "& .MuiDataGrid-footerContainer": {
-//               backgroundColor: "#f3f3e9",
-//             },
-//           }}
-//         >
-//           <DataGrid
-//             rows={filteredRows}
-//             columns={columns}
-//             pageSize={10}
-//             rowsPerPageOptions={[10]}
-//           />
-//         </Box>
-//         {roles === "Teacher" && (
-//           <Tooltip title="Add new list">
-//             <IconButton
-//               component={Link}
-//               to="/dash/new-list"
-//               aria-label="add"
-//               color="primary"
-//               sx={{
-//                 position: "absolute",
-//                 bottom: theme.spacing(2),
-//                 right: theme.spacing(2),
-//               }}
-//             >
-//               <AddCircleIcon style={{ fontSize: 60 }} />
-//             </IconButton>
-//           </Tooltip>
-//         )}
-//       </Box>
-//     </ThemeProvider>
-//   );
-// };
-
-// export default ListWord;

@@ -47,13 +47,13 @@ const login = async (req, res) => {
     // company: foundUser.company,
     class: foundUser.class,
   };
-  const acssesToken = jwt.sign(userInfo, process.env.ACCES_TOKEN_SECRET, {
+  const accessToken = jwt.sign(userInfo, process.env.ACCES_TOKEN_SECRET, {
     expiresIn: "15m",
   });
 
   const refreshToken = jwt.sign(
     { username: foundUser.username },
-    process.env.ACCES_TOKEN_SECRET,
+    process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: "7d" }
   );
 
@@ -62,7 +62,7 @@ const login = async (req, res) => {
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
-  res.json({ acssesToken });
+  res.json({ accessToken});
 };
 // const refresh = async (req, res) => {
 //   const cookies = req.cookies;
@@ -134,10 +134,10 @@ const refresh = async (req, res) => {
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decode) => {
       if (err) {
-        console.log("fff")
+
         return res.status(403).json({
           error: true,
-          message: "Forbiddenבבב",
+          message: "Forbidden",
           data: null,
         });
       }

@@ -13,10 +13,10 @@ const store = configureStore({
     
     middleware: (defaultMiddleware) =>
     defaultMiddleware().concat(apiSlice.middleware),
-    devTools: true//לא שלכוח לשנות בהמשך לfalse
+    devTools: false//לא שלכוח לשנות בהמשך לfalse
 
 
-    
+   
     
 });
 

@@ -48,6 +48,9 @@ import HangmanGame from "./features/actions/game/HangmanGame";
 import MainPage from "./MainPage";
 import Instructions from "./features/instructions/Instructions";
 import MarksByStudent from "./features/actions/MarksByStudent";
+import ScoreCharts from "./features/actions/graphs/ScoreCharts";
+import MainGraphs from "./features/actions/graphs/MainGraphs";
+import Play from "./features/actions/game/Play";
 
 // import PuzzleGame from "./features/actions/game/PuzzleGame";
 function App() {
@@ -96,14 +99,17 @@ function App() {
                   <Route path="PersonalDetails" element={<SingleUser notForATeacher="true" />} />
 
                   <Route path="wordLsList" element={<ListWord />} />
-                  <Route path="play/:_id" element={<WordsGame />} />
-                  <Route path="play/memory/:_id" element={<MemoryGame />} />
-                  <Route path="play/multi-choice/:_id" element={<MultiChoiceGame />} />
-                  <Route path="play/hangman/:_id" element={<HangmanGame />} />
+                  <Route path="play/:_id/wordgame" element={<WordsGame />} />
+                  <Route path="play/:_id/memory" element={<MemoryGame />} />
+                  <Route path="play/:_id/multi-choice" element={<MultiChoiceGame />} />
+                  <Route path="play/:_id/hangman" element={<HangmanGame />} />
                   {/* <Route path="play/puzzle/:_id" element={<PuzzleGame />} /> */}
 
                   <Route path="add" element={<AddWordsList />} />
                   <Route path="todos" element={<Todos />} />
+                  <Route path="play/:_id" element={<Play/>}/>
+                  <Route path="play" element={<Play/>}/>
+                  <Route path="graphs" element={<MainGraphs/>}/>
                   <Route path="marks/:_id" element={<ListMarkStudents />} />
 
                   <Route path="words/:_id" element={<Words />} />

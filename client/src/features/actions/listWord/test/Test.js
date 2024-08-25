@@ -16,12 +16,14 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-import { Speech } from 'react-speech';
+ import Speech from 'react-speech';
+
+
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import WordComparison from "./WordComparison";
 import useAuth from "../../../../hooks/useAuth";
-import WordSpeaker from "../add/WordSpeaker";
+
 import {
   useGetSingleTestMutation,
   useUpdateTestMutation,
