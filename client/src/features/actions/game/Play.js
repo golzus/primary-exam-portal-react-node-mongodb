@@ -15,7 +15,7 @@ const Play = () => {
   const [selectedId, setSelectedId] = useState("");
 
   useEffect(() => {
-    if (!_id) {
+    if (_id) {
       getAllTests({ user });
     }
     if (data) {
@@ -29,10 +29,10 @@ const Play = () => {
   const handleInputChange = (event) => {
     setSelectedId(event.target.value);
   };
-
+if(error||isLoading||!data)return <h1>loading...</h1>
   return (
     <ThemeProvider theme={theme}>
-      {!_id && data && (
+       (
         <Grid item xs={12} sm={6}>
           <TextField
             select
@@ -49,8 +49,7 @@ const Play = () => {
             ))}
           </TextField>
         </Grid>
-      )}
-
+      )
       {_id && (
         <Box
           sx={{
