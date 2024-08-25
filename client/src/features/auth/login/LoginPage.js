@@ -36,7 +36,9 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [usernameFocused, setUsernameFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
-
+  useEffect(()=>{
+    console.log("jj");
+  },[])
   useEffect(() => {
     if (isSuccess) {
            navigate('/dash');

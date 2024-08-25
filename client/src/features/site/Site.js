@@ -8,6 +8,7 @@ const [enter,setEnter]=useState(false);
 useEffect(() => {
     if (enter) {
       navigate("/login");
+   
     }
 }, [enter]);
 const handleClick=()=>{

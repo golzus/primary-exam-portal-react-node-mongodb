@@ -57,10 +57,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route element={<CheckLoginNotRequired />}>
           <Route path="/" element={<SiteLayout />}>
             <Route index element={<WelcomePage />} />
-            <Route path="login" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
 
             <Route element={<PersistLogin />}>
               <Route
@@ -120,7 +119,7 @@ function App() {
               </Route>
             </Route>
           </Route>
-        </Route>
+        
       </Routes>
     </Router>
   );
