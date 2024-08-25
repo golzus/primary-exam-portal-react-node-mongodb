@@ -31,7 +31,6 @@ const theme = createTheme({
 const LoginPage = () => {
   const [login, { isError, error, isLoading, data, isSuccess }] = useLoginMutation();
   const navigate = useNavigate();
-  const { roles } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [usernameFocused, setUsernameFocused] = useState(false);
