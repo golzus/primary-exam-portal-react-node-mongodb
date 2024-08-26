@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const verifyAdmin = require("../middleware/verifyAdmin");
 const login = async (req, res) => {
   const { username, password } = req.body;
+  const ee=await User.find()
+ 
   if (!username || !password)
     return res.status(401).json({
       erreo: true,
@@ -14,9 +16,9 @@ const login = async (req, res) => {
     });
 
   const foundUser = await User.findOne({
-    username: username,
-    deleted: false,
-    active: true,
+    username: "golda",
+    // deleted: false,
+    // active: true,
   })
 
     .populate("class", { name: 1, image: 1 })

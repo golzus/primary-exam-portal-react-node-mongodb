@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setToken } from '../features/auth/authSlice'
 const baseQuery = fetchBaseQuery({
-   //baseUrl: 'http://localhost:1000',
+//   baseUrl: 'http://localhost:1000',
       baseUrl: 'https://server-31ql.onrender.com', // הכתובת של הסרבר בענן
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
