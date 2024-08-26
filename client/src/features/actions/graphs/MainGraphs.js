@@ -148,7 +148,7 @@ const MainGraphs = () => {
       /> */}
     
     </div>
-    <LineChart/>
+  
     </div>
   );
 }

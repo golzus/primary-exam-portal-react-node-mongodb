@@ -1,7 +1,40 @@
-.score-category {
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 1.5;
-    color: #9B153B; /* צבע בורדו */
-  }
-  
+/* קובץ CSS עבור ScoreCharts */
+
+.chart-container {
+  border: 1px solid #e0e0e0; /* מסגרת אפורה סביב כל גרף */
+  border-radius: 8px; /* פינות מעוגלות */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* הצללה קלה */
+  overflow: hidden; /* להסתיר תוכן החורג */
+  background-color: #ffffff; /* רקע לבן */
+}
+
+.chart-container .chart {
+  height: 100%; /* הגובה יתפוס את כל הקונטיינר */
+  width: 100%; /* הרוחב יתפוס את כל הקונטיינר */
+}
+
+.graph-title {
+  padding: 10px; /* ריפוד מסביב לכותרת */
+  font-size: 1.2em; /* גודל כתב בכותרת */
+  color: #4e0623; /* צבע טקסט לכותרת */
+  text-align: center; /* ממרכז את הטקסט */
+  background-color: #f9f9f9; /* רקע בהיר לכותרת */
+}
+
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* רווח בין הפריטים */
+  margin-bottom: 16px; /* רווח מתחת לסטטיסטיקות */
+}
+
+.stats-item {
+  font-size: 1em; /* גודל כתב של סטטיסטיקות */
+  color: #333; /* צבע טקסט כהה לסטטיסטיקות */
+}
+
+.select-container {
+  margin-top: 16px; /* רווח עליון לבחירה */
+  display: flex;
+  justify-content: center; /* למרכז את הבחירה */
+}
