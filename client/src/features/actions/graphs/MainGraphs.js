@@ -4,6 +4,7 @@ import React from 'react';
 import Plot from 'react-plotly.js';
 import ScoreCharts from './ScoreCharts';
 import './MainGraphs.css'
+import LineChart from './lineData';
 // צבעים בורדו בגוונים שונים
 const colors = [
   '#9B153B',  // בורדו כהה
@@ -147,6 +148,7 @@ const MainGraphs = () => {
       /> */}
     
     </div>
+    <LineChart/>
     </div>
   );
 }

@@ -29,7 +29,7 @@ const Play = () => {
   const handleInputChange = (event) => {
     setSelectedId(event.target.value);
   };
-if(!_id&&(error||isLoading||!data))return <h1>loading...</h1>
+if((error||isLoading||!data))return <h1>loading...</h1>
   return (
     <ThemeProvider theme={theme}>
        
