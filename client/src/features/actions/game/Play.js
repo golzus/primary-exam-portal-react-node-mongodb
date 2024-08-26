@@ -24,32 +24,32 @@ const Play = () => {
         setSelectedId(data.data[0].title); // הגדרת ערך ברירת מחדל שהוא הראשון ברשימה
       }
     }
-  }, [_id, data, getAllTests, user]);
+  }, []);
 
   const handleInputChange = (event) => {
     setSelectedId(event.target.value);
   };
-if(error||isLoading||!data)return <h1>loading...</h1>
+if(!_id&&(error||isLoading||!data))return <h1>loading...</h1>
   return (
     <ThemeProvider theme={theme}>
-       (
+       
         <Grid item xs={12} sm={6}>
           <TextField
             select
             fullWidth
-            label="_id"
+            label="מבחן"
             name="_id"
             value={selectedId}
             onChange={handleInputChange}
           >
-            {data.data.map((test) => (
+            {data?.data?.map((test) => (
               <MenuItem key={test._id} value={test.title}>
                 {test.title}
               </MenuItem>
             ))}
           </TextField>
         </Grid>
-      )
+      
       {_id && (
         <Box
           sx={{

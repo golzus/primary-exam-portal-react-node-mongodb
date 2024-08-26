@@ -59,7 +59,8 @@ function App() {
       <Routes>
           <Route path="/" element={<SiteLayout />}>
             <Route index element={<WelcomePage />} />
-            <Route path="/login" element={<LoginPage />} />
+            {/* <Route path="/login" element={<LoginPage />} /> */}
+            <Route path="/login" element={<h1>hello</h1>} />
 
             <Route element={<PersistLogin />}>
               <Route
