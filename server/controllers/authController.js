@@ -16,13 +16,14 @@ const login = async (req, res) => {
     });
 
   const foundUser = await User.findOne({
-    username: "golda",
+    username: username,
     // deleted: false,
     // active: true,
   })
 
     .populate("class", { name: 1, image: 1 })
     .lean();
+    console.log(foundUser,"found");
   if (!foundUser) {
     return res.status(401).json({
       error: true,
