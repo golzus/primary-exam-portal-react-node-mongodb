@@ -27,6 +27,8 @@ import {
   useUpdateTestMutation,
 } from "../view/ListWordApiSlice";
 import useWordComparison from "../../../../hooks/useWordComparison";
+import WordSpeaker from "../add/WordSpeaker";
+import useWordSpeaker from "../../../../hooks/useWordSpeaker";
 
 const Test = () => {
   const compareWords = useWordComparison();
@@ -83,8 +85,6 @@ const Test = () => {
         }));
         setWordList(listTrying);
       }
-      if(wordList)
-console.log(wordList,"worrrrrrrrrrrrrrrrrrr");
       // Initialize listen counts with the correct size and values
       const initialListenCounts = new Array(listWord.data.test.length).fill(
         listWord.data.countListenToWord
@@ -92,6 +92,7 @@ console.log(wordList,"worrrrrrrrrrrrrrrrrrr");
       setListenCounts(initialListenCounts);
     }
   }, [isSuccess, listWord],wordList);
+  const speakWord=useWordSpeaker()
 
   useEffect(() => {
     if (isTrying) {
@@ -103,7 +104,6 @@ console.log(wordList,"worrrrrrrrrrrrrrrrrrr");
   }, [trying, sureStarting, _id, isUpdateSuccess, isError, loading, updateTest]);
 
   const handleChange = (index, value) => {
-    console.log(wordList,"xdfghjkjhgf");
     const updatedList = wordList.map((item, i) =>
       i === index
         ? { ...item, answer: value } // Create a new object with the updated answer
@@ -154,7 +154,7 @@ console.log(wordList,"worrrrrrrrrrrrrrrrrrr");
       updatedListenCounts[index] -= 1;
       setListenCounts(updatedListenCounts);
     }
-
+    speakWord(word);
 
     // e.stopPropagation();
     const voices = window.speechSynthesis.getVoices();
@@ -168,13 +168,14 @@ console.log(wordList,"worrrrrrrrrrrrrrrrrrr");
     const voice = preferredVoice || fallbackVoice;
 
     if (voice) {
-      <Speech
+     <Speech
         text={word}
         voice="Google UK English Female" // ניתן לשנות לקול המועדף עליך
         rate="1" // מהירות ההקראה
         pitch="1" // גובה הצליל
         volume="1" // עוצמת הקול
-      />
+      />  
+
     } else {
       console.warn('No US English voice found');
     }

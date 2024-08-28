@@ -26,15 +26,15 @@ import {
   // CircularProgress,
   Grid,
 } from "@mui/material";
-import { VolumeUp } from "@mui/icons-material";
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
 import WordSpeaker from "./WordSpeaker";
 import { useAddListWordsMutation, useUpdateListWordsMutation } from "../view/ListWordApiSlice";
-
+import useWordSpeaker from "../../../../hooks/useWordSpeaker";
+import { HiOutlineSpeakerWave } from "react-icons/hi2";
 const AddWordsList = ({ WORDLIST }) => {
-  const { company } = useAuth();
+  // const { company } = useAuth();
   const { _id } = useParams();
   // const navigate = useNavigate();
   const [addListWords, { isError: addError, error: addApiError, isSuccess: addSuccess, isLoading: addLoading }] = useAddListWordsMutation();
@@ -46,9 +46,8 @@ const AddWordsList = ({ WORDLIST }) => {
   const [active, setActive] = useState(true);
   const [countListenToWord, setCountListenToWord] = useState(5);
   const [openDialog, setOpenDialog] = useState(true);
-
   const { chosenClass } = useSelector((state) => state.schoolAndClass);
-
+  const speakWord=useWordSpeaker()
   useEffect(() => {
     if (WORDLIST) {
       setWords(WORDLIST.data.test);
@@ -113,13 +112,7 @@ const AddWordsList = ({ WORDLIST }) => {
     setOpenDialog(false);
   };
 
-  const playSound = (word) => {
-
-   < WordSpeaker word={word}/>
-    // const utterance = new SpeechSynthesisUtterance(word);
-    // speechSynthesis.speak(utterance);
-  };
-
+ 
   const handleKeyPress = (e, index) => {
     if (e.key === 'Enter') {
       if (words[index].word && words[index].translate) {
@@ -128,6 +121,12 @@ const AddWordsList = ({ WORDLIST }) => {
     }
   };
 
+
+
+  const handleListen=(word)=>{
+speakWord(word)
+  }
+ 
   return (
     <Box className="background-animation" sx={{ width: '100%', maxWidth: '210mm', margin: 'auto', p: 3 }}>
       {/* Dialog for initial details */}
@@ -304,9 +303,15 @@ const AddWordsList = ({ WORDLIST }) => {
                     />
                   </TableCell>
                   <TableCell>
-                    <IconButton onClick={() => playSound(row.word)}>
-                      <VolumeUp />
+                  <IconButton onClick={() => handleListen(row.word)}
+                      className='wordSpeakerButton'
+                    >
+                      <HiOutlineSpeakerWave />
                     </IconButton>
+
+                    {/* <IconButton onClick={() => playSound(row.word)}>
+                      <VolumeUp />
+                    </IconButton> */}
                   </TableCell>
                   <TableCell>
                     <IconButton onClick={() => deleteRow(index)} color="error">
