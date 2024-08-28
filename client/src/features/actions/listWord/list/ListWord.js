@@ -61,7 +61,7 @@ const ListWord = ({ todos }) => {
   }
 
   const { chosenClass, chosenSchool } = useSchoolAndClass();
-  const [playId,setPlayId]=useState(null)
+  const [playId, setPlayId] = useState(null)
   const [searchText, setSearchText] = useState("");
   useEffect(() => {
     if (roles === "Student" && !todos) {
@@ -105,10 +105,10 @@ const ListWord = ({ todos }) => {
       console.log(wordLsList, "testStudent");
     }
   }
-  
+
 
   // אם playId לא null, מחזירים את הקומפוננטה Play בלבד
- 
+
   const filteredRows = (wordLsList?.data || [])
     .filter((list) =>
       list.title.toLowerCase().includes(searchText.toLowerCase())
@@ -118,7 +118,7 @@ const ListWord = ({ todos }) => {
       title: list.title,
       date: list.date ? list.date.slice(0, 10) : "",
       wordCount: list.test.length,
-    mark: list.mark || 0
+      mark: list.mark || 0
 
     }));
 
@@ -130,7 +130,7 @@ const ListWord = ({ todos }) => {
       headerAlign: "center",
       align: "center",
     },
-  {
+    {
       field: "mark",
       headerName: "ציון",
       flex: 1,
@@ -146,7 +146,7 @@ const ListWord = ({ todos }) => {
       sortable: false,
       renderCell: (params) => (
         <>
-    {/* <Tooltip title="play-translate">
+          {/* <Tooltip title="play-translate">
     <IconButton
       component={Link}
       to={`/dash/play/${params.row.id}`}
@@ -180,19 +180,19 @@ const ListWord = ({ todos }) => {
     </IconButton>
   </Tooltip> */}
 
-  <Tooltip title="plays">
-    <IconButton
-       component={Link}
-       to={`/dash/play/${params.row.id}`}
-      aria-label="play-memory"
-      color="info"
-      sx={{ mr: 1 }}
-    >
-      <MdSportsEsports/>
-    </IconButton>
-  </Tooltip>
+          <Tooltip title="plays">
+            <IconButton
+              component={Link}
+              to={`/dash/play/${params.row.id}`}
+              aria-label="play-memory"
+              color="info"
+              sx={{ mr: 1 }}
+            >
+              <MdSportsEsports />
+            </IconButton>
+          </Tooltip>
 
-  <Tooltip title="Hangman-play">
+          {/* <Tooltip title="Hangman-play">
     <IconButton
       component={Link}
       to={`/dash/play/hangman/${params.row.id}`}
@@ -202,8 +202,9 @@ const ListWord = ({ todos }) => {
     >
       <FaUserSecret />
     </IconButton>
-  </Tooltip>
-  </>)},
+  </Tooltip> */}
+        </>)
+    },
     {
       field: "actions",
       headerName: "פעולות",
@@ -224,19 +225,10 @@ const ListWord = ({ todos }) => {
               <VisibilityIcon />
             </IconButton>
           </Tooltip>
-         
+
           {roles === "Teacher" ? (
             <>
-              {/* <Tooltip title="Print">
-                <IconButton
-                  aria-label="print"
-                  onClick={() => printTest(params.row.id)}
-                  color="info"
-                  sx={{ mr: 1 }}
-                >
-                  <PrintIcon />
-                </IconButton>
-              </Tooltip> */}
+           
               <Tooltip title="Update">
                 <IconButton
                   component={Link}
@@ -257,7 +249,7 @@ const ListWord = ({ todos }) => {
                   color="info"
                   sx={{ mr: 1 }}
                 >
-                                    <AssignmentIcon />
+                  <AssignmentIcon />
                 </IconButton>
               </Tooltip>
 
@@ -272,16 +264,28 @@ const ListWord = ({ todos }) => {
               </Tooltip>
             </>
           ) : roles === "Student" ? (
+            <>
             <Tooltip title="test">
               <IconButton
                 component={Link}
-                to={`/dash/test/${params.row.id}`}
+                to={`/dash/test/false/${params.row.id}`}
                 aria-label="view"
                 color="primary"
               >
                 <DescriptionIcon />
               </IconButton>
             </Tooltip>
+            <Tooltip title="trying">
+              <IconButton
+                component={Link}
+                to={`/dash/test/true/${params.row.id}`}
+                aria-label="trying"
+                color="primary"
+              >
+                <DescriptionIcon />
+              </IconButton>
+            </Tooltip>
+</>
           ) : null}
         </>
       ),
@@ -302,7 +306,7 @@ const ListWord = ({ todos }) => {
           }}
         >
           <TextField
-             label="חיפוש"
+            label="חיפוש"
             variant="outlined"
             value={searchText}
             onChange={handleSearch}
@@ -310,7 +314,7 @@ const ListWord = ({ todos }) => {
               startAdornment: (
                 <InputAdornment position="start">
                   {/* <IconButton edge="end"> */}
-                    <SearchIcon />
+                  <SearchIcon />
                   {/* </IconButton> */}
                 </InputAdornment>
               ),
@@ -347,7 +351,7 @@ const ListWord = ({ todos }) => {
               "& .MuiDataGrid-columnHeader": {
                 // backgroundColor: "#f3f3e9", // Beige background for the header
                 fontWeight: "bolder", // Bold header text
-                fontSize:"larger"
+                fontSize: "larger"
               },
               "& .MuiDataGrid-cell": {
                 overflow: "hidden",

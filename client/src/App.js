@@ -115,7 +115,7 @@ function App() {
 
                   <Route path="words/:_id" element={<Words />} />
                   <Route path=":_id" element={<SingleListWord />} />
-                  <Route path="test/:_id" element={<Test />} />
+                  <Route path="test/:trying/:_id" element={<Test />} />
                 </Route>
               {/* </Route> */}
               </Route>

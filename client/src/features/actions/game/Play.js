@@ -29,6 +29,23 @@ const Play = () => {
   const handleInputChange = (event) => {
     setSelectedId(event.target.value);
   };
+  if(!_id)return
+  <Grid item xs={12} sm={6}>
+  <TextField
+    select
+    fullWidth
+    label="מבחן"
+    name="_id"
+    value={selectedId}
+    onChange={handleInputChange}
+  >
+    {data?.data?.map((test) => (
+      <MenuItem key={test._id} value={test.title}>
+        {test.title}
+      </MenuItem>
+    ))}
+  </TextField>
+</Grid>
 if((error||isLoading||!data))return <h1>loading...</h1>
   return (
     <ThemeProvider theme={theme}>

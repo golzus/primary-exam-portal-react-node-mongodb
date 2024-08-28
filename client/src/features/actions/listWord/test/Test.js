@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -16,21 +16,18 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
- import Speech from 'react-speech';
+import Speech from 'react-speech';
 
 
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import WordComparison from "./WordComparison";
-import useAuth from "../../../../hooks/useAuth";
-
 import {
   useGetSingleTestMutation,
   useUpdateTestMutation,
 } from "../view/ListWordApiSlice";
 
 const Test = () => {
-  const { company, roles } = useAuth();
   const [markStudent, setMarkStudent] = useState(0);
   const [seeMark, setSeeMark] = useState(false);
   const [seeWarning, setSeeWarning] = useState(false);
@@ -38,6 +35,7 @@ const Test = () => {
   const [wordList, setWordList] = useState([]);
   const [listenCounts, setListenCounts] = useState([]);
   const { _id } = useParams();
+  const { trying } = useParams()
   const [
     updateTest,
     {
@@ -55,18 +53,22 @@ const Test = () => {
 
   useEffect(() => {
     getSingleTest({ _id });
+    console.log(trying, "tryingX");
   }, [_id]);
   useEffect(() => {
+
+
     if (listWord) {
       if (listWord.data.complete) {
         setSeeMark(true);
         setSureStarting(true);
         setMarkStudent(listWord.data.mark)
-        console.log(listWord.data.mark, "jjj");
+
       }
+
       // setSureStarting(true);
     }
-  }, [listWord]);
+  }, [listWord, trying]);
   useEffect(() => {
     if (isSuccess) {
       // Set the word list
@@ -81,9 +83,14 @@ const Test = () => {
   }, [isSuccess, listWord]);
 
   useEffect(() => {
-    if (sureStarting) {
+    if (trying) {
+      console.log(trying, "hhhhhhhhhhhhh");
+      setSureStarting(true);
+    }
+    if (sureStarting && !trying) {
       updateTest({ _id: _id, active: false, complete: true });
     }
+    
   }, [sureStarting, _id, isUpdateSuccess, isError, loading, updateTest]);
 
   const handleChange = (index, value) => {
@@ -102,7 +109,13 @@ const Test = () => {
   const handleSubmit = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    setSeeWarning(true);
+    if (trying === false)
+      setSeeWarning(true);
+    else {
+      setSeeWarning(false);
+      setSeeMark(true)
+    }
+
   };
 
   const handleWarningClose = () => {
@@ -153,13 +166,13 @@ const Test = () => {
     const voice = preferredVoice || fallbackVoice;
 
     if (voice) {
-      <Speech 
-      text={word}
-      voice="Google UK English Female" // ניתן לשנות לקול המועדף עליך
-      rate="1" // מהירות ההקראה
-      pitch="1" // גובה הצליל
-      volume="1" // עוצמת הקול
-    />
+      <Speech
+        text={word}
+        voice="Google UK English Female" // ניתן לשנות לקול המועדף עליך
+        rate="1" // מהירות ההקראה
+        pitch="1" // גובה הצליל
+        volume="1" // עוצמת הקול
+      />
     } else {
       console.warn('No US English voice found');
     }
@@ -179,15 +192,14 @@ const Test = () => {
     const mark = (correctAnswers / updatedList.length) * 100;
     setMarkStudent(mark);
     setWordList(updatedList);
-    console.log("Updated List with User Answers: ", updatedList);
-    console.log(mark, "gg");
-    updateTest({
-      _id: _id,
-      active: false,
-      test: updatedList,
-      complete: true,
-      mark
-    });
+    if (!trying)
+      updateTest({
+        _id: _id,
+        active: false,
+        test: updatedList,
+        complete: true,
+        mark
+      });
     setSeeMark(true);
   };
 
@@ -309,8 +321,8 @@ const Test = () => {
                     </TableCell>
                   )}
                   {seeMark && <TableCell>{cat.translate}</TableCell>}
-                 
-                
+
+
                   <TableCell>
                     <IconButton onClick={() => handleListen(index, cat.word)}
                       className='wordSpeakerButton'
