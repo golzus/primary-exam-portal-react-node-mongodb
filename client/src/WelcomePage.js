@@ -22,7 +22,7 @@ const WelcomePage = () => {
           marginBottom: '2rem' 
         }} 
       />
-           <a href="/login" >
+           <a href="/#/login" >
 
       <Button 
         variant="contained" 

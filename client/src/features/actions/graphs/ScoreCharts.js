@@ -163,8 +163,7 @@ import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import { useTheme, Typography, Select, MenuItem, Box } from '@mui/material'; // ייבוא רכיבי MUI
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../../../theme';
-import './ScoreCharts.css'; // ייבוא קובץ ה-CSS
+// import './ScoreCharts.css'; // ייבוא קובץ ה-CSS
 
 const initialData = {
   Math: [
@@ -275,22 +274,7 @@ const ScoreCharts = () => {
           <Typography variant="h6">
             דירוג: {statistics.rank} מתוך {initialData[selectedTest].length}
           </Typography>
-        </Box>
-
-        <Box className="chart-container" mt={2}>
-          <Plot
-            className='chart'
-            data={chartData}
-            layout={{
-              title: `התפלגות ציונים עבור ${selectedTest}`,
-              paper_bgcolor: '#ffffff',
-              plot_bgcolor: '#f3f3f3',
-              margin: { t: 40, b: 40, l: 40, r: 40 }, // הוספת מרווחים סביב הגרף
-            }}
-          />
-        </Box>
-
-        <Box className="select-container" mt={2}>
+          <Box className="select-container" mt={2}>
           <Select
             value={selectedTest}
             onChange={handleTestChange}
@@ -302,6 +286,36 @@ const ScoreCharts = () => {
             ))}
           </Select>
         </Box>
+        </Box>
+
+        <Box className="chart-container" mt={2}>
+          <Plot
+            className='chart'
+            data={chartData}
+            layout={{
+              title: `התפלגות ציונים עבור ${selectedTest}`,
+              paper_bgcolor: '#ffffff',
+              plot_bgcolor: '#f3f3f3',
+              height: 200, /* גובה של 40% מגובה החלון */
+              width: '30%',
+              margin: { t: 40, b: 40, l: 40, r: 40 }, // הוספת מרווחים סביב הגרף
+            }}
+          />
+        </Box>
+
+        {/* <Box className="select-container" mt={2}>
+          <Select
+            value={selectedTest}
+            onChange={handleTestChange}
+            variant="outlined"
+            sx={{ width: 200 }}
+          >
+            {Object.keys(initialData).map(test => (
+              <MenuItem key={test} value={test}>{test}</MenuItem>
+            ))}
+          </Select>
+        </Box> */}
+
       </Box>
     </ThemeProvider>
   );
