@@ -21,13 +21,15 @@ import Speech from 'react-speech';
 
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
 import { FaCheck, FaTimes } from "react-icons/fa";
-import WordComparison from "./WordComparison";
+// import WordComparison from "./WordComparison";
 import {
   useGetSingleTestMutation,
   useUpdateTestMutation,
 } from "../view/ListWordApiSlice";
+import useWordComparison from "../../../../hooks/useWordComparison";
 
 const Test = () => {
+  const compareWords = useWordComparison();
   const [markStudent, setMarkStudent] = useState(0);
   const [seeMark, setSeeMark] = useState(false);
   const [seeWarning, setSeeWarning] = useState(false);
@@ -36,6 +38,8 @@ const Test = () => {
   const [listenCounts, setListenCounts] = useState([]);
   const { _id } = useParams();
   const { trying } = useParams()
+  const isTrying = trying === "true";
+
   const [
     updateTest,
     {
@@ -53,47 +57,53 @@ const Test = () => {
 
   useEffect(() => {
     getSingleTest({ _id });
-    console.log(trying, "tryingX");
   }, [_id]);
   useEffect(() => {
-
-
     if (listWord) {
-      if (listWord.data.complete) {
+      if (listWord.data.complete&&!isTrying) {
         setSeeMark(true);
         setSureStarting(true);
         setMarkStudent(listWord.data.mark)
-
       }
 
       // setSureStarting(true);
     }
-  }, [listWord, trying]);
+  }, [listWord]);
   useEffect(() => {
     if (isSuccess) {
       // Set the word list
+      if(!isTrying)
       setWordList(listWord.data.test);
-
+      else {
+        const listTrying = listWord.data.test.map((item) => ({
+          word: item.word,
+          translate: item.translate,
+          correct: false,
+          answer: ""
+        }));
+        setWordList(listTrying);
+      }
+      if(wordList)
+console.log(wordList,"worrrrrrrrrrrrrrrrrrr");
       // Initialize listen counts with the correct size and values
       const initialListenCounts = new Array(listWord.data.test.length).fill(
         listWord.data.countListenToWord
       );
       setListenCounts(initialListenCounts);
     }
-  }, [isSuccess, listWord]);
+  }, [isSuccess, listWord],wordList);
 
   useEffect(() => {
-    if (trying) {
-      console.log(trying, "hhhhhhhhhhhhh");
+    if (isTrying) {
       setSureStarting(true);
     }
-    if (sureStarting && !trying) {
+    if (sureStarting && !isTrying) {
       updateTest({ _id: _id, active: false, complete: true });
     }
-    
-  }, [sureStarting, _id, isUpdateSuccess, isError, loading, updateTest]);
+  }, [trying, sureStarting, _id, isUpdateSuccess, isError, loading, updateTest]);
 
   const handleChange = (index, value) => {
+    console.log(wordList,"xdfghjkjhgf");
     const updatedList = wordList.map((item, i) =>
       i === index
         ? { ...item, answer: value } // Create a new object with the updated answer
@@ -109,7 +119,7 @@ const Test = () => {
   const handleSubmit = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    if (trying === false)
+    if (isTrying === false)
       setSeeWarning(true);
     else {
       setSeeWarning(false);
@@ -130,19 +140,11 @@ const Test = () => {
     );
   };
 
-  const handleResult = (index, isCorrect) => {
-    updateWordList(index, isCorrect);
-  };
+  // const handleResult = (index, isCorrect) => {
+  //   updateWordList(index, isCorrect);
+  // };
 
-  const compareAnswers = () => {
-    wordList.forEach((item, index) => {
-      <WordComparison
-        inputWord={item.answer}
-        correctAnswer={item.translate}
-        onResult={(isCorrect) => handleResult(index, isCorrect)}
-      />;
-    });
-  };
+
 
   const handleListen = (index, word) => {
 
@@ -180,12 +182,23 @@ const Test = () => {
 
 
   };
+  // const compareAnswers = () => {
+  //   // Use the custom hook outside of the callback
+  //   const results = wordList.map((item, index) => ({
+  //     ...item,
+  //     correct: useWordComparison(item.translate, item.answer),
+  //   }));
+  //   setWordList(results);
+  // };
+
 
   const checkTest = (e) => {
     setSeeWarning(false);
     const updatedList = wordList.map((item) => ({
       ...item,
-      correct: item.translate === item.answer, // Check if the answer is correct
+      correct:compareWords(item.translate , item.answer)
+      // Check if the answer is correct
+
     }));
 
     const correctAnswers = updatedList.filter((item) => item.correct).length;

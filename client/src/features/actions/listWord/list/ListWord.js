@@ -10,6 +10,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { FaPen } from 'react-icons/fa';
 import { MdSportsEsports } from 'react-icons/md';
 import SearchIcon from "@mui/icons-material/Search";
 // import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -282,7 +283,8 @@ const ListWord = ({ todos }) => {
                 aria-label="trying"
                 color="primary"
               >
-                <DescriptionIcon />
+
+                <FaPen />
               </IconButton>
             </Tooltip>
 </>
