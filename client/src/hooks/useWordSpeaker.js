@@ -19,12 +19,12 @@ const useWordSpeaker = () => {
     speechSynthesis.onvoiceschanged = loadVoices;
   }, []);
 
-  // הפונקציה שמוקראת מהמילה
-  const speakWord = (word) => {
+  // הפונקציה שמוקראת מהמילה עם פרמטר למהירות
+  const speakWord = (word, rate = 1) => {
     if (voice && word) {
       const utterance = new SpeechSynthesisUtterance(word);
       utterance.voice = voice;
-      utterance.rate = 1;
+      utterance.rate = rate; // מהירות השמעה
       utterance.pitch = 1;
       utterance.volume = 1;
 
