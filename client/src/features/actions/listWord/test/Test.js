@@ -29,8 +29,24 @@ import {
 import useWordComparison from "../../../../hooks/useWordComparison";
 import WordSpeaker from "../add/WordSpeaker";
 import useWordSpeaker from "../../../../hooks/useWordSpeaker";
+import {  FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const Test = () => {
+
+
+  
+    const [selectedSpeed, setSelectedSpeed] = useState(1); // ברירת המחדל למהירות רגילה
+  
+    const handleSpeedChange = (event) => {
+      setSelectedSpeed(Number(event.target.value));
+    };
+  
+    const handleSpeakClick = () => {
+      speakWord("identify", selectedSpeed);
+    };
+
+
+
   const compareWords = useWordComparison();
   const [markStudent, setMarkStudent] = useState(0);
   const [seeMark, setSeeMark] = useState(false);
@@ -124,6 +140,7 @@ const Test = () => {
     else {
       setSeeWarning(false);
       setSeeMark(true)
+      checkTest()
     }
 
   };
@@ -154,7 +171,7 @@ const Test = () => {
       updatedListenCounts[index] -= 1;
       setListenCounts(updatedListenCounts);
     }
-    speakWord(word);
+    speakWord(word,selectedSpeed);
 
     // e.stopPropagation();
     const voices = window.speechSynthesis.getVoices();
@@ -201,7 +218,7 @@ const Test = () => {
       // Check if the answer is correct
 
     }));
-
+console.log(wordList,"wordlistfff");
     const correctAnswers = updatedList.filter((item) => item.correct).length;
     const mark = (correctAnswers / updatedList.length) * 100;
     setMarkStudent(mark);
@@ -274,6 +291,28 @@ const Test = () => {
           backgroundColor: "rgba(255, 255, 255, 0.9)",
         }}
       >
+
+
+
+<FormControl fullWidth variant="outlined" margin="normal">
+        <InputLabel id="speed-select-label">בחר מהירות השמעה</InputLabel>
+        <Select
+          labelId="speed-select-label"
+          id="speed-select"
+          value={selectedSpeed}
+          onChange={handleSpeedChange}
+          label="בחר מהירות השמעה"
+        >
+          <MenuItem value={0.5}>0.5x (איטי יותר)</MenuItem>
+          <MenuItem value={0.75}>0.75x (איטי)</MenuItem>
+          <MenuItem value={1}>1x (רגיל)</MenuItem>
+          <MenuItem value={1.25}>1.25x (מהיר)</MenuItem>
+          <MenuItem value={1.5}>1.5x (מהיר יותר)</MenuItem>
+        </Select>
+      </FormControl>
+
+
+
         <Typography variant="h4" gutterBottom>
           {listWord?.data.title}
         </Typography>
