@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdNotifications, MdOutlineChat, MdPublic, MdSearch, MdPerson, MdUpload, MdExitToApp } from 'react-icons/md';
 import { ThemeProvider } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { Stack } from '@mui/material';
 import TestsYouHaveToDo from '../../features/TestsYouHaveToDo';
+import { useGetTestByClassAndUserMutation } from '../../features/actions/listWord/view/ListWordApiSlice';
 
 // עיצוב מותאם אישית עבור שדה החיפוש
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -40,6 +41,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Navbar = () => {
+  const [getTestByClassAndUser, { isError, data, error, isLoading }] =
+  useGetTestByClassAndUserMutation();
+const { _id: user } = useAuth();
+const [countOfNotifications,setCountOfNotifications]=useState(0)
+useEffect(() => {
+  getTestByClassAndUser({ user });
+  if(data){
+  setCountOfNotifications( data.data.length)}
+}, [getTestByClassAndUser, user]);
+
   const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
   const [profileAnchorEl, setProfileAnchorEl] = useState(null);
 
@@ -83,7 +94,7 @@ const Navbar = () => {
             }}>
               <div>
                 <IconButton aria-label="הצג התראות" color="inherit" onClick={handleNotificationClick}>
-                  <Badge badgeContent={0} color="secondary">
+                  <Badge badgeContent={countOfNotifications} color="secondary">
                     <MdNotifications size={20} style={{ color: '#ffffff' }} />
                   </Badge>
                 </IconButton>
@@ -163,7 +174,7 @@ const Navbar = () => {
           <Stack spacing={1} sx={{ width: "100%" }}>
             <Button
               component={Link}
-              to="PersonalDetails"
+              to="PersonallDetails"
               startIcon={<MdPerson />}
               onClick={handleClose}
               sx={{
