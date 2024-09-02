@@ -174,7 +174,7 @@ useEffect(() => {
           <Stack spacing={1} sx={{ width: "100%" }}>
             <Button
               component={Link}
-              to="PersonallDetails"
+              to="personalldetails"
               startIcon={<MdPerson />}
               onClick={handleClose}
               sx={{

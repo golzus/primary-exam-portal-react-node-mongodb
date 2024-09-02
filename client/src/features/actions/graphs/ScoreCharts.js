@@ -297,7 +297,7 @@ const ScoreCharts = () => {
               paper_bgcolor: '#ffffff',
               plot_bgcolor: '#f3f3f3',
               height: 200, /* גובה של 40% מגובה החלון */
-              width: '30%',
+              width:1000,
               margin: { t: 40, b: 40, l: 40, r: 40 }, // הוספת מרווחים סביב הגרף
             }}
           />

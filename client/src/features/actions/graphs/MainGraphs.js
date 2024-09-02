@@ -108,7 +108,8 @@ const MainGraphs = () => {
         data={lineData}
         layout={{
           title: 'התקדמות ציונים לאורך זמן',
-        
+          height: 300, /* גובה של 40% מגובה החלון */
+          width: 350,
           paper_bgcolor: '#ffffff',
           plot_bgcolor: '#f3f3f3',
         }}
@@ -119,7 +120,8 @@ const MainGraphs = () => {
         data={pieData}
         layout={{
           title: 'חלוקה לפי רמות ציונים',
-        
+          height: 300, /* גובה של 40% מגובה החלון */
+          width: 350,
           paper_bgcolor: '#ffffff',
           plot_bgcolor: '#f3f3f3',
         }}

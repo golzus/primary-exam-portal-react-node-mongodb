@@ -39,9 +39,8 @@
 
 /* הגדרת התנהגות גרפים כך שלא ייחתכו */
 .chart {
-    height: 100%; /* גובה 100% מהדיב המכיל */
+    /* height: 100%; /* גובה 100% מהדיב המכיל */
     width: 100%; /* רוחב 100% מהדיב המכיל */
-    background-color: slategray; /* צבע אפור מבריק */
     border-radius: 5px; 
     padding: 0; /* ללא ריפוד פנימי */
     box-sizing: border-box; /* כולל את הריפוד בגובה הכללי */
@@ -49,7 +48,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid #ccc; /* מסגרת אפורה סביב הגרף */
+    border: 2px solid #ccc; 
 }
 
 /* עבור מסכים קטנים */

@@ -67,7 +67,7 @@ const studentMenuActions = [
   {
     title: "אישי",
     list: [
-      { title: "הפרטים שלי", path: "PersonalDetails", icon: <Person /> },
+      { title: "הפרטים שלי", path: "personalldetails", icon: <Person /> },
     ],
   },
 ];
