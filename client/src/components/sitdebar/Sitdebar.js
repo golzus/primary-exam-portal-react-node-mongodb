@@ -177,7 +177,8 @@ const SiteBar = () => {
                   <ListItem
                     component={NavLink}
                     to={item.path}
-                    exact
+                    exact="true" // שינוי זה ממיר את הערך למחרוזת
+
                     sx={{
                       paddingRight: '0.5rem',
                       marginBottom: '0rem',
@@ -212,7 +213,8 @@ const SiteBar = () => {
                               <ListItem
                                 component={NavLink}
                                 to={subAction.path}
-                                exact
+                                exact="true" // שינוי זה ממיר את הערך למחרוזת
+
                                 sx={{
                                   paddingRight: '0.5rem',
                                   marginBottom: '0rem',

@@ -41,7 +41,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Navbar = () => {
-  const [getTestByClassAndUser, { isError, data, error, isLoading }] =
+  const [getTestByClassAndUser, {  data}] =
   useGetTestByClassAndUserMutation();
 const { _id: user } = useAuth();
 const [countOfNotifications,setCountOfNotifications]=useState(0)
@@ -49,7 +49,7 @@ useEffect(() => {
   getTestByClassAndUser({ user });
   if(data){
   setCountOfNotifications( data.data.length)}
-}, [getTestByClassAndUser, user]);
+}, [getTestByClassAndUser, user,data]);
 
   const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
   const [profileAnchorEl, setProfileAnchorEl] = useState(null);

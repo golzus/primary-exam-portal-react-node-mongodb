@@ -397,11 +397,11 @@ const SideBarActions = () => {
             </ListItem>
             {cat.list.map((item, subIndex) => (
               <ListItem
-                button
                 component={NavLink}
                 to={item.path}
                 key={subIndex}
-                exact
+                exact="true" // שינוי זה ממיר את הערך למחרוזת
+
                 sx={{
                   paddingRight: '1rem',
                   marginBottom: '0.5rem',
