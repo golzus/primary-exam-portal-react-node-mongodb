@@ -97,7 +97,7 @@ function App() {
                 {/* <Route path="dash/actions" element={<LayoutActions />}> */}
                   <Route index element={<MainPage/>} />
                   <Route path="choose" element={<CurrentSchoolAndClass />} />
-                  <Route path="PersonalDetails" element={<SingleUser notForATeacher="true" />} />
+                  <Route path="PersonallDetails" element={<SingleUser notForATeacher="true" />} />
 
                   <Route path="wordLsList" element={<ListWord />} />
                   <Route path="play/:_id/wordgame" element={<WordsGame />} />

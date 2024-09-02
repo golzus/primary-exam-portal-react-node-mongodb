@@ -88,18 +88,23 @@ const SingleUser = ({notForATeacher}) => {
                 defaultValue={user.fullname}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                select
-                fullWidth
-                label="Active"
-                name="active"
-                defaultValue={user.active}
-              >
-                <MenuItem value="true">Active</MenuItem>
-                <MenuItem value="false">Inactive</MenuItem>
-              </TextField>
-            </Grid>
+            <Grid item xs={12} sm={6}  style={{ display: notForATeacher || roles === 'Student' ? 'none' : 'block' }}>
+  <TextField
+    type={notForATeacher || roles === 'Student' ? 'hidden' : 'select'}
+    fullWidth
+    label={!(notForATeacher || roles === 'Student') ? "Active" : ""}
+    name="active"
+    defaultValue={user.active}
+  >
+    {!(notForATeacher || roles === 'Student') && (
+      <>
+        <MenuItem value="true">Active</MenuItem>
+        <MenuItem value="false">Inactive</MenuItem>
+      </>
+    )}
+  </TextField>
+</Grid>
+
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -115,7 +120,7 @@ const SingleUser = ({notForATeacher}) => {
               type="submit" 
               variant="contained" 
               color="primary"
-              disabled={isUpdating}
+              // disabled={isUpdating}
             >
               {isUpdating ? <><CircularProgress size={24} sx={{ marginRight: 1 }} /> {buttonText}</> : buttonText}
             </Button>
