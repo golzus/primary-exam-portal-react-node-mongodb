@@ -12,6 +12,8 @@ import useSchoolAndClass from '../../hooks/useSchoolAndClass';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import { FaChartLine } from 'react-icons/fa';
 import { useSendLoguotMutation } from '../../features/auth/authApiSlice';
+import { FaChalkboardTeacher } from 'react-icons/fa';
+import { FaUserTie } from 'react-icons/fa';
 
 
 // const user = {
@@ -126,7 +128,7 @@ const SiteBar = () => {
         },
       }}
     >
- <Box sx={{ padding: '0.5rem', textAlign: 'center', position: 'relative' }}>
+<Box sx={{ padding: '0.5rem', textAlign: 'center', position: 'relative' }}>
   <IconButton onClick={toggleCollapse} sx={{ position: 'absolute', top: 0, right: 0 }}>
     <FaBars style={{ color: '#9B153B' }} />
   </IconButton>
@@ -135,23 +137,63 @@ const SiteBar = () => {
       {roles === "Student" ? (
         <FaUser style={{ fontWeight: 'bold', fontSize: '1.9rem', color: '#9B153B', margin: '0 auto 0.5rem' }} />
       ) : (
-        <FaSchool style={{ fontSize: '1.5rem', color: '#9B153B', margin: '0 auto 0.5rem' }} />
+        <FaUserTie style={{ fontSize: '1.5rem', color: '#9B153B', margin: '0 auto 0.5rem' }} />
       )}
       <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '1rem', fontWeight: 'bold' }}>
         {fullname}
       </Typography>
-      <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '0.7rem', fontWeight: 'normal' }}>
-        {chosenNameSchool}
-      </Typography>
-      <Typography variant="h7" component="div" sx={{ color: '#9B153B', fontSize: '0.6rem', fontWeight: 'normal' }}>
-        {chosenNameClass}
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+        {chosenNameSchool && (
+          <>
+            <FaSchool style={{ fontSize: '1rem', color: '#9B153B' }} />
+            <Typography 
+              variant="h6" 
+              component="div" 
+              sx={{ 
+                color: '#9B153B', 
+                fontSize: '0.7rem', 
+                fontWeight: 'normal', 
+                maxWidth: '150px', 
+                overflow: 'hidden', 
+                textOverflow: 'ellipsis', 
+                whiteSpace: 'nowrap' 
+              }}
+            >
+              {chosenNameSchool}
+            </Typography>
+          </>
+        )}
+      </Box>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+        {chosenNameClass && (
+          <>
+            <FaChalkboardTeacher style={{ fontSize: '1rem', color: '#9B153B' }} />
+            <Typography 
+              variant="h7" 
+              component="div" 
+              sx={{ 
+                color: '#9B153B', 
+                fontSize: '0.6rem', 
+                fontWeight: 'normal', 
+                maxWidth: '150px', 
+                overflow: 'hidden', 
+                textOverflow: 'ellipsis', 
+                whiteSpace: 'nowrap' 
+              }}
+            >
+              {chosenNameClass}
+            </Typography>
+          </>
+        )}
+      </Box>
     </>
   )}
   <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.7rem' }}>
     {/* רכיבים נוספים במידת הצורך */}
   </Box>
 </Box>
+
+
 
 
       <Divider sx={{ borderColor: '#9B153B' }} />
