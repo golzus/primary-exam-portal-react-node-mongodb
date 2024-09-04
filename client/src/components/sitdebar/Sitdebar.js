@@ -61,8 +61,8 @@ const studentMenuActions = [
       { title: "גרפים", path: "graphs", icon: <FaChartLine /> },
     ],
 
-  
-    
+
+
   },
   {
     title: "אישי",
@@ -73,7 +73,7 @@ const studentMenuActions = [
 ];
 
 const SiteBar = () => {
-  const [sendLogout,{error,data}]= useSendLoguotMutation();
+  const [sendLogout, { error, data }] = useSendLoguotMutation();
   const { roles, classUser, fullname, image } = useAuth();
   const menuItems = roles === 'Teacher' ? teacherMenuActions : studentMenuActions;
   const [classTeacher, setClassTeacher] = useState("");
@@ -126,43 +126,33 @@ const SiteBar = () => {
         },
       }}
     >
-      <Box sx={{ padding: '0.5rem', textAlign: 'center', position: 'relative' }}>
-        <IconButton onClick={toggleCollapse} sx={{ position: 'absolute', top: 0, right: 0 }}>
-          <FaBars style={{ color: '#9B153B' }} />
-        </IconButton>
-        {!isCollapsed && (
-          <>
-            {image ? (
-              <Avatar
-                src={image}
-                sx={{
-                  width: '5vw',
-                  height: '5vw',
-                  maxWidth: '3rem',
-                  maxHeight: '3rem',
-                  margin: '0 auto 0.5rem',
-                }}
-              />
-            ) : (
-              <FaSchool style={{ fontSize: '1.5rem', color: '#9B153B', margin: '0 auto 0.5rem' }} />
-            )}
-            <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '0.7rem', fontWeight: 'bold' }}>
-              {chosenNameSchool}
-            </Typography>
-            <Typography variant="h7" component="div" sx={{ color: '#9B153B', fontSize: '0.6rem', fontWeight: 'bold' }}>
-              {chosenNameClass}
-            </Typography>
-          </>
-        )}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.7rem' }}>
-          <FaUser style={{ fontSize: '0.8rem', color: '#9B153B' }} />
-          {!isCollapsed && (
-            <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '0.7rem', fontWeight: 'bold' }}>
-              {fullname}
-            </Typography>
-          )}
-        </Box>
-      </Box>
+ <Box sx={{ padding: '0.5rem', textAlign: 'center', position: 'relative' }}>
+  <IconButton onClick={toggleCollapse} sx={{ position: 'absolute', top: 0, right: 0 }}>
+    <FaBars style={{ color: '#9B153B' }} />
+  </IconButton>
+  {!isCollapsed && (
+    <>
+      {roles === "Student" ? (
+        <FaUser style={{ fontWeight: 'bold', fontSize: '1.9rem', color: '#9B153B', margin: '0 auto 0.5rem' }} />
+      ) : (
+        <FaSchool style={{ fontSize: '1.5rem', color: '#9B153B', margin: '0 auto 0.5rem' }} />
+      )}
+      <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '1rem', fontWeight: 'bold' }}>
+        {fullname}
+      </Typography>
+      <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '0.7rem', fontWeight: 'normal' }}>
+        {chosenNameSchool}
+      </Typography>
+      <Typography variant="h7" component="div" sx={{ color: '#9B153B', fontSize: '0.6rem', fontWeight: 'normal' }}>
+        {chosenNameClass}
+      </Typography>
+    </>
+  )}
+  <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.7rem' }}>
+    {/* רכיבים נוספים במידת הצורך */}
+  </Box>
+</Box>
+
 
       <Divider sx={{ borderColor: '#9B153B' }} />
       <List>
