@@ -4,9 +4,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import theme from '../../theme';
 
-const TeacherInstructions = () => {
+const StudentInstructions = () => {
   const [openSection, setOpenSection] = useState(null);
 
+  // פונקציה להחלפת מצב פתיחה וסגירה של כל חלק בהוראות
   const toggleSection = (section) => {
     setOpenSection(openSection === section ? null : section);
   };
@@ -17,23 +18,24 @@ const TeacherInstructions = () => {
         maxWidth={false}
         sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
       >
+        {/* הקומפוננטה Paper מכילה את כל ההוראות בעיצוב נעים לעין */}
         <Paper
           sx={{
             width: '70vw',
-            height: '70vh',
+            height: '70vh', // גובה מוגדר ל-70% מגובה הדפדפן
             padding: '24px',
             backgroundColor: '#ffffff',
             borderRadius: '8px',
             boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-            overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
+            overflow: 'auto' // הגדרת גלילה אוטומטית במקרה שהתוכן חורג מהשטח הנראה
           }}
         >
           <Typography variant="h4" gutterBottom sx={{ color: theme.palette.primary.main, textAlign: 'center' }}>
-            הוראות למורה
+            הוראות לתלמידה
           </Typography>
           <Typography variant="h6" sx={{ color: theme.palette.primary.dark, textAlign: 'center' }}>
             ברוכים הבאים לאתר הבחנים שלנו!
@@ -42,6 +44,7 @@ const TeacherInstructions = () => {
             הנה הוראות לשימוש:
           </Typography>
 
+          {/* תיבת הוראות כלליות */}
           <Box sx={{ width: '100%', textAlign: 'right' }}>
             <Typography
               variant="h6"
@@ -56,17 +59,12 @@ const TeacherInstructions = () => {
             </Typography>
             <Collapse in={openSection === 'generalInstructions'} timeout="auto" unmountOnExit>
               <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
-                1. כאשר ברצונך להוסיף או לעדכן מידע במערכת (תלמיד, בוחן), בחר בית ספר וכיתה שבהם תרצה לבצע את השינויים.
-              </Typography>
-              <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
-                2. בחר את הפרטים שברצונך לעדכן או צור חדשים לפי הצורך.
-              </Typography>
-              <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
-                3. כל פעולה שתבצע תתעדכן בכיתה הספציפית ובבית הספר שנבחרו.
+                1. האתר נועד לעשיית בחנים בצורה נוחה וחווייתית, תוך כדי לימוד המילים באמצעות משחקים ובחני דמו לתרגול.
               </Typography>
             </Collapse>
           </Box>
 
+          {/* תיבת הוראות לבחנים */}
           <Box sx={{ width: '100%', textAlign: 'right' }}>
             <Typography
               variant="h6"
@@ -74,27 +72,37 @@ const TeacherInstructions = () => {
               onClick={() => toggleSection('createQuiz')}
               sx={{ cursor: 'pointer', color: theme.palette.primary.light }}
             >
-              יצירת בוחן חדש
+              בחנים
               <IconButton size="small">
                 {openSection === 'createQuiz' ? <ExpandLessIcon /> : <ExpandMoreIcon />}
               </IconButton>
             </Typography>
             <Collapse in={openSection === 'createQuiz'} timeout="auto" unmountOnExit>
               <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
-                1. כאשר אתה יוצר בוחן חדש, באפשרותך לבחור את המאפיינים הבאים:
+                1. ניתן להיכנס לתפריט הבחנים שהושלמו, ולראות את הציונים ואת התשובות.
               </Typography>
               <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
-                2. האם התלמיד יוכל לראות את המילה באנגלית בעת מענה על הבוחן.
+                2. בחנים שלא ניתן לעשותם יופיעו עם סמל מפתח ולא ניתן להיכנס אליהם.
               </Typography>
               <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
-                3. מספר הפעמים שהתלמיד יוכל לשמוע את המילה באנגלית במהלך הבוחן.
+                3. בכל בוחן ניתן ללחוץ על PLAY ולשחק במשחקים שיעזרו לתרגול המילים.
               </Typography>
               <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
-                4. האם התלמידים יוכלו לגשת לבוחן. אם אינך רוצה שהם יוכלו לגשת, השאר את הסטטוס כ- DISABLE. אם תרצה לאפשר להם גישה, עדכן את הסטטוס ל- ENABLE.
+                4. לחיצה על כפתור VIEW מאפשרת לראות ולהדפיס את המילים שבבוחן.
+              </Typography>
+              <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
+                5. כפתור TRY מאפשר בחן דמה לתרגול.
+              </Typography>
+              <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
+                6. שימו לב: כל מבחן ניתן לביצוע פעם אחת בלבד!
+              </Typography>
+              <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
+                7. ניתן להתאים את מהירות הדיבור ולזכור שכמות השמיעה מוגבלת.
               </Typography>
             </Collapse>
           </Box>
 
+          {/* תיבת משחקים וגרפים */}
           <Box sx={{ width: '100%', textAlign: 'right' }}>
             <Typography
               variant="h6"
@@ -102,21 +110,22 @@ const TeacherInstructions = () => {
               onClick={() => toggleSection('checkQuiz')}
               sx={{ cursor: 'pointer', color: theme.palette.primary.light }}
             >
-              בדיקת ציונים
+              משחקים וגרפים
               <IconButton size="small">
                 {openSection === 'checkQuiz' ? <ExpandLessIcon /> : <ExpandMoreIcon />}
               </IconButton>
             </Typography>
             <Collapse in={openSection === 'checkQuiz'} timeout="auto" unmountOnExit>
               <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
-                1. תוכל לראות רשימה של כל המבחנים שנעשו עד כה. לחץ על כפתור "MARKS" ליד הבוחן הרצוי כדי לראות את הציונים של כל התלמידים. תלמידים שלא ביצעו את הבוחן יופיעו ברשימה, אך לא ניתן להיכנס למבוחן שלהם. ליד שמם יופיע מנעול.
+                1. ניתן לבחור את הבוחן הרצוי ולתרגל את המילים באמצעות משחקים.
               </Typography>
               <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
-                2. תוכל גם לעבור לקטגוריה "STUDENTS" ולבחור את התלמידה הרצויה כדי לראות את הציונים שלה בכל המבחנים. תלמידים שלא ביצעו את הבוחן יופיעו ברשימה אך לא יהיה ניתן להיכנס לבוחן שלהם. ליד שמם יופיע מנעול.
+                2. נתיב הגרפים מציג את ממוצע הבחנים שלך, סטיית התקן, וגרף קווים לכל הציונים שלך.
               </Typography>
             </Collapse>
           </Box>
 
+          {/* תיבת עזרה ותמיכה */}
           <Box sx={{ width: '100%', textAlign: 'right' }}>
             <Typography
               variant="h6"
@@ -131,7 +140,7 @@ const TeacherInstructions = () => {
             </Typography>
             <Collapse in={openSection === 'help'} timeout="auto" unmountOnExit>
               <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
-                אם נתקלת בבעיות או יש לך שאלות, תוכל לפנות אלינו באמצעות מספר הטלפון: 050-4199417 או במייל: golda.z2030@gmail.com. אנו כאן לעזור לך!
+                אם יש בעיות או שאלות, ניתן לפנות אלינו בטלפון: 050-4199417 או במייל: golda.z2030@gmail.com.
               </Typography>
             </Collapse>
           </Box>
@@ -141,4 +150,4 @@ const TeacherInstructions = () => {
   );
 };
 
-export default TeacherInstructions;
+export default StudentInstructions;

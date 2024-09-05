@@ -30,9 +30,6 @@ import {
 import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
 import useAuth from "../../../../hooks/useAuth";
 import useSchoolAndClass from "../../../../hooks/useSchoolAndClass";
-// import WordsGame from "../../game/WordsGame";
-import { FaUserSecret } from "react-icons/fa";
-
 const ListWord = ({ todos }) => {
   const { roles, _id: user } = useAuth(); // Retrieve roles
 
@@ -131,13 +128,14 @@ const ListWord = ({ todos }) => {
       headerAlign: "center",
       align: "center",
     },
-    {
+    //הוספת עמודה רק אם המשתמשהוא תלמיד
+    ...(roles === 'Student' ? [{
       field: "mark",
       headerName: "ציון",
       flex: 1,
       headerAlign: "center",
       align: "center",
-    },
+    }] : []),
     {
       field: "plays",
       headerName: "משחקים",
@@ -229,7 +227,7 @@ const ListWord = ({ todos }) => {
 
           {roles === "Teacher" ? (
             <>
-           
+
               <Tooltip title="Update">
                 <IconButton
                   component={Link}
@@ -266,28 +264,28 @@ const ListWord = ({ todos }) => {
             </>
           ) : roles === "Student" ? (
             <>
-            <Tooltip title="test">
-              <IconButton
-                component={Link}
-                to={`/dash/test/false/${params.row.id}`}
-                aria-label="view"
-                color="primary"
-              >
-                <DescriptionIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="trying">
-              <IconButton
-                component={Link}
-                to={`/dash/test/true/${params.row.id}`}
-                aria-label="trying"
-                color="primary"
-              >
+              <Tooltip title="test">
+                <IconButton
+                  component={Link}
+                  to={`/dash/test/false/${params.row.id}`}
+                  aria-label="view"
+                  color="primary"
+                >
+                  <DescriptionIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="trying">
+                <IconButton
+                  component={Link}
+                  to={`/dash/test/true/${params.row.id}`}
+                  aria-label="trying"
+                  color="primary"
+                >
 
-                <FaPen />
-              </IconButton>
-            </Tooltip>
-</>
+                  <FaPen />
+                </IconButton>
+              </Tooltip>
+            </>
           ) : null}
         </>
       ),

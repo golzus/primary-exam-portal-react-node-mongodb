@@ -21,8 +21,8 @@ import { Link } from 'react-router-dom';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { Stack } from '@mui/material';
 import TestsYouHaveToDo from '../../features/TestsYouHaveToDo';
-import { useGetTestByClassAndUserMutation } from '../../features/actions/listWord/view/ListWordApiSlice';
-
+import { useGetAllListWordsByClassAndByActiveMutation, useGetTestByClassAndUserMutation } from '../../features/actions/listWord/view/ListWordApiSlice';
+import useSchoolAndClass from '../../hooks/useSchoolAndClass';
 // עיצוב מותאם אישית עבור שדה החיפוש
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
@@ -41,20 +41,33 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Navbar = () => {
-  const [getTestByClassAndUser, {  data}] =
-  useGetTestByClassAndUserMutation();
-const { _id: user } = useAuth();
-const [countOfNotifications,setCountOfNotifications]=useState(0)
-useEffect(() => {
-  getTestByClassAndUser({ user });
-  if(data){
-  setCountOfNotifications( data.data.length)}
-}, [getTestByClassAndUser, user,data]);
+  const [getAllListWordsByClassAndByActive, { data:dataTests }] =
+useGetAllListWordsByClassAndByActiveMutation();
+const { chosenClass } = useSchoolAndClass();
+  const [getTestByClassAndUser, { data }] =
+    useGetTestByClassAndUserMutation();
+  const { _id: user } = useAuth();
+  const [countOfNotifications, setCountOfNotifications] = useState(0)
+  useEffect(() => {
+    if (roles === 'Student') {
+      getTestByClassAndUser({ user });
+      if (data) {
+        setCountOfNotifications(data.data.length)
+      
+      }
+    }
+    else {
+      getAllListWordsByClassAndByActive({ active: false, chosenClass })
+      if(dataTests&&chosenClass){
+        setCountOfNotifications(dataTests.data.length)
+      }
+    }
+  }, [getTestByClassAndUser, user, data,dataTests,chosenClass]);
 
   const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
   const [profileAnchorEl, setProfileAnchorEl] = useState(null);
 
-  const { fullname,roles } = useAuth();
+  const { fullname, roles } = useAuth();
 
   const handleNotificationClick = (event) => {
     setNotificationAnchorEl(event.currentTarget);
@@ -116,8 +129,8 @@ useEffect(() => {
                     style: { marginTop: '10px' },
                   }}
                 >
-               {roles==='Teacher'&&   <ListWordToDo />}
-               {roles==='Student'&&<TestsYouHaveToDo/>}
+                  {roles === 'Teacher' && <ListWordToDo />}
+                  {roles === 'Student' && <TestsYouHaveToDo />}
                 </Popover>
 
                 <IconButton aria-label="הצג צ'אט" color="inherit">
@@ -127,9 +140,10 @@ useEffect(() => {
                   <MdPublic size={20} style={{ color: '#ffffff' }} />
                 </IconButton>
                 <IconButton aria-label="הצג פרופיל" color="inherit" onClick={handleProfileClick}>
-                  <Avatar style={{ 
+                  <Avatar style={{
                     backgroundColor: '#e91e63',
-                     width: 40, height: 40 }}>{fullname[0]}</Avatar>
+                    width: 40, height: 40
+                  }}>{fullname[0]}</Avatar>
                 </IconButton>
               </div>
             </ClickAwayListener>
@@ -154,7 +168,7 @@ useEffect(() => {
         PaperProps={{
           sx: {
             marginTop: "10px",
-            
+
           },
         }}
       >
@@ -224,7 +238,7 @@ useEffect(() => {
                 borderRadius: '4px',
                 fontSize: '0.875rem',
                 backgroundColor: '#ffffff',
-                
+
               }}
             >
               יציאה

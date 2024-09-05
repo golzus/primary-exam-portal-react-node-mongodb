@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useAuth from "../../../../hooks/useAuth";
 import {
   Box,
   Typography,
@@ -26,10 +25,10 @@ import {
   // CircularProgress,
   Grid,
 } from "@mui/material";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
-import WordSpeaker from "./WordSpeaker";
 import { useAddListWordsMutation, useUpdateListWordsMutation } from "../view/ListWordApiSlice";
 import useWordSpeaker from "../../../../hooks/useWordSpeaker";
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
@@ -47,13 +46,38 @@ const AddWordsList = ({ WORDLIST }) => {
   const [countListenToWord, setCountListenToWord] = useState(5);
   const [openDialog, setOpenDialog] = useState(true);
   const { chosenClass } = useSelector((state) => state.schoolAndClass);
+  const [buttonText,setButtonText]=useState("SAVE TEST")
+  const [buttonUpdate,setButtonUpdate]=useState("UPDATE TEST")
+  const navigate=useNavigate()
   const speakWord=useWordSpeaker()
   useEffect(() => {
     if (WORDLIST) {
       setWords(WORDLIST.data.test);
     }
   }, [WORDLIST]);
+useEffect(()=>{
+if(addSuccess){
+  setButtonText(<><CheckCircleIcon /> Successfully Added</>);
+  setTimeout(() => {
+    setButtonText("SAVE TEST");
+  
+      navigate("/dash/wordLsList");
+  }, 2000);
+}
+},[addSuccess])
+useEffect(()=>{
+  if(updateLoading){
+    setButtonUpdate('....Updating')
+  }
+  if(updateSuccess){
+    setButtonUpdate(<><CheckCircleIcon/>Successfully Update</>)
+    setTimeout(() => {
+     setButtonUpdate('UPDATE TEST') 
+     navigate("/dash/wordLsList");
 
+    }, 2000);
+  }
+},[updateSuccess,updateLoading])
   useEffect(() => {
     if (_id && WORDLIST) {
       setTitle(WORDLIST.data.title);
@@ -82,6 +106,13 @@ const AddWordsList = ({ WORDLIST }) => {
 
   const handleSubmitSave = (e) => {
     e.preventDefault();
+
+  
+    
+      setButtonText("Adding......");
+   
+
+
     // Verify that all word fields are filled
     for (let i = 0; i < words.length; i++) {
       if (!words[i].word || !words[i].translate) {
@@ -172,7 +203,7 @@ speakWord(word)
                   </Select>
                 </FormControl>
           <FormControl fullWidth variant="outlined" margin="normal">
-            <InputLabel id="active-label">Active</InputLabel>
+            <InputLabel id="active-label">Status</InputLabel>
             <Select
               labelId="active-label"
               id="active"
@@ -216,14 +247,14 @@ speakWord(word)
         <Grid container spacing={2}>
               <Grid item xs={12} sm={4}>
                 <FormControl fullWidth variant="outlined" margin="normal" size="small">
-                  <InputLabel id="active-label">Active</InputLabel>
+                  <InputLabel id="active-label">Status</InputLabel>
                   <Select
                     labelId="active-label"
                     id="active"
                     name="active"
                     label="Active"
                     value={active}
-                    onChange={(e) => setActive(e.target.value === 'true')}
+                    onChange={(e) => setActive(e.target.value)}
                   >
                     <MenuItem value={true}>Enabled</MenuItem>
                     <MenuItem value={false}>Disabled</MenuItem>
@@ -324,7 +355,7 @@ speakWord(word)
           </Table>
           <Box display="flex" justifyContent="center" sx={{ mt: 2 }}>
             <Button type="submit" variant="contained" color="primary">
-              { _id ? 'Update List' : 'Save List' }
+              { _id ? buttonUpdate : buttonText }
             </Button>
             <Button onClick={addNewRow} variant="contained" color="secondary" sx={{ ml: 2 }}>
               Add New Row

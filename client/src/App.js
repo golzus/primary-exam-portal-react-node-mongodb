@@ -53,6 +53,7 @@ import MarksByStudent from "./features/actions/MarksByStudent";
 import ScoreCharts from "./features/actions/graphs/ScoreCharts";
 import MainGraphs from "./features/actions/graphs/MainGraphs";
 import Play from "./features/actions/game/Play";
+import StudentInstructions from "./features/instructions/StudentInstructions";
 
 // import PuzzleGame from "./features/actions/game/PuzzleGame";
 function App() {
@@ -98,7 +99,7 @@ function App() {
                   <Route index element={<MainPage/>} />
                   <Route path="choose" element={<CurrentSchoolAndClass />} />
                   <Route path="personalldetails" element={<SingleUser notForATeacher="true" />} />
-
+                  <Route path="student-instruction" element={<StudentInstructions/>}/>
                   <Route path="wordLsList" element={<ListWord />} />
                   <Route path="play/:_id/wordgame" element={<WordsGame />} />
                   <Route path="play/:_id/memory" element={<MemoryGame />} />

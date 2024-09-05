@@ -70,6 +70,7 @@ const studentMenuActions = [
     title: "אישי",
     list: [
       { title: "הפרטים שלי", path: "personalldetails", icon: <Person /> },
+      { title: "הגדרות", path: "student-instruction", icon: <Settings /> },
     ],
   },
 ];

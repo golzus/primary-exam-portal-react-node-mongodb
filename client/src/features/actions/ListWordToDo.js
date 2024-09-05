@@ -1,42 +1,6 @@
-// import React, { useEffect } from 'react'
-// import { useGetAllListWordsByClassAndByActiveMutation } from './listWord/view/ListWordApiSlice'
-// import useSchoolAndClass from '../../hooks/useSchoolAndClass'
-// import CurrentSchoolAndClass from '../companies/CurrentSchoolAndClass/CurrentSchoolAndClass'
-// import { Link } from 'react-router-dom'
-
-// const ListWordToDo = () => {
-//     const [getAllListWordsByClassAndByActive,{data,error,isLoading}]=useGetAllListWordsByClassAndByActiveMutation()
-//     const {chosenClass}=useSchoolAndClass()
-//     useEffect(()=>{
-//         if(chosenClass)
-//         getAllListWordsByClassAndByActive({active:false,chosenClass})
-//     },[chosenClass])
-//     if(!chosenClass)return <CurrentSchoolAndClass/>
-
-//     if(error)return <h1>error</h1>
-//     if(isLoading||!data)return <h1>Loading...</h1>
-//     console.log(data.data[0]._id,"data");
-//   return (<div>
-//     <h1>כמות הבחנים שעליך להפוך ל-ACTIVE:{data.data.length}</h1>
-
-//     <button>
-//       <Link
-//         to={`/dash/actions/${data.data[0]._id}`}
-//         className="users-list-button users-list-view"
-//       >
-//         {data.data[0].title}
-//       </Link>
-//     </button>
-//     </div>
-//   )
-// }
-
-// export default ListWordToDo
-
 import React, { useEffect, useState } from "react";
 import { useGetAllListWordsByClassAndByActiveMutation } from "./listWord/view/ListWordApiSlice";
 import useSchoolAndClass from "../../hooks/useSchoolAndClass";
-import CurrentSchoolAndClass from "../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
 import { Link } from "react-router-dom";
 import {
   Button,
@@ -52,13 +16,14 @@ const ListWordToDo = ({ onNumChange }) => {
     useGetAllListWordsByClassAndByActiveMutation();
   const { chosenClass } = useSchoolAndClass();
   const [itemCount, setItemCount] = useState(0);
+  const { roles } = useAuth();
 
   useEffect(() => {
     if (chosenClass) {
       getAllListWordsByClassAndByActive({ active: false, chosenClass });
     }
-  }, [chosenClass]);
-const {roles}=useAuth()
+  }, [chosenClass, getAllListWordsByClassAndByActive, chosenClass]);
+
   useEffect(() => {
     if (data) {
       const count = data.data.length;
@@ -67,19 +32,37 @@ const {roles}=useAuth()
         onNumChange(count);
       }
     }
-  }, [data]);
+  }, [data, onNumChange]);
 
-  if (!chosenClass&&roles==='Teacher')
-    return <Typography variant="h5">אין התראות</Typography>;
+  if (!chosenClass && roles === 'Teacher') {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '20vh',width:'20vw' }}>
+        <Typography variant="h5">אין התראות</Typography>
+      </Box>
+    );
+  }
 
-  if (isLoading) return <CircularProgress />; // הצגת לולאת טעינה
-  if (error)
-    return <Typography color="error">Error: {error.message}</Typography>; // טיפול בשגיאות
+  if (isLoading) {
+    return (
+      <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '20vh',width:'20vw' }}>
+        <CircularProgress />
+        <Typography variant="h6" sx={{ mt: 2 }}>טוען נתונים...</Typography>
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Typography color="error">Error: {error.message}</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box
       sx={{
-        width: "20VW",
+        width: "20vw",
         p: 2,
         m: "auto",
         mt: 3,
@@ -92,10 +75,10 @@ const {roles}=useAuth()
       }}
     >
       {itemCount === 0 ? (
-        <Typography variant="h5">הידד עדכנת את כל המבחנים!</Typography>
+        <Typography variant="h5">הידד! עדכנת את כל המבחנים!</Typography>
       ) : (
         <>
-          <Typography variant="h5">
+          <Typography variant="h6" sx={{ mb: 2 }}>
             כמות הבחנים שעליך לעדכן: {itemCount}
           </Typography>
           <Stack spacing={2} sx={{ width: "100%" }}>
@@ -116,7 +99,6 @@ const {roles}=useAuth()
       )}
     </Box>
   );
-  return 2;
 };
 
 export default ListWordToDo;
