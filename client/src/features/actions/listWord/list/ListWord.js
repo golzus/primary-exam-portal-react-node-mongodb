@@ -27,6 +27,7 @@ import {
   useGetTestByClassAndUserMutation,
   useGetAllTestsDoneMutation,
 } from "../view/ListWordApiSlice";
+import LockIcon from '@mui/icons-material/Lock';
 import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
 import useAuth from "../../../../hooks/useAuth";
 import useSchoolAndClass from "../../../../hooks/useSchoolAndClass";
@@ -116,7 +117,8 @@ const ListWord = ({ todos }) => {
       title: list.title,
       date: list.date ? list.date.slice(0, 10) : "",
       wordCount: list.test.length,
-      mark: list.mark || 0
+      mark: list.mark || 0,
+      active:list.active
 
     }));
 
@@ -128,7 +130,7 @@ const ListWord = ({ todos }) => {
       headerAlign: "center",
       align: "center",
     },
-    //הוספת עמודה רק אם המשתמשהוא תלמיד
+    //הוספת עמודה רק אם המשתמש הוא תלמיד
     ...(roles === 'Student' ? [{
       field: "mark",
       headerName: "ציון",
@@ -145,39 +147,7 @@ const ListWord = ({ todos }) => {
       sortable: false,
       renderCell: (params) => (
         <>
-          {/* <Tooltip title="play-translate">
-    <IconButton
-      component={Link}
-      to={`/dash/play/${params.row.id}`}
-      aria-label="play"
-      color="info"
-      sx={{ mr: 1 }}
-    >
-      <MdLanguage />
-    </IconButton>
-  </Tooltip>
-  <Tooltip title="memory-play">
-    <IconButton
-      component={Link}
-      to={`/dash/play/memory/${params.row.id}`}
-      aria-label="play-memory"
-      color="info"
-      sx={{ mr: 1 }}
-    >
-      <MdFlip />
-    </IconButton>
-  </Tooltip>
-  <Tooltip title="multi-choice-play">
-    <IconButton
-      component={Link}
-      to={`/dash/play/multi-choice/${params.row.id}`}
-      aria-label="play-memory"
-      color="info"
-      sx={{ mr: 1 }}
-    >
-      <MdQuestionAnswer />
-    </IconButton>
-  </Tooltip> */}
+ 
 
           <Tooltip title="plays">
             <IconButton
@@ -219,7 +189,7 @@ const ListWord = ({ todos }) => {
               to={`/dash/words/${params.row.id}`}
               aria-label="update"
               color="info"
-              sx={{ mr: 1 }}
+              sx={{ mr: 1  ,verticalAlign: 'middle' }} // שמירה על יישור אמצע}}
             >
               <VisibilityIcon />
             </IconButton>
@@ -264,7 +234,48 @@ const ListWord = ({ todos }) => {
             </>
           ) : roles === "Student" ? (
             <>
-              <Tooltip title="test">
+
+
+
+       {/* בדיקה אם השורה פעילה */}
+       {params.row.active ? (
+          <Tooltip title="Go to test">
+            <IconButton
+              component={Link}
+              to={`/dash/test/false/${params.row.id}`}
+              aria-label="view"
+              color="primary"
+            >
+              <DescriptionIcon />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          // אייקון נעילה אם השורה לא פעילה
+          <Tooltip title="Test locked">
+          <Box
+            sx={{
+              position: 'relative',
+              display: 'inline-flex',
+              alignItems: 'center', // יישור באותו קו
+              verticalAlign: 'middle'
+            }}
+          >
+            <DescriptionIcon />
+            <LockIcon
+              sx={{
+                color: '#ff5252',
+                position: 'absolute',
+                bottom: '-2px', // מיקום נמוך יותר כדי להתחיל מלמטה
+                right: 0,
+                fontSize: '0.9rem'
+              }}
+            />
+          </Box>
+        </Tooltip>
+        )}
+
+
+              {/* <Tooltip title="test">
                 <IconButton
                   component={Link}
                   to={`/dash/test/false/${params.row.id}`}
@@ -273,7 +284,7 @@ const ListWord = ({ todos }) => {
                 >
                   <DescriptionIcon />
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
               <Tooltip title="trying">
                 <IconButton
                   component={Link}

@@ -3,6 +3,7 @@ import { useGetTestByClassAndUserMutation } from "./actions/listWord/view/ListWo
 import useAuth from "../hooks/useAuth";
 import { Typography, Button, CircularProgress, Stack, Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import LockIcon from '@mui/icons-material/Lock';
 
 const TestsYouHaveToDo = () => {
   const [getTestByClassAndUser, { isError, data, error, isLoading }] =
@@ -79,18 +80,30 @@ const TestsYouHaveToDo = () => {
         </Typography>
       ) : (
         <Stack spacing={2} sx={{ width: '100%' }}>
-          {tests.map((test) => (
-            <Button
-              key={test._id}
-              component={Link}
-              to={`/dash/test/true/${test._id}`}
-              variant="contained"
-              color="primary"
-              sx={{ width: '100%', textAlign: 'center', overflow: 'hidden' }}
-            >
-              {test.title}
-            </Button>
-          ))}
+   
+{tests.map((test) => (
+  <Button
+    key={test._id}
+    component={test.active ? Link : 'div'}
+    to={test.active ? `/dash/test/false/${test._id}` : undefined}
+    variant="contained"
+    color="primary"
+    sx={{ width: '100%', textAlign: 'center', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+  >
+    <Stack direction="row" spacing={1} alignItems="center">
+      <Typography>{test.title}</Typography>
+      {!test.active && (
+        <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 1 }}>
+          <LockIcon sx={{ color: '#ff5252' }} />
+          <Typography variant="caption" sx={{ marginLeft: 0.5 }}>
+            - עדיין לא זמין
+          </Typography>
+        </Box>
+      )}
+    </Stack>
+  </Button>
+))}
+
         </Stack>
       )}
     </Box>
