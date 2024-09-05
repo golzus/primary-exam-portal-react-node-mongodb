@@ -4,7 +4,7 @@ const User = require("../models/User");
 const getTestByClassAndUser = async (req, res) => {
     const {user}=req.body
     try {  
-    const test=await Test.find({user:user,active:true})
+    const test=await Test.find({user:user,complete:false})
     res.json(({error:false,message:"",data:test}))
 } catch (error) {
   console.log(error,"error");      
@@ -13,7 +13,7 @@ const getTestByClassAndUser = async (req, res) => {
 const getAllTestsDone = async (req, res) => {
   const {user}=req.body
   try {  
-  const test=await Test.find({user:user,active:false})
+  const test=await Test.find({user:user,complete:true})
   res.json(({error:false,message:"",data:test}))
 } catch (error) {
 console.log(error,"error");      
