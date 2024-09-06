@@ -311,3 +311,220 @@ const SiteBar = () => {
 };
 
 export default SiteBar;
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { FaUser, FaBars, FaSchool } from "react-icons/fa";
+// import { Drawer, List, ListItem, ListItemIcon, ListItemText, Typography, Divider, Box, IconButton, Collapse, Tooltip } from '@mui/material';
+// import { NavLink } from 'react-router-dom';
+// import { Dashboard, Person, Business, Settings, Help, ExitToApp, Quiz, ListAlt, Star } from '@mui/icons-material';
+// import { PiListPlusLight } from 'react-icons/pi';
+// import { GoChecklist } from 'react-icons/go';
+// import useAuth from '../../hooks/useAuth';
+// import { useSelector } from 'react-redux';
+// import useSchoolAndClass from '../../hooks/useSchoolAndClass';
+// import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
+// import { FaChartLine, FaChalkboardTeacher, FaUserTie } from 'react-icons/fa';
+// import { useSendLoguotMutation } from '../../features/auth/authApiSlice';
+
+// // הגדרת נתונים לתפריט המורה
+// const teacherMenuActions = [
+//   {
+//     list: [
+//       { title: "ראשי", path: "/dash", icon: <Dashboard /> },
+//       { title: "תלמידות", path: "users", icon: <Person /> },
+//       { title: "בתי ספר", path: "companies", icon: <Business /> },
+//       { title: "פעולות", path: "#", icon: null, isAction: true },
+//     ],
+//   },
+//   {
+//     title: "משתמש",
+//     list: [
+//       { title: "הגדרות", path: "instructions", icon: <Settings /> },
+//       { title: "לבחירת ביה''ס וכיתה", path: "help", icon: <Help /> },
+//     ],
+//   },
+// ];
+
+// // הגדרת פעולות נוספות
+// const actions = [
+//   {
+//     list: [
+//       { title: "יצירת בוחן חדש", path: "add", icon: <PiListPlusLight /> },
+//       { title: "בחנים", path: "wordLsList", icon: <GoChecklist /> },
+//     ],
+//   },
+// ];
+
+// // הגדרת נתונים לתפריט התלמיד
+// const studentMenuActions = [
+//   {
+//     title: "בחנים",
+//     list: [
+//       { title: "ראשי", path: "/dash", icon: <Dashboard /> },
+//       { title: "בחנים", path: "wordLsList", icon: <Quiz /> },
+//       { title: "בחנים שהושלמו", path: "todos", icon: <ListAlt /> },
+//       { title: "גיליון ציונים", path: "marks", icon: <Star /> },
+//       { title: "משחקים", path: "play", icon: <FaChartLine /> },
+//       { title: "גרפים", path: "graphs", icon: <FaChartLine /> },
+//     ],
+//   },
+//   {
+//     title: "אישי",
+//     list: [
+//       { title: "הפרטים שלי", path: "personalldetails", icon: <Person /> },
+//       { title: "הגדרות", path: "student-instruction", icon: <Settings /> },
+//     ],
+//   },
+// ];
+
+// // רכיב סרגל צד
+// const SiteBar = () => {
+//   const [sendLogout] = useSendLoguotMutation();
+//   const { roles, classUser, fullname } = useAuth();
+//   const menuItems = roles === 'Teacher' ? teacherMenuActions : studentMenuActions;
+//   const [classTeacher, setClassTeacher] = useState("");
+//   const [isCollapsed, setIsCollapsed] = useState(window.innerWidth < 900);
+//   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+//   const { chosenClass } = useSelector((state) => state.schoolAndClass);
+//   let { chosenNameClass, chosenNameSchool } = useSchoolAndClass();
+
+//   useEffect(() => {
+//     if (chosenClass) {
+//       setClassTeacher(chosenClass);
+//     }
+//   }, [chosenClass]);
+
+//   useEffect(() => {
+//     const handleResize = () => {
+//       setIsCollapsed(window.innerWidth < 900);
+//     };
+//     window.addEventListener('resize', handleResize);
+//     return () => window.removeEventListener('resize', handleResize);
+//   }, []);
+
+//   const toggleCollapse = () => {
+//     setIsCollapsed(!isCollapsed);
+//   };
+
+//   const toggleSubMenu = () => {
+//     setIsSubMenuOpen(!isSubMenuOpen);
+//   };
+
+//   if (roles === "Student") {
+//     chosenNameClass = classUser.name;
+//   }
+
+//   return (
+//     <Drawer
+//       variant="permanent"
+//       anchor="right"
+//       sx={{
+//         width: isCollapsed ? '50px' : '250px', // שינוי רוחב לפי פיקסלים
+//         flexShrink: 0,
+//         [`& .MuiDrawer-paper`]: {
+//           width: isCollapsed ? '50px' : '250px', // שינוי רוחב המגירה
+//           boxSizing: 'border-box',
+//           backgroundColor: '#f3f3e9',
+//           color: '#9B153B',
+//           direction: 'rtl',
+//           maxHeight: '100%',
+//           overflowY: 'auto', // הוספת גלילה בעת גלישת תוכן
+//         },
+//       }}
+//     >
+//       {/* כפתור התפריט העליון */}
+//       <Box sx={{ padding: '10px', textAlign: 'center', position: 'relative' }}>
+//         <IconButton onClick={toggleCollapse} sx={{ position: 'absolute', top: 0, right: 0 }}>
+//           <FaBars style={{ color: '#9B153B' }} />
+//         </IconButton>
+//         {!isCollapsed && (
+//           <>
+//             {/* אייקון מורה/תלמיד */}
+//             {roles === "Student" ? (
+//               <FaUser style={{ fontSize: '30px', color: '#9B153B', marginBottom: '10px' }} />
+//             ) : (
+//               <FaUserTie style={{ fontSize: '25px', color: '#9B153B', marginBottom: '10px' }} />
+//             )}
+//             {/* שם מלא */}
+//             <Typography variant="h6" component="div" sx={{ color: '#9B153B', fontSize: '16px', fontWeight: 'bold' }}>
+//               {fullname}
+//             </Typography>
+//             {/* שם בית ספר וכיתה */}
+//             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+//               {chosenNameSchool && (
+//                 <>
+//                   <FaSchool style={{ fontSize: '16px', color: '#9B153B' }} />
+//                   <Typography variant="body2" sx={{ color: '#9B153B', fontSize: '12px', maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+//                     {chosenNameSchool}
+//                   </Typography>
+//                 </>
+//               )}
+//             </Box>
+//             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+//               {chosenNameClass && (
+//                 <>
+//                   <FaChalkboardTeacher style={{ fontSize: '16px', color: '#9B153B' }} />
+//                   <Typography variant="body2" sx={{ color: '#9B153B', fontSize: '12px', maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+//                     {chosenNameClass}
+//                   </Typography>
+//                 </>
+//               )}
+//             </Box>
+//           </>
+//         )}
+//       </Box>
+
+//       {/* תוכן הסרגל */}
+//       <Divider sx={{ borderColor: '#9B153B' }} />
+//       <List>
+//         {menuItems.map((cat, index) => (
+//           <div key={index}>
+//             <ListItem>
+//               {!isCollapsed && <ListItemText primary={cat.title} sx={{ color: '#9B153B', fontSize: '14px', fontWeight: 'bold' }} />}
+//             </ListItem>
+//             {cat.list.map((item, subIndex) => (
+//               <Tooltip title={isCollapsed ? item.title : ''} placement="right" key={subIndex}>
+//                 <ListItem
+//                   component={NavLink}
+//                   to={item.path}
+//                   sx={{
+//                     paddingRight: '10px',
+//                     display: 'flex',
+//                     alignItems: 'center',
+//                     '&.active': {
+//                       backgroundColor: '#9B153B',
+//                       color: '#fff',
+//                     },
+//                     '&:hover': {
+//                       backgroundColor: '#f0e4e6',
+//                     },
+//                   }}
+//                   onClick={item.isAction ? toggleSubMenu : undefined}
+//                 >
+//                   <ListItemIcon sx={{ color: 'inherit' }}>
+//                     {item.icon ? React.cloneElement(item.icon, { fontSize: 'medium' }) : (isSubMenuOpen ? <MdArrowDropUp /> : <MdArrowDropDown />)}
+//                   </ListItemIcon>
+//                   {!isCollapsed && <ListItemText primary={item.title} sx={{ color: 'inherit', fontSize: '12px', whiteSpace: 'nowrap' }} />}
+//                 </ListItem>
+//               </Tooltip>
+//             ))}
+//             <Divider sx={{ borderColor: '#9B153B' }} />
+//           </div>
+//         ))}
+//       </List>
+//       {/* כפתור התנתקות */}
+//       {!isCollapsed && (
+//         <ListItem button onClick={sendLogout} sx={{ paddingRight: '10px', display: 'flex', alignItems: 'center' }}>
+//           <ListItemIcon sx={{ color: '#9B153B' }}>
+//             <ExitToApp />
+//           </ListItemIcon>
+//           <ListItemText primary="התנתק" sx={{ color: '#9B153B', fontSize: '12px' }} />
+//         </ListItem>
+//       )}
+//     </Drawer>
+//   );
+// };
+
+// export default SiteBar;

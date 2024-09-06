@@ -10,42 +10,48 @@ import useAuth from "../../../hooks/useAuth";
 
 const Play = () => {
   const { _id } = useParams();
-  const [getAllTests, { error, data, isLoading }] = useGetAllTestsMutation();
-  const { _id: user } = useAuth();
+  
   const [selectedId, setSelectedId] = useState("");
 
+ 
+  const [getAllTests, { error, data, isLoading }] = useGetAllTestsMutation();
+  const { _id: user } = useAuth();
+ 
+useEffect(()=>{
+ console.log(selectedId,"id"); 
+},[selectedId])
+
   useEffect(() => {
-    if (_id) {
       getAllTests({ user });
-    }
-    if (data) {
-      console.log(data, "data");
-      if (data.data.length > 0) {
-        setSelectedId(data.data[0].title); // הגדרת ערך ברירת מחדל שהוא הראשון ברשימה
-      }
-    }
+    // if (data) {
+    //   console.log(data, "data");
+    //   if (data.data.length > 0) {
+    //     setSelectedId(data.data[0].title); // הגדרת ערך ברירת מחדל שהוא הראשון ברשימה
+    //   }
+    // }
   }, []);
 
   const handleInputChange = (event) => {
     setSelectedId(event.target.value);
   };
-  if(!_id)return
+  if(!_id)
+  if(!selectedId) return(
   <Grid item xs={12} sm={6}>
   <TextField
     select
     fullWidth
     label="מבחן"
-    name="_id"
+    name="id"
     value={selectedId}
     onChange={handleInputChange}
   >
     {data?.data?.map((test) => (
-      <MenuItem key={test._id} value={test.title}>
+      <MenuItem key={test._id} value={test._id}>
         {test.title}
       </MenuItem>
     ))}
   </TextField>
-</Grid>
+</Grid>)
 if((error||isLoading||!data))return <h1>loading...</h1>
   return (
     <ThemeProvider theme={theme}>
@@ -60,14 +66,14 @@ if((error||isLoading||!data))return <h1>loading...</h1>
             onChange={handleInputChange}
           >
             {data?.data?.map((test) => (
-              <MenuItem key={test._id} value={test.title}>
+              <MenuItem key={test._id} value={test._id}>
                 {test.title}
               </MenuItem>
             ))}
           </TextField>
         </Grid>
       
-      {_id && (
+      {(selectedId||_id)&& (
         <Box
           sx={{
             display: "flex",
@@ -88,8 +94,9 @@ if((error||isLoading||!data))return <h1>loading...</h1>
               <Paper elevation={4} sx={{ padding: 2, textAlign: "center" }}>
                 <IconButton
                   component={Link}
-                  to="memory"
-                  sx={{
+                  to={selectedId&&!_id ? `${selectedId}/memory` :selectedId&&_id?`/dash/play/${selectedId}/memory`: "memory"}
+
+                     sx={{
                     fontSize: 60,
                     "&:hover": {
                       transform: "scale(1.1)",
@@ -106,7 +113,10 @@ if((error||isLoading||!data))return <h1>loading...</h1>
               <Paper elevation={4} sx={{ padding: 2, textAlign: "center" }}>
                 <IconButton
                   component={Link}
-                  to="multi-choice"
+                  to={selectedId&&!_id ? `${selectedId}/multi-choice` :selectedId&&_id?`/dash/play/${selectedId}/multi-choice`: "multi-choice"}
+
+
+               
                   sx={{
                     fontSize: 60,
                     "&:hover": {
@@ -124,7 +134,8 @@ if((error||isLoading||!data))return <h1>loading...</h1>
               <Paper elevation={4} sx={{ padding: 2, textAlign: "center" }}>
                 <IconButton
                   component={Link}
-                  to="wordgame"
+                  to={selectedId&&!_id ? `${selectedId}/wordgame` :selectedId&&_id?`/dash/play/${selectedId}/wordgame`: "wordgame"}
+
                   sx={{
                     fontSize: 60,
                     "&:hover": {
@@ -142,7 +153,9 @@ if((error||isLoading||!data))return <h1>loading...</h1>
               <Paper elevation={4} sx={{ padding: 2, textAlign: "center" }}>
                 <IconButton
                   component={Link}
-                  to="hangman"
+                  to={selectedId&&!_id ? `${selectedId}/hangman` :selectedId&&_id?`/dash/play/${selectedId}/hangman`: "hangman"}
+
+
                   sx={{
                     fontSize: 60,
                     "&:hover": {
