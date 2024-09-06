@@ -43,7 +43,8 @@ const TestsYouHaveToDo = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '100vh',
+          height: '20vh',
+          width: '20vw'
         }}
       >
         <Typography color="error" variant="h6">

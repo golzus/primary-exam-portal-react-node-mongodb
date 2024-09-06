@@ -91,13 +91,13 @@ const MemoryGame = () => {
             <Card
               onClick={() => handleCardClick(card)}
               style={{
-                backgroundColor: flippedCards.includes(card) || matchedCards.includes(card.id) ? '#f5f5f5' : '#3f51b5',
+                backgroundColor: flippedCards.includes(card) || matchedCards.includes(card.id) ? '#f5f5f5' : '#9B153B',
                 color: flippedCards.includes(card) || matchedCards.includes(card.id) ? '#000' : '#fff',
                 cursor: 'pointer'
               }}
             >
               <CardContent>
-                <Typography variant="h6">
+                <Typography variant="h6" sx={  flippedCards.includes(card) || matchedCards.includes(card.id)?{ color:'#9B153B' }:{color:'#ffffff'}}>
                   {flippedCards.includes(card) || matchedCards.includes(card.id) ? card.text : '?'}
                 </Typography>
               </CardContent>

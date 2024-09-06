@@ -34,28 +34,18 @@ useEffect(()=>{
   const handleInputChange = (event) => {
     setSelectedId(event.target.value);
   };
-  if(!_id)
-  if(!selectedId) return(
-  <Grid item xs={12} sm={6}>
-  <TextField
-    select
-    fullWidth
-    label="מבחן"
-    name="id"
-    value={selectedId}
-    onChange={handleInputChange}
-  >
-    {data?.data?.map((test) => (
-      <MenuItem key={test._id} value={test._id}>
-        {test.title}
-      </MenuItem>
-    ))}
-  </TextField>
-</Grid>)
+ 
 if((error||isLoading||!data))return <h1>loading...</h1>
   return (
     <ThemeProvider theme={theme}>
-       
+      <Box sx={{display:"flex",justifyContent:'center',alignItems:'center'}}>
+                        {!_id&&!selectedId&&  <Typography variant="h6" sx={{ color: theme.palette.primary.main,alignItems:'center' }}>
+         בחר מבחן שעם המילים האילו אתה רוצה לשחק
+          </Typography>}
+          {_id||selectedId&&  <Typography variant="h6" sx={{ color: theme.palette.primary.main,alignItems:'center' }}>
+       כדי לשחק עם מילים של מבחן אחר הנך יכול לבחור מבחן אחר מתוך הרשימה
+          </Typography>}
+          </Box>
         <Grid item xs={12} sm={6}>
           <TextField
             select
@@ -73,7 +63,7 @@ if((error||isLoading||!data))return <h1>loading...</h1>
           </TextField>
         </Grid>
       
-      {(selectedId||_id)&& (
+    
         <Box
           sx={{
             display: "flex",
@@ -95,7 +85,7 @@ if((error||isLoading||!data))return <h1>loading...</h1>
                 <IconButton
                   component={Link}
                   to={selectedId&&!_id ? `${selectedId}/memory` :selectedId&&_id?`/dash/play/${selectedId}/memory`: "memory"}
-
+                  disabled={!_id&&!selectedId}
                      sx={{
                     fontSize: 60,
                     "&:hover": {
@@ -114,6 +104,7 @@ if((error||isLoading||!data))return <h1>loading...</h1>
                 <IconButton
                   component={Link}
                   to={selectedId&&!_id ? `${selectedId}/multi-choice` :selectedId&&_id?`/dash/play/${selectedId}/multi-choice`: "multi-choice"}
+                  disabled={!_id&&!selectedId}
 
 
                
@@ -135,6 +126,7 @@ if((error||isLoading||!data))return <h1>loading...</h1>
                 <IconButton
                   component={Link}
                   to={selectedId&&!_id ? `${selectedId}/wordgame` :selectedId&&_id?`/dash/play/${selectedId}/wordgame`: "wordgame"}
+                  disabled={!_id&&!selectedId}
 
                   sx={{
                     fontSize: 60,
@@ -154,6 +146,7 @@ if((error||isLoading||!data))return <h1>loading...</h1>
                 <IconButton
                   component={Link}
                   to={selectedId&&!_id ? `${selectedId}/hangman` :selectedId&&_id?`/dash/play/${selectedId}/hangman`: "hangman"}
+                  disabled={!_id&&!selectedId}
 
 
                   sx={{
@@ -171,7 +164,7 @@ if((error||isLoading||!data))return <h1>loading...</h1>
             </Grid>
           </Grid>
         </Box>
-      )}
+      
     </ThemeProvider>
   );
 };

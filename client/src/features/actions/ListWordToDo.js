@@ -53,7 +53,8 @@ const ListWordToDo = ({ onNumChange }) => {
 
   if (error) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center',   height: '20vh',
+      width: '20vw' }}>
         <Typography color="error">Error: {error.message}</Typography>
       </Box>
     );
