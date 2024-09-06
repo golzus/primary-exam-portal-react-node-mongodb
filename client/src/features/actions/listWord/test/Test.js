@@ -200,25 +200,39 @@ const Test = () => {
 
 
   };
-  // const compareAnswers = () => {
-  //   // Use the custom hook outside of the callback
-  //   const results = wordList.map((item, index) => ({
+   // const checkTest = (e) => {
+  //   setSeeWarning(false);
+  //   const updatedList = wordList.map((item) => ({
   //     ...item,
-  //     correct: useWordComparison(item.translate, item.answer),
-  //   }));
-  //   setWordList(results);
-  // };
+  //     correct:compareWords(item.translate , item.answer)
+  //     // Check if the answer is correct
 
+  //   }));
 
   const checkTest = (e) => {
     setSeeWarning(false);
-    const updatedList = wordList.map((item) => ({
-      ...item,
-      correct:compareWords(item.translate , item.answer)
-      // Check if the answer is correct
+  
+    const updatedList = wordList.map((item) => {
+      // Split item.translate by comma and trim whitespace
+      const translationArray = item.translate
+        .split(',')
+        .map(word => word.trim());
+  
+      // Check if any translation matches the answer
+      const isCorrect = translationArray.some(translation => compareWords(translation, item.answer));
+  
+      // Return updated item with correct field set
+      return {
+        ...item,
+        correct: isCorrect
+      };
+    });
+  
+    // Update the state or perform any further actions with updatedList
+    // e.g., setWordList(updatedList);
+  
+  
 
-    }));
-console.log(wordList,"wordlistfff");
     const correctAnswers = updatedList.filter((item) => item.correct).length;
     const mark = (correctAnswers / updatedList.length) * 100;
     setMarkStudent(mark);
