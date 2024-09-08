@@ -16,6 +16,7 @@ import { FaChalkboardTeacher } from 'react-icons/fa';
 import { FaUserTie } from 'react-icons/fa';
 import { MdSportsEsports } from 'react-icons/md';
 import { HelpOutline, FilterAlt } from '@mui/icons-material';
+import { ChatBubbleOutline } from '@mui/icons-material';
 
 // const user = {
 //   username: "username",
@@ -62,6 +63,9 @@ const studentMenuActions = [
       // { title: "גיליון ציונים", path: "marks", icon: <Star /> },
       { title: "משחקים", path: "play", icon: < MdSportsEsports /> },
       { title: "גרפים", path: "graphs", icon: <FaChartLine /> },
+      { title: "tips", path: "tips", icon: <ChatBubbleOutline /> },
+      { title: "gramar-roles", path: "gramar-roles", icon: <ChatBubbleOutline /> },
+
     ],
 
 

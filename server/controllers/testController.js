@@ -67,9 +67,9 @@ const updateTestAfterDoing = async (req, res) => {
         .json({ error: true, message: "no test found", data: null });
     }
     updateTest.active = active;
+    updateTest.complete=complete
     if (test) {
       updateTest.test = test;
-      updateTest.complete = complete;
       updateTest.mark = mark;
     }
     const updateTests = await updateTest.save();
