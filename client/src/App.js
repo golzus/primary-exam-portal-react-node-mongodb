@@ -59,6 +59,7 @@ import GrammarRules from "./features/grammarRules/GrammarRules";
 import PastSimpleRules from "./features/grammarRules/PastSimpleRules";
 import FutureSimpleRules from "./features/grammarRules/FutureSimpleRules";
 import VerbsExplanation from "./features/grammarRules/VerbsExplanation";
+import IrregularVerbs from "./features/grammarRules/IrregularVerbs";
 
 // import PuzzleGame from "./features/actions/game/PuzzleGame";
 function App() {
@@ -106,12 +107,14 @@ function App() {
                   <Route path="personalldetails" element={<SingleUser notForATeacher="true" />} />
                   <Route path="tips" element={<Tips />} />
                  
-                  
+                
                   <Route path="student-instruction" element={<StudentInstructions/>}/>
-                  <Route path="gramar-roles" element={<GrammarRules/>}/>
-                  <Route path="gramar-roles/past-simple-rules" element={<PastSimpleRules/>}/>
-                  <Route path="gramar-roles/future-simple-rules" element={<FutureSimpleRules/>}/>
-                  <Route path="gramar-roles/verb-explanation" element={<VerbsExplanation/>}/>
+                  <Route path="gramar-rules" element={<GrammarRules/>}/>
+                  <Route path="gramar-rules/past-simple-rules" element={<PastSimpleRules/>}/>
+                  <Route path="gramar-rules/future-simple-rules" element={<FutureSimpleRules/>}/>
+                  <Route path="gramar-rules/verb-explanation" element={<VerbsExplanation/>}/>
+                  <Route path="gramar-rules/verb-explanation" element={<VerbsExplanation/>}/>
+                  <Route path="gramar-rules/verb-explanation/irregular-rules" element={<IrregularVerbs/>}/>
 
                   <Route path="wordLsList" element={<ListWord />} />
                   <Route path="play/:_id/wordgame" element={<WordsGame />} />

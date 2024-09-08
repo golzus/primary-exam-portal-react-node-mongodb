@@ -1,7 +1,9 @@
 import React from 'react';
-import { Typography, Box, List, ListItem, ListItemIcon, ListItemText, Paper } from '@mui/material';
+import { Typography, Box, List, ListItem, ListItemIcon, ListItemText, Paper, IconButton } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useTheme } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
+import { FaExclamation } from 'react-icons/fa';
 
 const VerbsExplanation = () => {
   const theme = useTheme();
@@ -19,106 +21,108 @@ const VerbsExplanation = () => {
         פעלים באנגלית – מדריך ללמידה
       </Typography>
 
-      {/* סעיף 1 - מה זה פעלים באנגלית */}
+      {/* הסבר כללי על פעלים */}
       <Box mb={4}>
         <Typography variant="h5" component="h2" gutterBottom style={{ color: theme.palette.secondary.main }}>
-          1. מה זה פעלים באנגלית?
+          מה זה פעלים באנגלית?
         </Typography>
         <Typography variant="body1" gutterBottom>
-          פעלים באנגלית הם מילים המתארות פעולה, כמו "ללכת", "לכתוב", "לאכול", ועוד. במשפטים רבים, הם מהווים את הליבה של המשפט ומסייעים להבנת ההקשר הכולל.
+          פעלים באנגלית הם מילים שמתארות פעולה, כמו "ללכת", "לאכול", "לכתוב" ועוד. הם מהווים חלק מרכזי במשפט, וללא פועל קשה לבטא פעולה.
         </Typography>
-        <List>
-          <ListItem>
-            <ListItemIcon>
-              <CheckCircleIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="I walk to school every day." />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <CheckCircleIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="She writes a letter." />
-          </ListItem>
-        </List>
       </Box>
 
-      {/* סעיף 2 - סוגי פעלים באנגלית */}
+      {/* סעיף 1 - פעלים חזקים */}
       <Box mb={4}>
         <Typography variant="h5" component="h2" gutterBottom style={{ color: theme.palette.secondary.main }}>
-          2. שלושה סוגי פעלים באנגלית
+          1. פעלים חזקים
         </Typography>
         <Typography variant="body1" gutterBottom>
-          באנגלית יש שלושה סוגים עיקריים של פעלים: חזקים, חלשים, וחריגים.
+          פעלים חזקים הם פעלים שבהם השינוי לזמן עבר מתבצע בתוך הפועל עצמו, ולא באמצעות תוספת חיצונית. השינוי הזה מתבצע לרוב בתנועות הפועל.
         </Typography>
         <List>
           <ListItem>
             <ListItemIcon>
               <CheckCircleIcon color="primary" />
             </ListItemIcon>
-            <ListItemText primary="פעלים חזקים: לדוגמה, run -> ran" />
+            <ListItemText primary="דוגמה: Run -> Ran (הפועל 'לרוץ' הופך ל'רצתי' בעבר)" />
           </ListItem>
           <ListItem>
             <ListItemIcon>
               <CheckCircleIcon color="primary" />
             </ListItemIcon>
-            <ListItemText primary="פעלים חלשים: לדוגמה, walk -> walked" />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <CheckCircleIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="פעלים חריגים: לדוגמה, go -> went" />
+            <ListItemText primary="דוגמה: Sing -> Sang (הפועל 'לשיר' הופך ל'שרתי' בעבר)" />
           </ListItem>
         </List>
+        <Typography variant="body1" gutterBottom>
+          השינוי מתבצע בתנועה הפנימית של הפועל (כמו שינוי מ-'u' ל-'a'), ולכן הם נקראים 'פעלים חזקים'. השינוי הוא פנימי ללא תוספת סיומת.
+        </Typography>
       </Box>
 
-      {/* סעיף 3 - הטיית פעלים בזמן */}
+      {/* סעיף 2 - פעלים חלשים */}
       <Box mb={4}>
         <Typography variant="h5" component="h2" gutterBottom style={{ color: theme.palette.secondary.main }}>
-          3. הטיות פעלים בזמנים שונים
+          2. פעלים חלשים
         </Typography>
         <Typography variant="body1" gutterBottom>
-          הפעלים האנגליים נוטים בזמנים שונים, כאשר הפעלים מופיעים ב-12 זמנים שונים. הזמנים הנפוצים ביותר הם הווה ועבר.
+          פעלים חלשים הם פעלים שבהם לא מתבצע שינוי פנימי, אלא מתווספת להם סיומת של זמן עבר, לרוב -ed.
         </Typography>
         <List>
           <ListItem>
             <ListItemIcon>
               <CheckCircleIcon color="primary" />
             </ListItemIcon>
-            <ListItemText primary="הווה פשוט: I eat breakfast every day." />
+            <ListItemText primary="דוגמה: Walk -> Walked (הפועל 'ללכת' הופך ל'הלכתי' בעבר)" />
           </ListItem>
           <ListItem>
             <ListItemIcon>
               <CheckCircleIcon color="primary" />
             </ListItemIcon>
-            <ListItemText primary="עבר פשוט: I ate breakfast yesterday." />
+            <ListItemText primary="דוגמה: Talk -> Talked (הפועל 'לדבר' הופך ל'דיברתי' בעבר)" />
           </ListItem>
         </List>
+        <Typography variant="body1" gutterBottom>
+          הפעלים עצמם לא משתנים, אלא מקבלים תוספת חיצונית של זמן עבר. זאת הסיבה לקרוא להם 'פעלים חלשים'.
+        </Typography>
       </Box>
 
-      {/* סעיף 4 - דקדוק באנגלית עם פעלים */}
+      {/* סעיף 3 - פעלים חריגים */}
       <Box mb={4}>
         <Typography variant="h5" component="h2" gutterBottom style={{ color: theme.palette.secondary.main }}>
-          4. פעלים ודקדוק
+          3. פעלים חריגים
         </Typography>
         <Typography variant="body1" gutterBottom>
-          הפעלים ממלאים תפקיד מרכזי בזמנים השונים באנגלית. חשוב לדעת להטות אותם בצורה נכונה על מנת לדבר בצורה תקינה.
+          פעלים חריגים הם פעלים שהשינוי שלהם לזמן עבר אינו תואם כלל קבוע, ולכן יש ללמוד אותם בצורה פרטנית.
         </Typography>
         <List>
           <ListItem>
             <ListItemIcon>
               <CheckCircleIcon color="primary" />
             </ListItemIcon>
-            <ListItemText primary="חיובי: She will go to school tomorrow." />
+            <ListItemText primary="דוגמה: Go -> Went (הפועל 'ללכת' הופך ל'הלכתי' בעבר)" />
           </ListItem>
           <ListItem>
             <ListItemIcon>
               <CheckCircleIcon color="primary" />
             </ListItemIcon>
-            <ListItemText primary="שלילה: She won't go to school tomorrow." />
+            <ListItemText primary="דוגמה: Wake -> Woke (הפועל 'להתעורר' הופך ל'התעוררתי' בעבר)" />
           </ListItem>
         </List>
+        <Typography variant="body1" gutterBottom>
+          אין כלל ברור לגבי הפעלים החריגים, ולכן יש ללמוד כל פועל בנפרד.
+        </Typography>
+        <IconButton
+                component={Link}
+                to="irregular-rules"
+                sx={{
+                  fontSize: 90,
+                  "&:hover": {
+                    transform: "scale(1.1)",
+                    transition: "transform 0.3s ease-in-out",
+                  },
+                }}
+              ><Typography>לרשימה של החריגים השכיחים</Typography>
+              <FaExclamation  />
+              </IconButton>
       </Box>
     </Paper>
   );
