@@ -118,8 +118,8 @@ const ListWord = ({ todos }) => {
       date: list.date ? list.date.slice(0, 10) : "",
       wordCount: list.test.length,
       mark: list.mark || 0,
-      active:list.active
-
+      active:list.active,
+      complete:list.complete
     }));
 
   const columns = [
@@ -238,7 +238,7 @@ const ListWord = ({ todos }) => {
 
 
        {/* בדיקה אם השורה פעילה */}
-       {params.row.active ? (
+       {(params.row.active||params.row.complete) ? (
           <Tooltip title="Go to test">
             <IconButton
               component={Link}

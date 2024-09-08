@@ -8,7 +8,7 @@ body, html {
   .container {
     display: flex;
     height: 100vh; /* הגובה של ה-container הוא 100% מהגובה של המסך */
-    overflow: hidden; /* למנוע גלילה חיצונית */
+    /* overflow: hidden; למנוע גלילה חיצונית */
   }
   
   .mane {
@@ -30,6 +30,12 @@ body, html {
   }
   .contemt > * {
     flex: 0 1 auto; /* לכל פריט בתוכן, Flex-grow: 0, Flex-shrink: 1, Flex-basis: auto */
+  }
+  .outlet{
+    height: 60vh;
+  }
+  .footer{
+    height: 10vh;
   }
   @media (max-width:1000px) {
     .content {

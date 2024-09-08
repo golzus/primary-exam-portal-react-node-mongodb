@@ -1,35 +1,39 @@
-const Test =require("../models/Test");
+const Test = require("../models/Test");
 const User = require("../models/User");
 
 const getTestByClassAndUser = async (req, res) => {
-    const {user}=req.body
-    try {  
-    const test=await Test.find({user:user,complete:false})
-    res.json(({error:false,message:"",data:test}))
-} catch (error) {
-  console.log(error,"error");      
-}
+  const { user } = req.body;
+  try {
+    const test = await Test.find({ user: user, complete: false });
+    res.json({ error: false, message: "", data: test });
+  } catch (error) {
+    console.log(error, "error");
+    res.status(500).json({ error: true, message: "Server error", data: null });
+  }
 };
+
 const getAllTestsDone = async (req, res) => {
-  const {user}=req.body
-  try {  
-  const test=await Test.find({user:user,complete:true})
-  res.json(({error:false,message:"",data:test}))
-} catch (error) {
-console.log(error,"error");      
-}
+  const { user } = req.body;
+  try {
+    const test = await Test.find({ user: user, complete: true });
+    res.json({ error: false, message: "", data: test });
+  } catch (error) {
+    console.log(error, "error");
+    res.status(500).json({ error: true, message: "Server error", data: null });
+  }
 };
+
 const getAllTests = async (req, res) => {
-  
-  const {user}=req.body
-  console.log(user,"user");
-  try {  
-  const test=await Test.find({user:user}).populate("user").lean()
-  res.json(({error:false,message:"",data:test}))
-} catch (error) {
-console.log(error,"error");      
-}
+  const { user } = req.body;
+  try {
+    const test = await Test.find({ user: user }).populate("user").lean();
+    res.json({ error: false, message: "", data: test });
+  } catch (error) {
+    console.log(error, "error");
+    res.status(500).json({ error: true, message: "Server error", data: null });
+  }
 };
+
 const getTestById = async (req, res) => {
   try {
     const { _id } = req.body;
@@ -41,17 +45,18 @@ const getTestById = async (req, res) => {
     res.json({ error: false, message: "", data: test });
   } catch (error) {
     console.log(error, "error");
+    res.status(500).json({ error: true, message: "Server error", data: null });
   }
 };
 
 const updateTestAfterDoing = async (req, res) => {
   try {
-    const { mark, test, active, _id ,complete} = req.body;
+    const { mark, test, active, _id, complete } = req.body;
 
-    if ( !_id) {
+    if (!_id) {
       return res.status(400).json({
         error: true,
-        message: "test and_id  are required!",
+        message: "test and _id are required!",
         data: null,
       });
     }
@@ -61,17 +66,101 @@ const updateTestAfterDoing = async (req, res) => {
         .status(400)
         .json({ error: true, message: "no test found", data: null });
     }
-   updateTest.active = active;
-  if(test){
-    updateTest.test = test;
-    updateTest.complete=complete
-    updateTest.mark=mark
-  }
+    updateTest.active = active;
+    if (test) {
+      updateTest.test = test;
+      updateTest.complete = complete;
+      updateTest.mark = mark;
+    }
     const updateTests = await updateTest.save();
     res.json({ error: false, message: "", data: updateTests });
   } catch (error) {
     console.log(error, "error");
+    res.status(500).json({ error: true, message: "Server error", data: null });
   }
 };
 
-module.exports={getTestByClassAndUser,getTestById,updateTestAfterDoing,getAllTestsDone,getAllTests}
+module.exports = {
+  getTestByClassAndUser,
+  getTestById,
+  updateTestAfterDoing,
+  getAllTestsDone,
+  getAllTests,
+};
+
+// const Test =require("../models/Test");
+// const User = require("../models/User");
+
+// const getTestByClassAndUser = async (req, res) => {
+//     const {user}=req.body
+//     try {  
+//     const test=await Test.find({user:user,complete:false})
+//     res.json(({error:false,message:"",data:test}))
+// } catch (error) {
+//   console.log(error,"error");      
+// }
+// };
+// const getAllTestsDone = async (req, res) => {
+//   const {user}=req.body
+//   try {  
+//   const test=await Test.find({user:user,complete:true})
+//   res.json(({error:false,message:"",data:test}))
+// } catch (error) {
+// console.log(error,"error");      
+// }
+// };
+// const getAllTests = async (req, res) => {
+  
+//   const {user}=req.body
+//   try {  
+//   const test=await Test.find({user:user}).populate("user").lean()
+//   res.json(({error:false,message:"",data:test}))
+// } catch (error) {
+// console.log(error,"error");      
+// }
+// };
+// const getTestById = async (req, res) => {
+//   try {
+//     const { _id } = req.body;
+//     if (!_id)
+//       return res
+//         .status(400)
+//         .json({ error: true, message: "_id is required", data: null });
+//     const test = await Test.findById(_id).lean();
+//     res.json({ error: false, message: "", data: test });
+//   } catch (error) {
+//     console.log(error, "error");
+//   }
+// };
+
+// const updateTestAfterDoing = async (req, res) => {
+//   try {
+//     const { mark, test, active, _id ,complete} = req.body;
+
+//     if ( !_id) {
+//       return res.status(400).json({
+//         error: true,
+//         message: "test and_id  are required!",
+//         data: null,
+//       });
+//     }
+//     const updateTest = await Test.findById(_id);
+//     if (!updateTest) {
+//       return res
+//         .status(400)
+//         .json({ error: true, message: "no test found", data: null });
+//     }
+//    updateTest.active = active;
+//   if(test){
+//     updateTest.test = test;
+//     updateTest.complete=complete
+//     updateTest.mark=mark
+//   }
+//     const updateTests = await updateTest.save();
+//     res.json({ error: false, message: "", data: updateTests });
+//   } catch (error) {
+//     console.log(error, "error");
+//   }
+// };
+
+// module.exports={getTestByClassAndUser,getTestById,updateTestAfterDoing,getAllTestsDone,getAllTests}

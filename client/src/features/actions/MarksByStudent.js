@@ -73,7 +73,7 @@ const MarksByStudent = () => {
       renderCell: (params) => {
         if (params.row.complete) {
           return (
-            <Link to={`/dash/test/${params.value}`} style={{ textDecoration: 'none', color: '#9B153B' }}>
+            <Link to={`/dash/test/false/${params.value}`} style={{ textDecoration: 'none', color: '#9B153B' }}>
               <DescriptionIcon />
             </Link>
           );

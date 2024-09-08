@@ -39,10 +39,10 @@ if((error||isLoading||!data))return <h1>loading...</h1>
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{display:"flex",justifyContent:'center',alignItems:'center'}}>
-                        {!_id&&!selectedId&&  <Typography variant="h6" sx={{ color: theme.palette.primary.main,alignItems:'center' }}>
+                        {(!_id&&!selectedId)&&  <Typography variant="h6" sx={{ color: theme.palette.primary.main,alignItems:'center' }}>
          בחר מבחן שעם המילים האילו אתה רוצה לשחק
           </Typography>}
-          {_id||selectedId&&  <Typography variant="h6" sx={{ color: theme.palette.primary.main,alignItems:'center' }}>
+          {(_id||selectedId)&&  <Typography variant="h6" sx={{ color: theme.palette.primary.main,alignItems:'center' }}>
        כדי לשחק עם מילים של מבחן אחר הנך יכול לבחור מבחן אחר מתוך הרשימה
           </Typography>}
           </Box>

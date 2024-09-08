@@ -15,8 +15,8 @@ const DashLayout = () => {
       </div>
       <div className='content'>
         <Navbar className="nav" />
-        <Outlet />
-        <Footer />
+        <Outlet className="outlet"/>
+        <Footer className="footer" />
       </div>
     </div>
   )
