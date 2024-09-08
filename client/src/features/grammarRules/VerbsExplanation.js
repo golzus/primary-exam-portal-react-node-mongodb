@@ -114,7 +114,7 @@ const VerbsExplanation = () => {
                 component={Link}
                 to="irregular-rules"
                 sx={{
-                  fontSize: 90,
+                  fontSize: 60,
                   "&:hover": {
                     transform: "scale(1.1)",
                     transition: "transform 0.3s ease-in-out",

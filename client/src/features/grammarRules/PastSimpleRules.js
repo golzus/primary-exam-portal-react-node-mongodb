@@ -1,8 +1,10 @@
 import React from 'react';
-import { Box, Typography, List, ListItem, ListItemIcon, ListItemText, Divider, Paper } from '@mui/material';
+import { IconButton,Box, Typography, List, ListItem, ListItemIcon, ListItemText, Divider, Paper } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import theme from '../../theme';
+import { Link } from 'react-router-dom';
+import { FaExclamation } from 'react-icons/fa';
 
 const PastSimpleRules = () => {
   return (
@@ -113,6 +115,20 @@ const PastSimpleRules = () => {
           </Typography>
         </Box>
 
+        <IconButton
+                component={Link}
+                to="gramar-rules/verb-explanation"
+                sx={{
+                  fontSize: 60,
+                  "&:hover": {
+                    transform: "scale(1.1)",
+                    transition: "transform 0.3s ease-in-out",
+                  },
+                }}
+              ><Typography>לקרוא עוד על יוצאי דופן</Typography>
+              <FaExclamation  />
+              </IconButton>
+
         {/* משפט בשלילה */}
         <Box mb={4}>
           <Typography variant="h6" color="secondary" sx={{ fontWeight: 'bold', marginBottom: '10px' }}>
@@ -131,6 +147,7 @@ const PastSimpleRules = () => {
           <Typography variant="body1">
             כדי להפוך את המשפט לשאלה, נוסיף את המילה <strong>did</strong> בתחילת המשפט, והפועל יופיע בצורת ה-Present Simple שלו. לדוגמה: <strong>Did she read the book?</strong>
           </Typography>
+          
         </Box>
       </Paper>
     </ThemeProvider>
