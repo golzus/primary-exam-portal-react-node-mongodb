@@ -117,7 +117,7 @@ const PastSimpleRules = () => {
 
         <IconButton
                 component={Link}
-                to="gramar-rules/verb-explanation"
+                to="/dash/gramar-rules/verb-explanation"
                 sx={{
                   fontSize: 60,
                   "&:hover": {
@@ -125,7 +125,7 @@ const PastSimpleRules = () => {
                     transition: "transform 0.3s ease-in-out",
                   },
                 }}
-              ><Typography>לקרוא עוד על יוצאי דופן</Typography>
+              ><Typography>לקרוא עוד על פעלים</Typography>
               <FaExclamation  />
               </IconButton>
 
