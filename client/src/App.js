@@ -58,6 +58,7 @@ import Tips from "./features/actions/tips/Tips";
 import GrammarRules from "./features/grammarRules/GrammarRules";
 import PastSimpleRules from "./features/grammarRules/PastSimpleRules";
 import FutureSimpleRules from "./features/grammarRules/FutureSimpleRules";
+import VerbsExplanation from "./features/grammarRules/VerbsExplanation";
 
 // import PuzzleGame from "./features/actions/game/PuzzleGame";
 function App() {
@@ -104,12 +105,13 @@ function App() {
                   <Route path="choose" element={<CurrentSchoolAndClass />} />
                   <Route path="personalldetails" element={<SingleUser notForATeacher="true" />} />
                   <Route path="tips" element={<Tips />} />
-
+                 
                   
                   <Route path="student-instruction" element={<StudentInstructions/>}/>
                   <Route path="gramar-roles" element={<GrammarRules/>}/>
                   <Route path="gramar-roles/past-simple-rules" element={<PastSimpleRules/>}/>
                   <Route path="gramar-roles/future-simple-rules" element={<FutureSimpleRules/>}/>
+                  <Route path="gramar-roles/verb-explanation" element={<VerbsExplanation/>}/>
 
                   <Route path="wordLsList" element={<ListWord />} />
                   <Route path="play/:_id/wordgame" element={<WordsGame />} />
