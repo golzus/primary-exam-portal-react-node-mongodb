@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from './theme';  // שימוש ב-theme הקיים שלך
+import theme from '../../theme';
 
 const PastSimpleRules = () => {
   return (
