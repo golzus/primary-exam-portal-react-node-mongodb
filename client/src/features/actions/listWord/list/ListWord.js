@@ -20,6 +20,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { Link } from "react-router-dom";
+// import { FaCheckCircle } from 'react-icons/fa';
+
 import theme from "../../../../theme";
 import {
   useDeleteListWordsMutation,
@@ -31,6 +33,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
 import useAuth from "../../../../hooks/useAuth";
 import useSchoolAndClass from "../../../../hooks/useSchoolAndClass";
+import LOADING from "../../../loadingAnimation/LoadingAnimation";
 const ListWord = ({ todos }) => {
   const { roles, _id: user } = useAuth(); // Retrieve roles
 
@@ -87,8 +90,8 @@ const ListWord = ({ todos }) => {
     );
   }
 
-  if (isLoading) return <Typography variant="h5">Loading...</Typography>;
-
+  // if (isLoading) return <Typography variant="h5">Loading...</Typography>;
+if(isLoading)return <LOADING/>
   const handleDeleteClick = (list) => {
     if (window.confirm("בטוח שברצונך למחוק את המבחן?")) {
       deleteListWords({ _id: list._id });
@@ -98,7 +101,6 @@ const ListWord = ({ todos }) => {
     setSearchText(event.target.value);
   };
   if (roles === "Student") {
-    if (isLoading) return <h1>Loading...</h1>;
     if (isError) console.log(isError, "error");
     if (wordLsList) {
       console.log(wordLsList, "testStudent");
@@ -117,7 +119,7 @@ const ListWord = ({ todos }) => {
       title: list.title,
       date: list.date ? list.date.slice(0, 10) : "",
       wordCount: list.test.length,
-      mark: list.mark || 0,
+      mark: `${list.mark}%` || 0,
       active:list.active,
       complete:list.complete
     }));
@@ -131,7 +133,7 @@ const ListWord = ({ todos }) => {
       align: "center",
     },
     //הוספת עמודה רק אם המשתמש הוא תלמיד
-    ...(roles === 'Student' ? [{
+    ...((roles === 'Student'&&todos) ? [{
       field: "mark",
       headerName: "ציון",
       flex: 1,
@@ -305,6 +307,16 @@ const ListWord = ({ todos }) => {
 
   return (
     <ThemeProvider theme={theme}>
+   {/* <Box display="flex" justifyContent="center" alignItems="center" sx={{ mb: 4 }}>
+      < FaCheckCircle  style={{ color: '#007BFF', fontSize: '3rem', marginRight: '12px' }} />
+      <Typography
+        variant="h4"
+        component="div"
+        sx={{ color: '#1D3557', fontSize: '2.5rem', fontWeight: 'bold', textAlign: 'center' }}
+      >
+        בחנים שעדיין צריך לעשות
+      </Typography>
+    </Box> */}
       <CssBaseline />
       <Box sx={{ display: "flex", flexDirection: "column", height: "93vh" }}>
         <Box

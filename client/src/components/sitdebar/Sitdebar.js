@@ -18,6 +18,9 @@ import { MdSportsEsports } from 'react-icons/md';
 import { HelpOutline, FilterAlt } from '@mui/icons-material';
 import { ChatBubbleOutline } from '@mui/icons-material';
 import { Book } from '@mui/icons-material';
+import { FaBook } from 'react-icons/fa';
+import { FaCheckCircle } from 'react-icons/fa';
+
 
 // const user = {
 //   username: "username",
@@ -59,8 +62,8 @@ const studentMenuActions = [
     title: "בחנים",
     list: [
       { title: "ראשי", path: "/dash", icon: <Dashboard /> },
-      { title: "בחנים", path: "wordLsList", icon: <Quiz /> },
-      { title: "בחנים שהושלמו", path: "todos", icon: <ListAlt /> },
+      { title: "בחנים", path: "wordLsList", icon: <FaBook /> },
+      { title: "בחנים שהושלמו", path: "todos", icon: <FaCheckCircle /> },
       // { title: "גיליון ציונים", path: "marks", icon: <Star /> },
       { title: "משחקים", path: "play", icon: < MdSportsEsports /> },
       { title: "גרפים", path: "graphs", icon: <FaChartLine /> },

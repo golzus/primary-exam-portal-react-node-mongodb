@@ -30,6 +30,7 @@ import useWordComparison from "../../../../hooks/useWordComparison";
 // import WordSpeaker from "../add/WordSpeaker";
 import useWordSpeaker from "../../../../hooks/useWordSpeaker";
 import {  FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import LOADING from "../../../loadingAnimation/LoadingAnimation";
 
 const Test = () => {
 
@@ -118,7 +119,7 @@ const Test = () => {
   }, [trying, sureStarting, _id, isUpdateSuccess, isError, loading, updateTest]);
   useEffect(()=>{
     if (checkedTest&&wordList){
-
+      if(!isTrying)
     updateTest({
       _id: _id,
       active: false,
@@ -181,29 +182,29 @@ const Test = () => {
     }
     speakWord(word,selectedSpeed);
 
-    // e.stopPropagation();
-    const voices = window.speechSynthesis.getVoices();
+    // // e.stopPropagation();
+    // const voices = window.speechSynthesis.getVoices();
 
-    // Try to find a US English female voice (priority)
-    const preferredVoice = voices.find(voice => voice.lang === 'en-US' && voice.name.includes('Female'));
+    // // Try to find a US English female voice (priority)
+    // const preferredVoice = voices.find(voice => voice.lang === 'en-US' && voice.name.includes('Female'));
 
-    // Fallback to any US English voice
-    const fallbackVoice = voices.find(voice => voice.lang === 'en-US');
+    // // Fallback to any US English voice
+    // const fallbackVoice = voices.find(voice => voice.lang === 'en-US');
 
-    const voice = preferredVoice || fallbackVoice;
+    // const voice = preferredVoice || fallbackVoice;
 
-    if (voice) {
-     <Speech
-        text={word}
-        voice="Google UK English Female" // ניתן לשנות לקול המועדף עליך
-        rate="1" // מהירות ההקראה
-        pitch="1" // גובה הצליל
-        volume="1" // עוצמת הקול
-      />  
+    // if (voice) {
+    //  <Speech
+    //     text={word}
+    //     voice="Google UK English Female" // ניתן לשנות לקול המועדף עליך
+    //     rate="1" // מהירות ההקראה
+    //     pitch="1" // גובה הצליל
+    //     volume="1" // עוצמת הקול
+    //   />  
 
-    } else {
-      console.warn('No US English voice found');
-    }
+    // } else {
+    //   console.warn('No US English voice found');
+    // }
 
 
 
@@ -235,7 +236,7 @@ const Test = () => {
         correct: isCorrect
       };
     });
-  console.log("i am here!!!!!!!!!!!!!!!!!!!!!!!");
+ 
     // Update the state or perform any further actions with updatedList
     // e.g., setWordList(updatedList);
   
@@ -254,7 +255,7 @@ const Test = () => {
       //   mark:markStudent
       // });
     setSeeMark(true);
-    console.log(wordList,"updateeeeeeeeeeeee",markStudent);
+
   };
 
   if (sureStarting === false) {
@@ -294,7 +295,7 @@ const Test = () => {
     );
   }
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <LOADING />;
   if (isError || error)
     return (
       <Typography color="error">
