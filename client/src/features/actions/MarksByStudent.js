@@ -28,7 +28,7 @@ const MarksByStudent = () => {
           const testsArray = response.data.data;
           const formattedRows = testsArray.map(item => ({
             id: item._id,
-            mark: item.mark.toFixed(2),
+            mark:item.complete? `${item.mark.toFixed(2)}%`:"--",
             date: item.date.slice(0, 10),
             actions: item._id,
             complete: item.complete,

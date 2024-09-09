@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 // פונקציה לחישוב המרחק לוונשטיין
 function calculateLevenshteinDistance(str1, str2) {
-    console.log(str1);
+  
   const dp = Array(str1.length + 1).fill(null).map(() => Array(str2.length + 1).fill(0));
-console.log("hhhhhhhhhh");
+
   for (let i = 0; i <= str1.length; i++) {
     dp[i][0] = i;
   }

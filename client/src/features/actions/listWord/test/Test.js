@@ -27,7 +27,7 @@ import {
   useUpdateTestMutation,
 } from "../view/ListWordApiSlice";
 import useWordComparison from "../../../../hooks/useWordComparison";
-import WordSpeaker from "../add/WordSpeaker";
+// import WordSpeaker from "../add/WordSpeaker";
 import useWordSpeaker from "../../../../hooks/useWordSpeaker";
 import {  FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
@@ -39,9 +39,9 @@ const Test = () => {
       setSelectedSpeed(Number(event.target.value));
     };
   
-    const handleSpeakClick = () => {
-      speakWord("identify", selectedSpeed);
-    };
+    // const handleSpeakClick = () => {
+    //   speakWord("identify", selectedSpeed);
+    // };
 
 
 
@@ -55,7 +55,7 @@ const Test = () => {
   const { _id } = useParams();
   const { trying } = useParams()
   const isTrying = trying === "true";
-
+  const [checkedTest,setCheckedTest]=useState(false)
   const [
     updateTest,
     {
@@ -113,10 +113,20 @@ const Test = () => {
       setSureStarting(true);
     }
     if (sureStarting && !isTrying) {
-      updateTest({ _id: _id, active: false, complete: true });
+      updateTest({ _id: _id, active: false, complete: true,test:null});
     }
   }, [trying, sureStarting, _id, isUpdateSuccess, isError, loading, updateTest]);
+  useEffect(()=>{
+    if (checkedTest&&wordList){
 
+    updateTest({
+      _id: _id,
+      active: false,
+      test: wordList,
+      complete: true,
+      mark:markStudent
+    });}
+  },[markStudent,checkedTest,wordList])
   const handleChange = (index, value) => {
     const updatedList = wordList.map((item, i) =>
       i === index
@@ -229,22 +239,22 @@ const Test = () => {
     // Update the state or perform any further actions with updatedList
     // e.g., setWordList(updatedList);
   
-  
+    setCheckedTest(true)
 
     const correctAnswers = updatedList.filter((item) => item.correct).length;
     const mark = (correctAnswers / updatedList.length) * 100;
     setMarkStudent(mark);
     setWordList(updatedList);
-    if (!trying)
-      updateTest({
-        _id: _id,
-        active: false,
-        test: updatedList,
-        complete: true,
-        mark
-      });
+    // if (!trying)
+      // updateTest({
+      //   _id: _id,
+      //   active: false,
+      //   test: wordList,
+      //   complete: true,
+      //   mark:markStudent
+      // });
     setSeeMark(true);
-    console.log(updatedList,"updateeeeeeeeeeeee");
+    console.log(wordList,"updateeeeeeeeeeeee",markStudent);
   };
 
   if (sureStarting === false) {
@@ -440,7 +450,7 @@ const Test = () => {
           {seeMark && (
             <Box mt={3} textAlign="center">
               <Typography variant="h6">
-                הציון שלך הוא: {markStudent.toFixed(2)}%
+                הציון שלך הוא: {markStudent}%
               </Typography>
             </Box>
           )}

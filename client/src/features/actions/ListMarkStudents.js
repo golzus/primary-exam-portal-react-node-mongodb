@@ -25,7 +25,7 @@ const ListMarkStudents = () => {
           const testsArray = response.data.data;
           const formattedRows = testsArray.map(item => ({
             id: item._id,
-            mark: item.mark.toFixed(2),
+            mark:item.complete? `${item.mark.toFixed(2)}%`:"--",
             user: item.user.fullname,
             actions: item._id,
             complete: item.complete
@@ -71,7 +71,7 @@ const ListMarkStudents = () => {
         // בדיקת תנאי אם השדה complete שווה ל-true
         if (params.row.complete) {
           return (
-            <Link to={`/dash/test/${params.value}`} style={{ textDecoration: 'none', color: '#9B153B' }}>
+            <Link to={`/dash/test/false/${params.value}`} style={{ textDecoration: 'none', color: '#9B153B' }}>
               <DescriptionIcon />
             </Link>
           );
