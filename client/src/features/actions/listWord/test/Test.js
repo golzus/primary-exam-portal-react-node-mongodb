@@ -33,8 +33,6 @@ import {  FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const Test = () => {
 
-
-  
     const [selectedSpeed, setSelectedSpeed] = useState(1); // ברירת המחדל למהירות רגילה
   
     const handleSpeedChange = (event) => {
@@ -227,7 +225,7 @@ const Test = () => {
         correct: isCorrect
       };
     });
-  
+  console.log("i am here!!!!!!!!!!!!!!!!!!!!!!!");
     // Update the state or perform any further actions with updatedList
     // e.g., setWordList(updatedList);
   
@@ -246,6 +244,7 @@ const Test = () => {
         mark
       });
     setSeeMark(true);
+    console.log(updatedList,"updateeeeeeeeeeeee");
   };
 
   if (sureStarting === false) {

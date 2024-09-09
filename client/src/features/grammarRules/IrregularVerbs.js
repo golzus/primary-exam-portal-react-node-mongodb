@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../theme'; // ייבוא הנושא שהגדרת
+import { FormControl, IconButton, InputLabel, MenuItem, Select } from '@mui/material';
+import { HiOutlineSpeakerWave } from "react-icons/hi2";
+import useWordSpeaker from '../../hooks/useWordSpeaker';
 
 // נתונים של הפעלים החריגים כולל תרגום לעברית
 const irregularVerbs = [
@@ -48,27 +51,71 @@ const irregularVerbs = [
 ];
 
 // עמודות הטבלה כולל תרגום
+
+
+function IrregularVerbs() {
+  const speakWord=useWordSpeaker()
+
+  const [selectedSpeed,setSelectedSpeed]=useState()
+  const handleListen = (index, word) => {
+    speakWord(word,selectedSpeed);
+  };
+const handleSpeedChange = (event) => {
+  setSelectedSpeed(Number(event.target.value));
+
+};
 const columns = [
-  { field: 'translation', headerName: 'המילה בעברית ', flex: 1, sortable: true },
+  { field: 'translation', headerName: 'המילה בעברית', flex: 1, sortable: true },
   { field: 'base', headerName: 'צורת המילה באופן רגיל', flex: 1, sortable: true },
   { field: 'pastSimple', headerName: 'עבר פשוט', flex: 1, sortable: true },
   { field: 'pastParticiple', headerName: 'עבר סביל', flex: 1, sortable: true },
+  {
+    field: 'listen', 
+    headerName: 'האזן למילה', 
+    flex: 0.5, 
+    sortable: false,
+    renderCell: (params) => {
+      const index = params.row.id; // השתמש ב-id של כל שורה כדי לנהל את ההשמעות
+      return (
+        <IconButton
+          onClick={() => handleListen(index, params.row.base)}
+          className='wordSpeakerButton'
+        >
+          <HiOutlineSpeakerWave />
+        </IconButton>
+      );
+    }
+  }
 ];
-
-function IrregularVerbs() {
-  return (
-    <ThemeProvider theme={theme}>
-      <div style={{ height: 600, width: '100%' }}>
-        <DataGrid
-          rows={irregularVerbs}
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          checkboxSelection
-        />
-      </div>
-    </ThemeProvider>
-  );
+return (
+  <ThemeProvider theme={theme}>
+    <FormControl fullWidth variant="outlined" margin="normal">
+      <InputLabel id="speed-select-label">בחר מהירות השמעה</InputLabel>
+      <Select
+        labelId="speed-select-label"
+        id="speed-select"
+        value={selectedSpeed}
+        onChange={handleSpeedChange}
+        label="בחר מהירות השמעה"
+      >
+        <MenuItem value={0.5}>0.5x (איטי יותר)</MenuItem>
+        <MenuItem value={0.75}>0.75x (איטי)</MenuItem>
+        <MenuItem value={1}>1x (רגיל)</MenuItem>
+        <MenuItem value={1.25}>1.25x (מהיר)</MenuItem>
+        <MenuItem value={1.5}>1.5x (מהיר יותר)</MenuItem>
+      </Select>
+    </FormControl>
+    <div style={{ height: 600, width: '100%' }}>
+      <DataGrid
+        rows={irregularVerbs}
+        columns={columns}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
+        checkboxSelection
+      />
+    </div>
+  </ThemeProvider>
+);
 }
 
 export default IrregularVerbs;
