@@ -1,13 +1,23 @@
-.footer{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 30px;
-    color: var(--textSoft);
-}
-.footer-logo{
-    font-weight: bold;
-}
-.footer-text{
-font-size: 12px;
-}
+.footer {
+    padding: 20px; /* מרווח פנימי סביב התוכן בתוך ה-Footer */
+    background-color: #f8f8f8; /* צבע רקע של ה-Footer */
+    text-align: center; /* ממרכז את התוכן בתוך ה-Footer */
+    position: sticky; /* מוודא שה-Footer יישאר יציב בחלק התחתון של המסך */
+    bottom: 0; /* מוודא שה-Footer יישאר בחלק התחתון של הדף */
+    z-index: 1000; /* מבטיח שה-Footer יישאר מעל שאר התוכן */
+  }
+  
+  .footer a {
+    color: #9B153B; /* צבע טקסט קישורים בתוך ה-Footer */
+    text-decoration: none; /* מסיר קו תחתון מהקישורים */
+  }
+  
+  .footer a:hover {
+    text-decoration: underline; /* מוסיף קו תחתון לקישורים כאשר המשתמש מרחף מעליהם */
+  }
+  
+  .footer-text {
+    margin-top: 10px; /* מרווח מעל הטקסט בתוך ה-Footer */
+    color: #9B153B; /* צבע הטקסט בתחתית ה-Footer */
+  }
+  

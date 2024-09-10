@@ -10,6 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import DescriptionIcon from '@mui/icons-material/Description'; // אייקון למבחן
 import theme from '../../theme';
 import LockIcon from '@mui/icons-material/Lock';
+import LOADING from '../loadingAnimation/LoadingAnimation';
 
 const MarksByStudent = () => {
   const [getAllTests, { error, data, isLoading }] = useGetAllTestsMutation();
@@ -89,7 +90,7 @@ const MarksByStudent = () => {
     }
   ];
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <LOADING/>;
   if (error || !data) return <Typography variant="h6">Error loading data</Typography>;
 
   return (

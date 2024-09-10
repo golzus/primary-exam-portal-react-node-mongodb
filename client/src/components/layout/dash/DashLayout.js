@@ -7,7 +7,6 @@ import SitdeBar from '../../sitdebar/Sitdebar'
 import useAuth from '../../../hooks/useAuth'
 
 const DashLayout = () => {
-  const { roles } = useAuth();
   return (
     <div className='container'>
       <div className='mane'>

@@ -3,6 +3,7 @@ import { Box, Typography, Button, TextField, Grid } from '@mui/material';
 import { useGetListWordsByIdMutation, useGetSingleTestMutation } from '../listWord/view/ListWordApiSlice';
 import { useParams } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
+import LOADING from '../../loadingAnimation/LoadingAnimation';
 
 const HangmanGame = () => {
   const { roles } = useAuth();
@@ -84,7 +85,7 @@ const HangmanGame = () => {
     setUserGuess('');
   };
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <LOADING/>
   if (isError) return <h1>Error</h1>;
   if (!words || words.length === 0) {
     return <Typography variant="h6">אין מילים למשחק.</Typography>;

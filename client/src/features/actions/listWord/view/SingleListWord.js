@@ -10,6 +10,7 @@ import { Box, Typography, Button, Table, TableHead, TableBody, TableRow, TableCe
 import { MdDelete } from 'react-icons/md';
 import { VolumeUp } from '@mui/icons-material';
 import AddWordsList from '../add/AddWordsList';
+import LOADING from '../../../loadingAnimation/LoadingAnimation';
 
 const SingleListWord = () => {
   const { _id2 } = useAuth();
@@ -76,7 +77,7 @@ const SingleListWord = () => {
     speechSynthesis.speak(utterance);
   };
 
-  if (isLoading) return <Typography variant="h6" align="center">Loading...</Typography>;
+  if (isLoading) return <LOADING/>
   if (isError || err) return <Typography variant="h6" align="center">Error: {error?.data?.message || 'Something went wrong!'}</Typography>;
 return <AddWordsList WORDLIST={listWord}/>
   return (

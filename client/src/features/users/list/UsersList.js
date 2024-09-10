@@ -16,6 +16,7 @@ import AddUserForm from '../add/AddUser';
 import theme from '../../../theme';
 import { ThemeProvider } from '@mui/material/styles';
 import './users-list.css';
+import LOADING from '../../loadingAnimation/LoadingAnimation';
 
 const UsersList = () => {
  
@@ -119,12 +120,12 @@ const UsersList = () => {
     }
   }, [showThankYou]);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <LOADING/>
   if (isError) return <h1>Error: {JSON.stringify(error)}</h1>;
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', height: '93vh' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: '75vh' }}>
         <Box className='user-list-top' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <Button
             className="users-list-add-button"
@@ -159,38 +160,68 @@ const UsersList = () => {
 
           />
         </Box>
-        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-          <Box sx={{ flex: 1, overflowY: 'auto' }}>
-            <DataGrid
-              rows={filteredRows}
-              columns={columns}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
-              checkboxSelection
-              disableSelectionOnClick
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+{/* <Box
+  sx={{
+    flex: 1,
+    overflowY: "auto",
+    position: "relative", // תומך במיקום יחסי
+    bottom: 0, // שומר אותו בקצה התחתון של הקונטיינר
+  }}
+>
+  <DataGrid
+    rows={filteredRows}
+    columns={columns}
+    pageSize={5}
+    rowsPerPageOptions={[5]}
+    checkboxSelection
+    disableSelectionOnClick
+    sx={{
+      height: "100%", // מבטיח שהגובה יתפוס את כל השטח הזמין
+      width: "100%",
+      "& .MuiDataGrid-columnHeader": {
+        fontWeight: "bolder", // טקסט כותרת בולט
+        fontSize: "larger",
+      },
+      "& .MuiDataGrid-cell": {
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+      },
+    }}
+  />
+</Box> */}
+<Box sx={{ 
+  flex: 1, 
+  overflowY: 'auto', 
+  paddingBottom: '20vh', 
+  display: 'flex', 
+  flexDirection: 'column', 
+  minHeight: '85vh' // מאפשר ל-Box להתכווץ ולהתממש בהתאם לתוכן
+}}>
+  <DataGrid
+    rows={filteredRows}
+    columns={columns}
+    pageSize={10}
+    rowsPerPageOptions={[10, 20, 50]}
+    disableSelectionOnClick
+    sx={{
+      height: "100%", // ייקח את כל השטח הפנוי ב-Box
+      width: "100%",
+      "& .MuiDataGrid-columnHeader": {
+        fontWeight: "bolder", // Bold header text
+        fontSize: "larger",
+      },
+      "& .MuiDataGrid-cell": {
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+      },
+    }}
+  />
+</Box>
 
-              sx={{
-                height: "calc(100% - 2px)", // Adjust height to ensure sticky footer space
-                width: "100%",
-                "& .MuiDataGrid-columnHeader": {
-                  // backgroundColor: "#f3f3e9", // Beige background for the header
-                  fontWeight: "bolder", // Bold header text
-                  fontSize: "larger"
-                },
-                "& .MuiDataGrid-cell": {
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                },
-              }}
-            />
-          </Box>
-          {/* <Box sx={{ position: 'sticky', bottom: 0, backgroundColor: '#f3f3e9', padding: '8px', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img src='/logo.png' style={{ height: '200px', marginRight: '8px' }} />
-            <Typography variant="body2" color="textSecondary">
-              © 2024 Your Company
-            </Typography>
-          </Box> */}
-        </Box>
+ 
+</Box>
+
         <Modal
           open={showAddUserForm}
           onClose={() => setShowAddUserForm(false)}

@@ -37,9 +37,9 @@ const LOADING = () => {
         />
       </Box>
       {/* הודעת טעינה */}
-      <Typography variant="h5" sx={{ color: '#9B153B', fontWeight: 'bold' }}>
+      {/* <Typography variant="h5" sx={{ color: '#9B153B', fontWeight: 'bold' }}>
         טוען נתונים, אנא המתן...
-      </Typography>
+      </Typography> */}
 
       {/* הגדרת אנימציה */}
       <style>

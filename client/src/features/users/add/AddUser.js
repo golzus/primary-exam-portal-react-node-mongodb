@@ -134,7 +134,7 @@ return <CurrentSchoolAndClass/>
           label='הרשאה'
         >
           <MenuItem value='Student'>Student</MenuItem>
-          <MenuItem value='Teacher'>Teacher</MenuItem>
+          {/* <MenuItem value='Teacher'>Teacher</MenuItem> */}
         </Select>
       </FormControl>
       <FormControl fullWidth>

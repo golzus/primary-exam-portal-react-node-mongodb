@@ -7,6 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Container, CssBaseline, FormControl, InputLabel, MenuItem, Select, Typography, Box, CircularProgress, Alert } from '@mui/material';
 import useAuth from '../../../hooks/useAuth';
 import theme from '../../../theme'
+import LOADING from '../../loadingAnimation/LoadingAnimation';
 
 const CurrentSchoolAndClass = () => {
   const [getAllSchoolsByTeacher, { data: Schools, isError, error, isLoading }] = useGetAllSchoolsByTeacherMutation();
@@ -44,7 +45,7 @@ const CurrentSchoolAndClass = () => {
     console.log('Selected Class:', selectedClass.name);
   };
 
-  if (isLoading || classesIsLoading) return <CircularProgress color="primary" />;
+  if (isLoading || classesIsLoading) return<LOADING/>
   if (isError || classesIsError) return <Alert severity="error">{JSON.stringify(error || classesError)}</Alert>;
 
   return (

@@ -66,6 +66,7 @@ import "./add-ompany.css";
 import { useAddSchoolMutation } from '../CompaniesApiSlice';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
+import LOADING from '../../loadingAnimation/LoadingAnimation';
 const AddSchool = () => {
     const [addSchool, { isError, error, isSuccess, isLoading }] = useAddSchoolMutation();
     const navigate = useNavigate();
@@ -90,7 +91,7 @@ const {_id}=useAuth()
         addSchool(SchoolObject)
     };
 
-    if (isLoading) return <h1>Loading...</h1>;
+    if (isLoading) return <LOADING/>
     if (isError) return <h1>Error: {JSON.stringify(error)}</h1>;
 
     return (

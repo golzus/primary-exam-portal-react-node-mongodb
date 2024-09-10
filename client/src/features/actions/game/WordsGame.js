@@ -98,6 +98,7 @@ import { useGetListWordsByIdMutation, useGetSingleTestMutation } from '../listWo
 import { useParams } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import theme from '../../../theme';
+import LOADING from '../../loadingAnimation/LoadingAnimation';
 
 const WordGame = () => {
         const {roles}=useAuth()
@@ -155,7 +156,7 @@ const WordGame = () => {
       setUserAnswer('');
     }
   };
-  if(isLoading)return <h1>Loading...</h1>
+  if(isLoading)return <LOADING/>
   if(isError)return <h1>error</h1>
   if (!words || words.length === 0) {
       return <Typography variant="h6">אין מילים למשחק.</Typography>;

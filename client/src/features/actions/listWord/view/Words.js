@@ -10,6 +10,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../../../theme';
 import WordSpeaker from '../add/WordSpeaker';
 import useAuth from '../../../../hooks/useAuth';
+import LOADING from '../../../loadingAnimation/LoadingAnimation';
 
 
 
@@ -103,7 +104,7 @@ const Words = () => {
     }
   };
 
-  if (isLoading || !wordList) return <h1>Loading...</h1>;
+  if (isLoading || !wordList) return <LOADING/>
 
   const columns = [
     { field: 'number', headerName: '#', flex: 0.2, headerAlign: 'center', align: 'center' },

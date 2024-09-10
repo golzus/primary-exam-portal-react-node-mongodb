@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ThemeProvider, Box, Typography, Container, IconButton, Collapse, Paper } from '@mui/material';
+import { ThemeProvider, Box, Typography, Container, IconButton, Collapse, Paper, Link } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import theme from '../../theme';
@@ -131,8 +131,21 @@ const TeacherInstructions = () => {
             </Typography>
             <Collapse in={openSection === 'help'} timeout="auto" unmountOnExit>
               <Typography variant="body1" sx={{ color: '#800000', marginBottom: '8px' }}>
-                אם נתקלת בבעיות או יש לך שאלות, תוכל לפנות אלינו באמצעות מספר הטלפון: 050-4199417 או במייל: golda.z2030@gmail.com. אנו כאן לעזור לך!
+                אם נתקלת בבעיות או יש לך שאלות, תוכל לפנות אלינו באמצעות מספר הטלפון: 050-4199417 או במייל:
               </Typography>
+              <Link
+          href="mailto:golda.z2030@gmail.com?subject=Contact from Website&body=Hello Goldi,"
+          sx={{
+            color:  '#800000',
+            textDecoration: 'none',
+            fontWeight: 'bold',
+            '&:hover': {
+              textDecoration: 'underline',
+            },
+          }}
+        >
+          golda.z2030@gmail.com
+        </Link>
             </Collapse>
           </Box>
         </Paper>

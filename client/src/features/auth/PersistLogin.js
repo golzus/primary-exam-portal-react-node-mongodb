@@ -72,6 +72,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useRefreshMutation } from "./authApiSlice"
 import { useSelector } from 'react-redux'
 import { selectToken } from "./authSlice"
+import LOADING from "../loadingAnimation/LoadingAnimation"
 
 const PersistLogin = () => {
 
@@ -117,7 +118,7 @@ const PersistLogin = () => {
     let content
   if (isLoading) { //persist: yes, token: no
         console.log('loading')
-        content = <h1> Loading </h1>
+        content = <LOADING/>
     } else if (isError) { //persist: yes, token: no
         console.log(error)     
         content = (
@@ -127,7 +128,7 @@ const PersistLogin = () => {
             </p>
         )
     } else if (isSuccess && trueSuccess) { //persist: yes, token: yes
-        console.log('success')
+       
         content = <Outlet />
     } else if (token && isUninitialized) { //persist: yes, token: yes
         // console.log('token and uninit')

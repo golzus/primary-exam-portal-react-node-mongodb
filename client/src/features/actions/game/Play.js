@@ -7,6 +7,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../../theme";
 import { useGetAllTestsMutation } from "../listWord/view/ListWordApiSlice";
 import useAuth from "../../../hooks/useAuth";
+import LOADING from "../../loadingAnimation/LoadingAnimation";
 
 const Play = () => {
   const { _id } = useParams();
@@ -35,7 +36,7 @@ useEffect(()=>{
     setSelectedId(event.target.value);
   };
  
-if((error||isLoading||!data))return <h1>loading...</h1>
+if((error||isLoading||!data))return<LOADING/>
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{display:"flex",justifyContent:'center',alignItems:'center'}}>

@@ -317,8 +317,8 @@ if(isLoading)return <LOADING/>
         בחנים שעדיין צריך לעשות
       </Typography>
     </Box> */}
-      <CssBaseline />
-      <Box sx={{ display: "flex", flexDirection: "column", height: "93vh" }}>
+      {/* <CssBaseline /> */}
+      <Box sx={{ display: "flex", flexDirection: "column", height: "75vh" }}>
         <Box
           sx={{
             p: 2,
@@ -361,28 +361,35 @@ if(isLoading)return <LOADING/>
             Add New
           </Button> */}
         </Box>
-        <Box sx={{ flex: 1, overflowY: "auto" }}>
-          <DataGrid
-            rows={filteredRows}
-            columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[10, 20, 50]}
-            disableSelectionOnClick
-            sx={{
-              height: "calc(100% - 56px)", // Adjust height to ensure sticky footer space
-              width: "100%",
-              "& .MuiDataGrid-columnHeader": {
-                // backgroundColor: "#f3f3e9", // Beige background for the header
-                fontWeight: "bolder", // Bold header text
-                fontSize: "larger"
-              },
-              "& .MuiDataGrid-cell": {
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              },
-            }}
-          />
-        </Box>
+        <Box sx={{ 
+  flex: 1, 
+  overflowY: 'auto', 
+  paddingBottom: '20vh', 
+  display: 'flex', 
+  flexDirection: 'column', 
+  minHeight: '85vh'
+}}>
+  <DataGrid
+    rows={filteredRows}
+    columns={columns}
+    pageSize={10}
+    rowsPerPageOptions={[10, 20, 50]}
+    disableSelectionOnClick
+    sx={{
+      height: "100%", // ייקח את כל השטח הפנוי ב-Box
+      width: "100%",
+      "& .MuiDataGrid-columnHeader": {
+        fontWeight: "bolder", // Bold header text
+        fontSize: "larger",
+      },
+      "& .MuiDataGrid-cell": {
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+      },
+    }}
+  />
+</Box>
+
         {/* <Box
           sx={{
             position: "sticky",

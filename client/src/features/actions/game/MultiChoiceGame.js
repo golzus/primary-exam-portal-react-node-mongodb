@@ -3,6 +3,7 @@ import { Typography, Box, Button, Grid } from '@mui/material';
 import { useGetListWordsByIdMutation, useGetSingleTestMutation } from '../listWord/view/ListWordApiSlice'; 
 import { useParams } from 'react-router-dom'; 
 import useAuth from '../../../hooks/useAuth'; 
+import LOADING from '../../loadingAnimation/LoadingAnimation';
 
 const MultiChoiceGame = () => {
     const { roles } = useAuth(); // שליפת התפקידים של המשתמש
@@ -74,7 +75,7 @@ const MultiChoiceGame = () => {
         }
     };
 
-    if (isLoading) return <h1>Loading...</h1>; // הצגת הודעת טעינה בזמן טעינת הנתונים
+    if (isLoading) return <LOADING/>// הצגת הודעת טעינה בזמן טעינת הנתונים
     if (isError) return <h1>Error</h1>; // הצגת הודעת שגיאה במקרה של תקלה
     if (!words || words.length === 0) {
         return <Typography variant="h6">אין מילים למשחק.</Typography>; // הצגת הודעה כאשר אין מילים למשחק

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useGetAllUsersByClassMutation } from "../../users/view/userApiSlice"
+import LOADING from "../../loadingAnimation/LoadingAnimation";
 
 const Students = () => {
     const [getAllUsersByClass,{data,isLoading,error}]=useGetAllUsersByClassMutation()
@@ -11,7 +12,7 @@ const Students = () => {
 
     if(data)
 console.log(data.data,"data");
-if(isLoading)return <h1>loading...</h1>
+if(isLoading)return <LOADING/>
 if(!data)
 return <h1>no students</h1>
 if(error)
