@@ -61,7 +61,7 @@ if(addSuccess){
   setTimeout(() => {
     setButtonText("SAVE TEST");
   
-      navigate("/dash/wordLsList");
+      navigate("/dash/wordsList");
   }, 2000);
 }
 },[addSuccess])
@@ -73,7 +73,7 @@ useEffect(()=>{
     setButtonUpdate(<><CheckCircleIcon/>Successfully Update</>)
     setTimeout(() => {
      setButtonUpdate('UPDATE TEST') 
-     navigate("/dash/wordLsList");
+     navigate("/dash/wordsList");
 
     }, 2000);
   }

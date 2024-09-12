@@ -20,11 +20,11 @@
 //               },
 //               {
 //                 title: "בחנים",
-//                 path: "wordLsList",
+//                 path: "wordsList",
 //               },
 //               {
 //                 title: "רשימת משימות",
-//                 path: "wordLsList",
+//                 path: "wordsList",
 //               },
 //               {
 //                 title:"גיליון ציונים",
@@ -51,7 +51,7 @@
 //             },
 //             {
 //               title: "בחנים",
-//               path: "wordLsList",
+//               path: "wordsList",
 //               icon:<GoChecklist/>
 //             },
 //           ],
@@ -135,7 +135,7 @@
 // //         },
 // //         {
 // //           title: "בחנים",
-// //           path: "wordLsList",
+// //           path: "wordsList",
 // //         },
 // //       ],
 // //     }
@@ -156,7 +156,7 @@
 // //         },
 // //         {
 // //           title: "בחנים",
-// //           path: "wordLsList",
+// //           path: "wordsList",
 // //           icon: <GoChecklist />
 // //         },
 // //       ],
@@ -287,8 +287,8 @@ const SideBarActions = () => {
   //     title: "בחנים",
   //     list: [
   //       { title: "ראשי", path: "/dash/actions", icon: <Quiz /> },
-  //       { title: "בחנים", path: "actions/wordLsList", icon: <Assignment /> },
-  //       { title: "רשימת משימות", path: "actions/wordLsList", icon: <Assignment /> },
+  //       { title: "בחנים", path: "actions/wordsList", icon: <Assignment /> },
+  //       { title: "רשימת משימות", path: "actions/wordsList", icon: <Assignment /> },
   //       { title: "גיליון ציונים", path: "actions/marks", icon: <School /> },
   //     ],
   //   },
@@ -305,7 +305,7 @@ const SideBarActions = () => {
       title: "בחנים",
       list: [
         { title: "ראשי", path: "/dash/actions", icon: <Dashboard /> }, // Dashboard icon for main
-        { title: "בחנים", path: "wordLsList", icon: <Quiz /> }, // Quiz icon for tests
+        { title: "בחנים", path: "wordsList", icon: <Quiz /> }, // Quiz icon for tests
         { title: "רשימת משימות", path: "todos", icon: <ListAlt /> }, // List icon for task list
         { title: "גיליון ציונים", path: "marks", icon: <Star /> }, // Star icon for grades (representing excellence)
       ],
@@ -326,7 +326,7 @@ const SideBarActions = () => {
       list: [
         { title: "ראשי", path: "/dash/actions" },
         { title: "יצירת בוחן חדש", path: "add", icon: <PiListPlusLight /> },
-        { title: "בחנים", path: "wordLsList", icon: <GoChecklist /> }
+        { title: "בחנים", path: "wordsList", icon: <GoChecklist /> }
       ]
     }
   ];

@@ -13,6 +13,12 @@ const FutureSimpleRules = () => {
         padding: theme.spacing(4),
         backgroundColor: theme.palette.background.default,
         color: theme.palette.text.primary,
+        backgroundColor: theme.palette.background.default,
+        padding: theme.spacing(4),
+        borderRadius: '10px',
+        boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.15)',
+        height: '68vh', // גובה מוגדר
+        overflowY: 'auto', // גלילה פנימית כאשר התוכן חורג
       }}
     >
       <Typography variant="h4" component="h1" gutterBottom style={{ color: theme.palette.primary.main }}>

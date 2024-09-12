@@ -52,7 +52,7 @@ const actions = [
   {
     list: [
       { title: "יצירת בוחן חדש", path: "add", icon: <PiListPlusLight /> },
-      { title: "בחנים", path: "wordLsList", icon: <GoChecklist /> },
+      { title: "בחנים", path: "wordsList", icon: <GoChecklist /> },
     ],
   },
 ];
@@ -62,7 +62,7 @@ const studentMenuActions = [
     title: "בחנים",
     list: [
       { title: "ראשי", path: "/dash", icon: <Dashboard /> },
-      { title: "בחנים", path: "wordLsList", icon: <FaBook /> },
+      { title: "בחנים", path: "wordsList", icon: <FaBook /> },
       { title: "בחנים שהושלמו", path: "todos", icon: <FaCheckCircle /> },
       // { title: "גיליון ציונים", path: "marks", icon: <Star /> },
       { title: "משחקים", path: "play", icon: < MdSportsEsports /> },

@@ -43,20 +43,20 @@ const ListWord = ({ todos }) => {
   const [getAllListWordsByClass, teacherResponse] =
     useGetAllListWordsByClassMutation();
 
-  let wordLsList, isError, error, isLoading;
+  let wordsList, isError, error, isLoading;
 
   if (todos) {
-    wordLsList = doneResponse.data;
+    wordsList = doneResponse.data;
     isError = doneResponse.isError;
     error = doneResponse.isError;
     isLoading = doneResponse.isLoading;
   } else if (roles === "Student") {
-    wordLsList = studentResponse.data;
+    wordsList = studentResponse.data;
     isError = studentResponse.isError;
     error = studentResponse.isStudentError;
     isLoading = studentResponse.isStudentisLoading;
   } else if (roles === "Teacher") {
-    wordLsList = teacherResponse.data;
+    wordsList = teacherResponse.data;
     isError = teacherResponse.isError;
     error = teacherResponse.error;
     isLoading = teacherResponse.isLoading;
@@ -102,15 +102,15 @@ if(isLoading)return <LOADING/>
   };
   if (roles === "Student") {
     if (isError) console.log(isError, "error");
-    if (wordLsList) {
-      console.log(wordLsList, "testStudent");
+    if (wordsList) {
+      console.log(wordsList, "testStudent");
     }
   }
 
 
   // אם playId לא null, מחזירים את הקומפוננטה Play בלבד
 
-  const filteredRows = (wordLsList?.data || [])
+  const filteredRows = (wordsList?.data || [])
     .filter((list) =>
       list.title.toLowerCase().includes(searchText.toLowerCase())
     )

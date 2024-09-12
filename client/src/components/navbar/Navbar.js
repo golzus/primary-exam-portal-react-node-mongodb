@@ -44,6 +44,14 @@ const Navbar = () => {
   const [getAllListWordsByClassAndByActive, { data:dataTests }] =
 useGetAllListWordsByClassAndByActiveMutation();
 const { chosenClass } = useSchoolAndClass();
+const [currentPage, setCurrentPage] = useState(window.location.hash);
+useEffect(()=>{
+  setCurrentPage( window.location.hash.split('/').pop())
+console.log(currentPage,"zfgh");
+},[window.location.hash])
+
+
+
   const [getTestByClassAndUser, { data }] =
     useGetTestByClassAndUserMutation();
   const { _id: user } = useAuth();
@@ -83,7 +91,19 @@ const { chosenClass } = useSchoolAndClass();
     setNotificationAnchorEl(null);
     setProfileAnchorEl(null);
   };
+  const translationMap = {
+    'play': 'משחקים',
+    'dash': 'ראשי',
+    'wordsList': 'בחנים',
+    'todos':'בחנים שהושלמו',
+    'graphs':'גרפים',
+    'tips':'טיפים לדיבור באנגלית',
+    'gramar-rules':'כללי דקדוק',
+    'personalldetails':'הפרטים שלי',
+    'student-instruction':'הוראות'
 
+    // הוסף ערכים נוספים לפי הצורך
+  };
   const openNotification = Boolean(notificationAnchorEl);
   const openProfile = Boolean(profileAnchorEl);
 
@@ -92,7 +112,7 @@ const { chosenClass } = useSchoolAndClass();
       <AppBar position="static" style={{ backgroundColor: '#9B153B' }}>
         <Toolbar>
           <div className="navbar-title" style={{ flexGrow: 1, color: '#ffffff', fontWeight: 'bold' }}>
-            ראשי
+          { translationMap[currentPage] }
           </div>
 
           <div className="navbar-search" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>

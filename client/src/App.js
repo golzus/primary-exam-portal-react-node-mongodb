@@ -118,7 +118,7 @@ function App() {
                           <Route path="gramar-rules/verb-explanation/irregular-rules" element={<IrregularVerbs/>}/>
                   <Route path="gramar-rules/present-continuous-rules" element={<PresentContinuousRules/>}/>
 
-                  <Route path="wordLsList" element={<ListWord />} />
+                  <Route path="wordsList" element={<ListWord />} />
                   <Route path="play/:_id/wordgame" element={<WordsGame />} />
                   <Route path="play/:_id/memory" element={<MemoryGame />} />
                   <Route path="play/:_id/multi-choice" element={<MultiChoiceGame />} />

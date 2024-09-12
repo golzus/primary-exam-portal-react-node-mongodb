@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../theme'; // ייבוא הנושא שהגדרת
-import { FormControl, IconButton, InputLabel, MenuItem, Select } from '@mui/material';
+import { Box, FormControl, IconButton, InputLabel, MenuItem, Select } from '@mui/material';
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
 import useWordSpeaker from '../../hooks/useWordSpeaker';
 
@@ -89,6 +89,12 @@ const columns = [
 ];
 return (
   <ThemeProvider theme={theme}>
+    <Box sx={  { backgroundColor: theme.palette.background.default,
+          padding: theme.spacing(4),
+          borderRadius: '10px',
+          boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.15)',
+          height: '68vh', // גובה מוגדר
+          overflowY: 'auto', }}>
     <FormControl fullWidth variant="outlined" margin="normal">
       <InputLabel id="speed-select-label">בחר מהירות השמעה</InputLabel>
       <Select
@@ -113,7 +119,7 @@ return (
         rowsPerPageOptions={[10]}
         checkboxSelection
       />
-    </div>
+    </div></Box>
   </ThemeProvider>
 );
 }
