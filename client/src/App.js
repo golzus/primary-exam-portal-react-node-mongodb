@@ -60,6 +60,7 @@ import PastSimpleRules from "./features/grammarRules/PastSimpleRules";
 import FutureSimpleRules from "./features/grammarRules/FutureSimpleRules";
 import VerbsExplanation from "./features/grammarRules/VerbsExplanation";
 import IrregularVerbs from "./features/grammarRules/IrregularVerbs";
+import PresentContinuousRules from "./features/grammarRules/PresentContinuousRules";
 
 // import PuzzleGame from "./features/actions/game/PuzzleGame";
 function App() {
@@ -114,7 +115,8 @@ function App() {
                   <Route path="gramar-rules/future-simple-rules" element={<FutureSimpleRules/>}/>
                   <Route path="gramar-rules/verb-explanation" element={<VerbsExplanation/>}/>
                   <Route path="gramar-rules/verb-explanation" element={<VerbsExplanation/>}/>
-                  <Route path="gramar-rules/verb-explanation/irregular-rules" element={<IrregularVerbs/>}/>
+                          <Route path="gramar-rules/verb-explanation/irregular-rules" element={<IrregularVerbs/>}/>
+                  <Route path="gramar-rules/present-continuous-rules" element={<PresentContinuousRules/>}/>
 
                   <Route path="wordLsList" element={<ListWord />} />
                   <Route path="play/:_id/wordgame" element={<WordsGame />} />

@@ -1,10 +1,11 @@
+import { Box } from '@mui/material';
 
 
 import React from 'react';
 import Plot from 'react-plotly.js';
 import ScoreCharts from './ScoreCharts';
-import './MainGraphs.css'
-import LineChart from './lineData';
+// import './MainGraphs.css'
+// import LineChart from './lineData';
 // צבעים בורדו בגוונים שונים
 const colors = [
   '#9B153B',  // בורדו כהה
@@ -83,6 +84,14 @@ const pieTotalData = [
 const MainGraphs = () => {
   return (
     <div className='graphsContent'>
+      <Box sx={{   height: '68vh', 
+      width:'50w',
+          margin: 'auto',
+          backgroundColor: '#ffffff',  // צבע רקע לבן
+          padding: '20px',
+          borderRadius: '16px',
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינה
+          overflowY: 'auto',}}>
         {/* <div className='headers'><h1>average</h1><h1>num</h1><h1>what you are</h1></div> */}
         <div>  <ScoreCharts   /></div>
     <div className='graphs'>
@@ -96,8 +105,12 @@ const MainGraphs = () => {
           title: 'ציונים לפי בוחן',
           paper_bgcolor: '#ffffff',
           plot_bgcolor: '#f3f3f3',
-          height: 300, /* גובה של 40% מגובה החלון */
-    width: 350
+
+
+
+          
+          height: 350, /* גובה של 40% מגובה החלון */
+    width: 400
 
 
         }}
@@ -108,8 +121,8 @@ const MainGraphs = () => {
         data={lineData}
         layout={{
           title: 'התקדמות ציונים לאורך זמן',
-          height: 300, /* גובה של 40% מגובה החלון */
-          width: 350,
+          height: 350, /* גובה של 40% מגובה החלון */
+          width: 400,
           paper_bgcolor: '#ffffff',
           plot_bgcolor: '#f3f3f3',
         }}
@@ -120,8 +133,8 @@ const MainGraphs = () => {
         data={pieData}
         layout={{
           title: 'חלוקה לפי רמות ציונים',
-          height: 300, /* גובה של 40% מגובה החלון */
-          width: 350,
+          height: 350, /* גובה של 40% מגובה החלון */
+          width: 400,
           paper_bgcolor: '#ffffff',
           plot_bgcolor: '#f3f3f3',
         }}
@@ -149,7 +162,7 @@ const MainGraphs = () => {
       /> */}
     
     </div>
-  
+    </Box>
     </div>
   );
 }

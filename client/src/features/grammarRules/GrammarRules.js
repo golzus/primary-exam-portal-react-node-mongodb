@@ -18,6 +18,12 @@ const GrammarRules = () => {
           backgroundColor: "#f3f3e9",
           gap: 2,
           padding: 4,
+
+
+          backgroundColor: '#ffffff',  // צבע רקע לבן
+          padding: '20px',
+          borderRadius: '16px',
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינה
         }}
       >
         <Typography variant="h2" sx={{ color: theme.palette.primary.main }}>

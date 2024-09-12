@@ -18,7 +18,10 @@ const PastSimpleRules = () => {
           padding: theme.spacing(4),
           borderRadius: '10px',
           boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.15)',
+          height: '68vh', // גובה מוגדר
+          overflowY: 'auto', // גלילה פנימית כאשר התוכן חורג
         }}
+
       >
         <Typography variant="h4" color="primary" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold' }}>
           כללי השימוש ב-Past Simple

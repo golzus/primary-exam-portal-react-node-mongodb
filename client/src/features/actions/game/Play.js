@@ -71,10 +71,18 @@ if((error||isLoading||!data))return<LOADING/>
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            minHeight: "65vh",
-            backgroundColor: "#f3f3e9",
+            height: "50vh",
+            backgroundColor:'#f3f3e9',
+            // backgroundColor: "#f3f3e9",
             gap: 2,
             padding: 4,
+            backgroundColor: '#ffffff',  // צבע רקע לבן
+            padding: '20px',
+            borderRadius: '16px',
+            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינהz
+           
+
+           
           }}
         >
           <Typography variant="h2" sx={{ color: theme.palette.primary.main }}>
