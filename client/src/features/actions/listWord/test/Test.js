@@ -267,6 +267,10 @@ const Test = () => {
         justifyContent="center"
         minHeight="100vh"
         textAlign="center"
+        sx={{   padding: '20px',
+        borderRadius: '16px',
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינה
+        overflowY: 'auto',}}
       >
         <Typography variant="h6">
           האם הינך בטוח שברצונך להתחיל את הבוחן?
@@ -304,7 +308,10 @@ const Test = () => {
     );
 
   return (
-    <Box className="background-animation">
+    <Box className="background-animation" sx={{   padding: '20px',
+    borderRadius: '16px',
+    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינה
+    overflowY: 'auto',}}>
       <Box
         p={3}
         component={Paper}
@@ -313,6 +320,7 @@ const Test = () => {
           maxWidth: "900px",
           margin: "auto",
           backgroundColor: "rgba(255, 255, 255, 0.9)",
+        
         }}
       >
 

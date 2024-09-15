@@ -95,7 +95,11 @@ const MarksByStudent = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '1200px', margin: 'auto' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '1200px', margin: 'auto',   backgroundColor: '#ffffff',  // צבע רקע לבן
+          padding: '20px',
+          borderRadius: '16px',
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינה
+          overflowY: 'auto', }}>
         <Typography variant="h4" align="center" gutterBottom>
           ציונים ובחנים של התלמידה:
         </Typography>
@@ -122,7 +126,7 @@ const MarksByStudent = () => {
         </Box>
 
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-          <Box sx={{ flex: 1, overflowY: 'auto', height: '70%' }}>
+          <Box sx={{ flex: 1, overflowY: 'auto', height: '70%', minHight:'70vh'}}>
             <DataGrid
               rows={filteredRows}
               columns={columns}

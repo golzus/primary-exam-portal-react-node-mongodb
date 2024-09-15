@@ -130,7 +130,11 @@ const Words = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ padding: '16px' }}>
+      <Box sx={{ padding: '16px' ,   backgroundColor: '#ffffff',  // צבע רקע לבן
+          padding: '20px',
+          borderRadius: '16px',
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינה
+          overflowY: 'auto',}}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '16px' }}>
           <Typography variant="h4" component="h1" sx={{ color: theme.palette.primary.main }}>{wordList.data.title}</Typography>
           <Typography variant="h6" color="textSecondary" sx={{ marginTop: '8px', color: theme.palette.primary.main }}>

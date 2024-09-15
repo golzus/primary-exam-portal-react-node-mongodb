@@ -99,7 +99,7 @@ function App() {
                     <Route path="instructions" element={<Instructions />} />
                     {/* <Route path="settings"element={<Translation />}/> */}
 
-                    <Route path="help" element={<CurrentSchoolAndClass />} />
+                    <Route path="choose-school-and-class" element={<CurrentSchoolAndClass />} />
                   </Route>
                
                 {/* <Route path="dash/actions" element={<LayoutActions />}> */}
@@ -125,7 +125,7 @@ function App() {
                   <Route path="play/:_id/hangman" element={<HangmanGame />} />
                   {/* <Route path="play/puzzle/:_id" element={<PuzzleGame />} /> */}
 
-                  <Route path="add" element={<AddWordsList />} />
+                  <Route path="add-test" element={<AddWordsList />} />
                   <Route path="todos" element={<Todos />} />
                   <Route path="play/:_id" element={<Play/>}/>
                   <Route path="play" element={<Play/>}/>

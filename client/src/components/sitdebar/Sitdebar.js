@@ -43,7 +43,7 @@ const teacherMenuActions = [
     title: "משתמש",
     list: [
       { title: "הוראות", path: "instructions", icon: <HelpOutline /> },
-      { title: "לבחירת ביה''ס וכיתה", path: "help", icon: <FilterAlt /> },
+      { title: "לבחירת ביה''ס וכיתה", path: "choose-school-and-class", icon: <FilterAlt /> },
     ],
   },
 ];
@@ -51,7 +51,7 @@ const teacherMenuActions = [
 const actions = [
   {
     list: [
-      { title: "יצירת בוחן חדש", path: "add", icon: <PiListPlusLight /> },
+      { title: "יצירת בוחן חדש", path: "add-test", icon: <PiListPlusLight /> },
       { title: "בחנים", path: "wordsList", icon: <GoChecklist /> },
     ],
   },

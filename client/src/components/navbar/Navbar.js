@@ -100,7 +100,20 @@ console.log(currentPage,"zfgh");
     'tips':'טיפים לדיבור באנגלית',
     'gramar-rules':'כללי דקדוק',
     'personalldetails':'הפרטים שלי',
-    'student-instruction':'הוראות'
+    'student-instruction':'הוראות',
+    'users':"תלמידות",
+    'companies':'בתי ספר',
+     'add-test':'הוספת בוחן חדש',
+     'instructions':'הוראות',
+     'choose-school-and-class':'בחירת בית ספר וכיתה',
+     'present-continuous-rules':"הווה ממושך",
+     'future-simple-rules':'עתיד פשוט',
+     'verb-explanation':'הסבר על הפועל',
+     'past-simple-rules':'עבר פשוט',
+     'multi-choice':'משחק תרגום מרובה בחירות',
+     'memory':'משחק זיכרון',
+     'hangman':'משחק המן תולה על עץ',
+     'wordgame':'משחק תרגום'
 
     // הוסף ערכים נוספים לפי הצורך
   };

@@ -92,7 +92,11 @@ const ListMarkStudents = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '1200px', margin: 'auto' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '1200px', margin: 'auto',   backgroundColor: '#ffffff',  // צבע רקע לבן
+          padding: '20px',
+          borderRadius: '16px',
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינה
+          overflowY: 'auto', }}>
         <Typography variant="h4" align="center" gutterBottom>
           ציונים ובחנים של תלמידות
         </Typography>

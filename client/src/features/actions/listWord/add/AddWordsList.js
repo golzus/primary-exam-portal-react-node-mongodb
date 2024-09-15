@@ -159,7 +159,10 @@ speakWord(word)
   }
  
   return (
-    <Box className="background-animation" sx={{ width: '100%', maxWidth: '210mm', margin: 'auto', p: 3 }}>
+    <Box className="background-animation" sx={{ width: '100%', maxWidth: '210mm', margin: 'auto', p: 3,   padding: '20px',
+    borderRadius: '16px',
+    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינה
+    overflowY: 'auto', }}>
       {/* Dialog for initial details */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle>Enter Test Details</DialogTitle>

@@ -325,6 +325,7 @@ if(isLoading)return <LOADING/>
             backgroundColor: "#ffffff", // White background for the top section
             display: "flex",
             justifyContent: "space-between",
+          
             alignItems: "center",
           }}
         >
@@ -364,10 +365,10 @@ if(isLoading)return <LOADING/>
         <Box sx={{ 
   flex: 1, 
   overflowY: 'auto', 
-  paddingBottom: '20vh', 
+  // paddingBottom: '20vh', 
   display: 'flex', 
   flexDirection: 'column', 
-  minHeight: '85vh'
+  minHeight: '65vh'
 }}>
   <DataGrid
     rows={filteredRows}
