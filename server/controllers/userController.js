@@ -2,6 +2,23 @@ const bcrypt = require("bcrypt");
 const Class = require("../models/Class");
 const User = require("../models/User");
 
+const checkIfUsernameExist = async (req,res)=>{
+  try{
+    const {username}=req.body;
+    if (!username) 
+      return res.status(400).json({ error: true, message: "no id", data: null });
+    
+    const user=await User.find({username:username})
+    if(user.length>0)
+        return res.status(200).json({ error: true, message: "שם משתמש תפוס", data: null });
+  
+  if(user.length===0)
+    return res.status(200).json({ error: true, message: "", data: null });
+}
+  catch (error) {
+    res.status(500).json({ error: true, message: "Server error", data: null });
+  }
+}
 const getUsers = async (req, res) => {
   try {
     const users = await User.find({ deleted: false }, { password: 0 }).populate("class").lean();
@@ -42,19 +59,24 @@ const getUser = async (req, res) => {
 };
 
 const getUsersByClass = async (req, res) => {
+console.log("hello");
   try {
-    const { classStudent } = req.body;
-    if (!classStudent) {
+    const { chosenClass } = req.body;
+ 
+    if (!chosenClass) {
       return res.status(400).json({
         error: true,
         message: "classStudent is required!",
         data: null,
       });
-    }
-    const classes = await User.find({ class: classStudent }).lean();
+    } 
+   
+       const classes = await User.find({ deleted: false,class:chosenClass }, { password: 0 }).populate("class").lean();
+
     if (!classes) {
-      return res.status(400).json({ error: true, message: "no students", data: null });
+      return res.status(200).json({ error: false, message: "no students", data: null });
     }
+    console.log(classes,"classes");
     res.json({ error: false, message: "", data: classes });
   } catch (error) {
     console.log(error);
@@ -155,7 +177,8 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, getUser, addUser, updateUser, getUserById, deleteUser, getUsersByClass };
+module.exports = { getUsers, getUser,checkIfUsernameExist, addUser, updateUser, getUserById, deleteUser, getUsersByClass };
+
 
 
 // const bcrypt = require("bcrypt");

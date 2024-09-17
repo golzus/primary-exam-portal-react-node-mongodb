@@ -10,24 +10,26 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from "react-router-dom";
 import { IoPersonAddSharp } from "react-icons/io5";
-import { useDeleteUserMutation, useGetAllUsersQuery } from '../view/userApiSlice';
+import { useDeleteUserMutation,useGetAllUsersByClassMutation } from '../view/userApiSlice';
 
 import AddUserForm from '../add/AddUser';
 import theme from '../../../theme';
 import { ThemeProvider } from '@mui/material/styles';
 import './users-list.css';
 import LOADING from '../../loadingAnimation/LoadingAnimation';
+import useSchoolAndClass from '../../../hooks/useSchoolAndClass';
+import CurrentSchoolAndClass from '../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass';
 
 const UsersList = () => {
  
-
-  const { data: users, isError, error, isLoading } = useGetAllUsersQuery();
+const [getAllUsersByClass,{ data: users, isError, error, isLoading}]=useGetAllUsersByClassMutation()
+  // const { data: users, isError, error, isLoading } = useGetAllUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   const [rows, setRows] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [showAddUserForm, setShowAddUserForm] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
-
+const {chosenClass}=useSchoolAndClass()
   useEffect(() => {
     let usersData
     if (users) {
@@ -45,7 +47,12 @@ const UsersList = () => {
       setRows(usersData);
     }
   }, [users]);
-
+useEffect(()=>{
+  if(chosenClass){
+    console.log(chosenClass);
+   getAllUsersByClass({chosenClass})
+  }
+},[chosenClass,showAddUserForm])
   const deleteClick = (user) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       deleteUser({ _id: user._id });
@@ -122,7 +129,7 @@ const UsersList = () => {
 
   if (isLoading) return <LOADING/>
   if (isError) return <h1>Error: {JSON.stringify(error)}</h1>;
-
+  if(!chosenClass)return <CurrentSchoolAndClass/>
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '75vh' }}>

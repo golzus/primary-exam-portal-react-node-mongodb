@@ -49,6 +49,14 @@ const usersApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags:["Users"]
         }),
+        checkName:build.mutation({
+            query: (Users) => ({
+                url: "/api/users/username",
+                method:"POST",
+                body:Users
+            }),
+            invalidatesTags:["Users"]
+        }),
        updateUser:build.mutation({
             query: (Users) => ({
                 url: "/api/users",
@@ -67,6 +75,6 @@ const usersApiSlice = apiSlice.injectEndpoints({
         }),
     })
 })
-export const {useGetAllUsersQuery, useAddUserMutation, useGetAllUsersByClassMutation,
+export const {useGetAllUsersQuery, useAddUserMutation, useGetAllUsersByClassMutation,useCheckNameMutation,
     useUpdateUserMutation, useDeleteUserMutation,useListUsersCompanyMutation,useGetUserByIdMutation}=usersApiSlice;
 
