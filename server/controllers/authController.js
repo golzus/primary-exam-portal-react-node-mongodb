@@ -178,10 +178,14 @@ const refresh = async (req, res) => {
 };
 
 const logout = async (req, res) => {
+  console.log("hhh")
   const cookies = req.cookies;
+  console.log("hhh",cookies)
+
   if (!cookies?.jwt) {
+    console.log(";;");
     return res.status(204).json({
-      erreo: true,
+      error: true,
       message: "no content",
       data: null,
     });

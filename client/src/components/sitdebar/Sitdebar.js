@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { FaUser, FaBars, FaSchool } from "react-icons/fa";
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Avatar, Typography, Divider, Box, IconButton, Collapse, Tooltip } from '@mui/material';
-import { NavLink } from 'react-router-dom';
-import { Dashboard, Person, Business, Settings, Help, ExitToApp, Quiz, ListAlt, Star } from '@mui/icons-material';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, Typography, Divider, Box, IconButton, Collapse, Tooltip } from '@mui/material';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Dashboard, Person, Business, ExitToApp, Quiz, ListAlt, Star } from '@mui/icons-material';
 import { PiListPlusLight } from 'react-icons/pi';
 import { GoChecklist } from 'react-icons/go';
 import useAuth from '../../hooks/useAuth';
@@ -20,15 +20,6 @@ import { ChatBubbleOutline } from '@mui/icons-material';
 import { Book } from '@mui/icons-material';
 import { FaBook } from 'react-icons/fa';
 import { FaCheckCircle } from 'react-icons/fa';
-
-
-// const user = {
-//   username: "username",
-//   fullname: "שם מלא",
-//   seminary: "שם בית ספר",
-//   image: "https://via.placeholder.com/50",
-// };
-
 const teacherMenuActions = [
   {
     list: [
@@ -85,7 +76,7 @@ const studentMenuActions = [
 ];
 
 const SiteBar = () => {
-  const [sendLogout, { error, data }] = useSendLoguotMutation();
+  const [logout, { IsSucsses, data,isLoading }] = useSendLoguotMutation();
   const { roles, classUser, fullname, image } = useAuth();
   const menuItems = roles === 'Teacher' ? teacherMenuActions : studentMenuActions;
   const [classTeacher, setClassTeacher] = useState("");
@@ -119,6 +110,19 @@ const SiteBar = () => {
   if (roles === "Student") {
     chosenNameClass = classUser.name;
   }
+const navigate=useNavigate()
+
+  const handleLogout = async () => {
+
+    try {
+
+      await logout();
+        navigate('/') // הנח שהפונקציה logout מבוצעת בצורה אסינכרונית
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
+  };
+
 
   return (
     <Drawer
@@ -305,10 +309,11 @@ const SiteBar = () => {
         ))}
       </List>
       <Divider sx={{ borderColor: '#9B153B' }} />
-      <List sx={{ marginTop: 'auto' }}>
+      {/* <List sx={{ marginTop: 'auto' }}>
         <ListItem
           component={NavLink}
           to="/"
+          onClick={() => logout()}
           sx={{
             paddingRight: '0.5rem',
             marginBottom: '0rem',
@@ -327,7 +332,39 @@ const SiteBar = () => {
             <ListItemText primary="יציאה" sx={{ color: 'inherit', textAlign: 'right', fontSize: '0.7rem', fontWeight: 'bold' }} />
           )}
         </ListItem>
+      </List> */}
+
+
+<List sx={{ marginTop: 'auto' }}>
+        <ListItem
+          button
+          onClick={handleLogout}
+          sx={{
+            paddingRight: '0.5rem',
+            marginBottom: '0rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            '&:hover': {
+              backgroundColor: '#f0e4e6',
+            },
+            cursor: isLoading ? 'not-allowed' : 'pointer', // שנה את הקורסור אם יש טעינה
+          }}
+        >
+          <ListItemIcon sx={{ color: 'inherit', minWidth: 0 }}>
+            <ExitToApp />
+          </ListItemIcon>
+          {!isCollapsed && (
+            <ListItemText
+              primary="יציאה"
+              sx={{ color: 'inherit', textAlign: 'right', fontSize: '0.7rem', fontWeight: 'bold' }}
+            />
+          )}
+        </ListItem>
       </List>
+
+
+
     </Drawer>
   );
 };

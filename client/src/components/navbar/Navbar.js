@@ -17,12 +17,13 @@ import theme from '../../theme';
 import ListWordToDo from '../../features/actions/ListWordToDo';
 import useAuth from '../../hooks/useAuth';
 import './navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { Stack } from '@mui/material';
 import TestsYouHaveToDo from '../../features/TestsYouHaveToDo';
 import { useGetAllListWordsByClassAndByActiveMutation, useGetTestByClassAndUserMutation } from '../../features/actions/listWord/view/ListWordApiSlice';
 import useSchoolAndClass from '../../hooks/useSchoolAndClass';
+import { useSendLoguotMutation } from '../../features/auth/authApiSlice';
 // עיצוב מותאם אישית עבור שדה החיפוש
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
@@ -50,6 +51,7 @@ useEffect(()=>{
 console.log(currentPage,"zfgh");
 },[window.location.hash])
 
+const [logout, { IsSucsses,isLoading }] = useSendLoguotMutation();
 
 
   const [getTestByClassAndUser, { data }] =
@@ -120,6 +122,17 @@ console.log(currentPage,"zfgh");
   const openNotification = Boolean(notificationAnchorEl);
   const openProfile = Boolean(profileAnchorEl);
 
+  const navigate=useNavigate()
+  const handleLogout = async () => {
+
+    try {
+
+      await logout();
+        navigate('/') // הנח שהפונקציה logout מבוצעת בצורה אסינכרונית
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
+  };
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="static" style={{ backgroundColor: '#9B153B' }}>
@@ -257,25 +270,28 @@ console.log(currentPage,"zfgh");
               העלאת תמונה
             </Button>
             <Button
-              component={Link}
-              to="/"
-              startIcon={<MdExitToApp />}
-              onClick={handleClose}
-              sx={{
-                width: "100%",
-                textAlign: 'left',
-                color: 'primary.main',
-                justifyContent: 'flex-start',
-                gap: 1,
-                border: '1px solid #9B153B',
-                borderRadius: '4px',
-                fontSize: '0.875rem',
-                backgroundColor: '#ffffff',
+      onClick={handleLogout} // קריאה לפונקציה בעת הלחיצה
+      startIcon={<MdExitToApp />} // סמל יציאה
+      sx={{
+        width: "100%",
+        textAlign: 'left',
+        color: 'primary.main',
+        justifyContent: 'flex-start',
+        gap: 1,
+        border: '1px solid #9B153B',
+        borderRadius: '4px',
+        fontSize: '0.875rem',
+        backgroundColor: '#ffffff',
+        "&:hover": {
+          backgroundColor: '#f5f5f5', // הוספת אפקט מעבר עכבר
+        },
+      }}
+      aria-hidden={false} // מוודאים שאין aria-hidden על הכפתור
+    >
+      יציאה
+    </Button>
 
-              }}
-            >
-              יציאה
-            </Button>
+
             <IconButton
               onClick={handleClose}
               sx={{ position: 'absolute', top: 0, left: 0 }}
