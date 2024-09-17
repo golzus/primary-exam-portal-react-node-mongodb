@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import useAuth from "../../../hooks/useAuth"
 import { useAddClassMutation,useGetAllClassesBySchoolMutation, useGetAllSchoolsByTeacherMutation } from "../CompaniesApiSlice"
 import {  useNavigate } from "react-router-dom"
+import LOADING from "../../loadingAnimation/LoadingAnimation"
 
 const AddClass = () => {
     const [addClass,{data:addClassData,isSuccess}]=useAddClassMutation()
@@ -25,7 +26,7 @@ const AddClass = () => {
     };
     const teacher=_id
      const [getAllClassesBySchool,{data,isError,isLoading,error}]=useGetAllClassesBySchoolMutation()
-        if(schoolsisLoading||!schools)return <h1>Loading....</h1>
+        if(schoolsisLoading||!schools)return <LOADING/>
         if(error||schoolsErrorData)return <h1>error</h1>
     const schoolsTeacher=schools.data.filter(school=>school.teacher===teacher)
     return (

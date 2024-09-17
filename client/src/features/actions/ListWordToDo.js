@@ -10,6 +10,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
+import LOADING from "../loadingAnimation/LoadingAnimation";
 
 const ListWordToDo = ({ onNumChange }) => {
   const [getAllListWordsByClassAndByActive, { data, error, isLoading }] =
@@ -45,8 +46,9 @@ const ListWordToDo = ({ onNumChange }) => {
   if (isLoading) {
     return (
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '20vh',width:'20vw' }}>
-        <CircularProgress />
-        <Typography variant="h6" sx={{ mt: 2 }}>טוען נתונים...</Typography>
+        {/* <CircularProgress />
+        <Typography variant="h6" sx={{ mt: 2 }}>טוען נתונים...</Typography> */}
+        <LOADING/>
       </Box>
     );
   }

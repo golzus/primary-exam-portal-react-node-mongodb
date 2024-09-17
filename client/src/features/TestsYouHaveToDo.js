@@ -4,6 +4,7 @@ import useAuth from "../hooks/useAuth";
 import { Typography, Button, CircularProgress, Stack, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import LockIcon from '@mui/icons-material/Lock';
+import LOADING from "./loadingAnimation/LoadingAnimation";
 
 const TestsYouHaveToDo = () => {
   const [getTestByClassAndUser, { isError, data, error, isLoading }] =
@@ -28,10 +29,7 @@ const TestsYouHaveToDo = () => {
           width: '20vw'
         }}
       >
-        <CircularProgress size={40} />
-        <Typography variant="h6" sx={{ mt: 2 }}>
-          טוען נתונים...
-        </Typography>
+      <LOADING/>
       </Box>
     );
   }

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRefreshMutation } from "./auth/authApiSlice";
 import { useSelector } from 'react-redux';
 import { selectToken } from "./auth/authSlice";
+import LOADING from "./loadingAnimation/LoadingAnimation";
 
 const CheckLoginNotRequired = () => {
     const token = useSelector(selectToken);
@@ -39,8 +40,7 @@ const CheckLoginNotRequired = () => {
 
     let content;
     if (isLoading) {
-        console.log('loading');
-        content = <h1>Loading</h1>;
+        content = <LOADING/>;
     } else {
         content = <Outlet />;
     }

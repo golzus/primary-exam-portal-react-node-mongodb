@@ -7,6 +7,7 @@ import { Card, CardContent, Typography, TextField, Button, Box, Grid, MenuItem, 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import "./single-user.css";
 import useAuth from '../../../hooks/useAuth';
+import LOADING from '../../loadingAnimation/LoadingAnimation';
 
 const SingleUser = ({notForATeacher}) => {
   const [userId,setUserId] = useState("");
@@ -52,7 +53,7 @@ const SingleUser = ({notForATeacher}) => {
     updateUser(userObject);
   };
 
-  if (isLoading) return <Typography variant="h4">Loading...</Typography>;
+  if (isLoading) return<LOADING/>;
   if (isError || !isSuccess) return <Typography variant="h4">Error: {JSON.stringify(error)}</Typography>;
   
   const user = data.data;

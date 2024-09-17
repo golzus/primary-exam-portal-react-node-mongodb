@@ -11,7 +11,7 @@ const LOADING = () => {
         alignItems: 'center',
         justifyContent: 'center',
         height: '100vh',
-        backgroundColor: '#f9f9f9',
+        // backgroundColor: '#f9f9f9',
         textAlign: 'center',
       }}
     >
