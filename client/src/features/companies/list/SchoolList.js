@@ -13,9 +13,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { BsBuildingAdd } from "react-icons/bs";
 import { useGetAllSchoolsByTeacherMutation, useDeleteSchoolMutation } from '../CompaniesApiSlice';
 import useAuth from '../../../hooks/useAuth';
-import './school-list.css';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import ListAltIcon from '@mui/icons-material/ListAlt';
 import LOADING from '../../loadingAnimation/LoadingAnimation';
 const SchoolList = () => {
   const [getAllSchoolsByTeacher, { data: Schools, isError, error, isLoading }] = useGetAllSchoolsByTeacherMutation();
@@ -36,7 +34,7 @@ const SchoolList = () => {
       const schoolsData = Schools.data?.map(school => ({
         ...school,
         id: school._id,
-        createedAt: school.createedAt?.toString().slice(4, 16),
+        createedAt: school.createdAt?.toString().slice(0, 10),
         activeStatus: school.active ? "פעיל" : "לא פעיל"
       }));
       setRows(schoolsData);
@@ -106,8 +104,9 @@ const SchoolList = () => {
   if (isError) return <h1>Error: {JSON.stringify(error)}</h1>;
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '75vh', backgroundColor: '#fafaf5', overflow: 'hidden' }}>
-      <Box className='school-list-top' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', padding: '0 16px' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '75vh', overflowY: 'hidden',
+    }}>
+      <Box className='school-list-top' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', padding: '0 16px',overflowX:'auto',overflowY:'hidden' }}>
         <Button
           className="schools-list-add-button"
           component={Link}
@@ -141,12 +140,13 @@ const SchoolList = () => {
         />
       </Box>
       <Box sx={{ 
-  flex: 1, 
-  overflowY: 'auto', 
-  paddingBottom: '20vh', 
-  display: 'flex', 
-  flexDirection: 'column', 
-  minHeight: '85vh'}}>
+   flex: 1, 
+   overflowY: 'auto', 
+   paddingBottom: '20vh', 
+   display: 'flex', 
+   flexDirection: 'column', 
+   minHeight: '65vh', // מאפשר ל-Box להתכווץ ולהתממש בהתאם לתוכן,
+  minWidth:'700px'}}>
   <DataGrid
     rows={filteredRows}
     columns={columns}
@@ -161,7 +161,7 @@ const SchoolList = () => {
         fontSize: "larger",
       },
       "& .MuiDataGrid-cell": {
-        overflow: "hidden",
+        // overflow: "hidden",
         textOverflow: "ellipsis",
       },
     }}

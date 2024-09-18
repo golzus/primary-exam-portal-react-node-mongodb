@@ -32,6 +32,7 @@ import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/Curr
 import { useAddListWordsMutation, useUpdateListWordsMutation } from "../view/ListWordApiSlice";
 import useWordSpeaker from "../../../../hooks/useWordSpeaker";
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
+import { set } from "mongoose";
 const AddWordsList = ({ WORDLIST }) => {
   // const { company } = useAuth();
   const { _id } = useParams();
@@ -46,42 +47,45 @@ const AddWordsList = ({ WORDLIST }) => {
   const [countListenToWord, setCountListenToWord] = useState(5);
   const [openDialog, setOpenDialog] = useState(true);
   const { chosenClass } = useSelector((state) => state.schoolAndClass);
-  const [buttonText,setButtonText]=useState("SAVE TEST")
-  const [buttonUpdate,setButtonUpdate]=useState("UPDATE TEST")
-  const navigate=useNavigate()
-  const speakWord=useWordSpeaker()
+  const [buttonText, setButtonText] = useState("SAVE TEST")
+  const [buttonUpdate, setButtonUpdate] = useState("UPDATE TEST")
+  const [seeWarningActive,setSeeWarningActive]=useState(false)
+  const navigate = useNavigate()
+  const [okActive,setOkActive]=useState(false)
+  const speakWord = useWordSpeaker()
   useEffect(() => {
     if (WORDLIST) {
       setWords(WORDLIST.data.test);
     }
   }, [WORDLIST]);
-useEffect(()=>{
-if(addSuccess){
-  setButtonText(<><CheckCircleIcon /> Successfully Added</>);
-  setTimeout(() => {
-    setButtonText("SAVE TEST");
-  
-      navigate("/dash/wordsList");
-  }, 2000);
-}
-},[addSuccess])
-useEffect(()=>{
-  if(updateLoading){
-    setButtonUpdate('....Updating')
-  }
-  if(updateSuccess){
-    setButtonUpdate(<><CheckCircleIcon/>Successfully Update</>)
-    setTimeout(() => {
-     setButtonUpdate('UPDATE TEST') 
-     navigate("/dash/wordsList");
+  useEffect(() => {
+    if (addSuccess) {
+      setButtonText(<><CheckCircleIcon /> Successfully Added</>);
+      setTimeout(() => {
+        setButtonText("SAVE TEST");
 
-    }, 2000);
-  }
-},[updateSuccess,updateLoading])
+        navigate("/dash/wordsList");
+      }, 2000);
+    }
+  }, [addSuccess])
+  useEffect(() => {
+    if (updateLoading) {
+      setButtonUpdate('....Updating')
+    }
+    if (updateSuccess) {
+      setButtonUpdate(<><CheckCircleIcon />Successfully Update</>)
+      setTimeout(() => {
+        setButtonUpdate('UPDATE TEST')
+        navigate("/dash/wordsList");
+
+      }, 2000);
+    }
+  }, [updateSuccess, updateLoading])
   useEffect(() => {
     if (_id && WORDLIST) {
       setTitle(WORDLIST.data.title);
-      setDate(WORDLIST.data.date);
+
+      setDate(WORDLIST.data.date.toString().slice(0, 10));
       setActive(WORDLIST.data.active);
       setCountListenToWord(WORDLIST.data.countListenToWord);
       setOpenDialog(false)
@@ -107,16 +111,12 @@ useEffect(()=>{
   const handleSubmitSave = (e) => {
     e.preventDefault();
 
-  
-    
-      setButtonText("Adding......");
-   
-
-
+if(okActive||!active){
+    setButtonText("Adding......");
     // Verify that all word fields are filled
     for (let i = 0; i < words.length; i++) {
       if (!words[i].word || !words[i].translate) {
-         alert("Please fill out all word and translation fields before saving.");
+        alert("Please fill out all word and translation fields before saving.");
         return;
       }
     }
@@ -128,7 +128,7 @@ useEffect(()=>{
       date: date,
       active: active,
       countListenToWord: countListenToWord,
-      seeWords:seeWords
+      seeWords: seeWords
     };
 
     if (_id) {
@@ -136,33 +136,42 @@ useEffect(()=>{
       updateListWords(listObject);
     } else {
       addListWords(listObject);
-    }
+    }}
+ else
+    setSeeWarningActive(true)
   };
-
+const backToFuncSubmit=()=>{
+  setOkActive(true)
+  // handleSubmitSave()
+}
   const handleInitialDetailsSubmit = () => {
     setOpenDialog(false);
   };
+  const handleWarningClose=()=>{
+    setSeeWarningActive(false)
+  }
 
- 
   const handleKeyPress = (e, index) => {
     if (e.key === 'Enter') {
       if (words[index].word && words[index].translate) {
         addNewRow();
-      } 
+      }
     }
   };
 
 
 
-  const handleListen=(word)=>{
-speakWord(word)
+  const handleListen = (word) => {
+    speakWord(word)
   }
- 
+
   return (
-    <Box className="background-animation" sx={{ width: '100%', maxWidth: '210mm', margin: 'auto', p: 3,   padding: '20px',
-    borderRadius: '16px',
-    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינה
-    overflowY: 'auto', }}>
+    <Box className="background-animation" sx={{
+      width: '100%', maxWidth: '210mm', margin: 'auto', p: 3, padding: '20px',
+      borderRadius: '16px',
+      boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינה
+      overflowY: 'auto',
+    }}>
       {/* Dialog for initial details */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle>Enter Test Details</DialogTitle>
@@ -191,20 +200,20 @@ speakWord(word)
 
 
 
-<FormControl fullWidth variant="outlined" margin="normal" size="small">
-                  <InputLabel id="seeWords-label">See Words</InputLabel>
-                  <Select
-                    labelId="seeWords-label"
-                    id="seeWords"
-                    name="seeWords"
-                    label="See Words"
-                    value={seeWords}
-                    onChange={(e) => setSeeWords(e.target.value)}
-                  >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                  </Select>
-                </FormControl>
+          <FormControl fullWidth variant="outlined" margin="normal" size="small">
+            <InputLabel id="seeWords-label">See Words</InputLabel>
+            <Select
+              labelId="seeWords-label"
+              id="seeWords"
+              name="seeWords"
+              label="See Words"
+              value={seeWords}
+              onChange={(e) => setSeeWords(e.target.value)}
+            >
+              <MenuItem value={true}>Yes</MenuItem>
+              <MenuItem value={false}>No</MenuItem>
+            </Select>
+          </FormControl>
           <FormControl fullWidth variant="outlined" margin="normal">
             <InputLabel id="active-label">Status</InputLabel>
             <Select
@@ -248,53 +257,53 @@ speakWord(word)
         <Divider sx={{ my: 2 }} />
 
         <Grid container spacing={2}>
-              <Grid item xs={12} sm={4}>
-                <FormControl fullWidth variant="outlined" margin="normal" size="small">
-                  <InputLabel id="active-label">Status</InputLabel>
-                  <Select
-                    labelId="active-label"
-                    id="active"
-                    name="active"
-                    label="Active"
-                    value={active}
-                    onChange={(e) => setActive(e.target.value)}
-                  >
-                    <MenuItem value={true}>Enabled</MenuItem>
-                    <MenuItem value={false}>Disabled</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <FormControl fullWidth variant="outlined" margin="normal" size="small">
-                  <InputLabel id="seeWords-label">See Words</InputLabel>
-                  <Select
-                    labelId="seeWords-label"
-                    id="seeWords"
-                    name="seeWords"
-                    label="See Words"
-                    value={seeWords}
-                    onChange={(e) => setSeeWords(e.target.value)}
-                  >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                  </Select>
-                </FormControl>
-                
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  name="countListenToWord"
-                  type="number"
-                  label="Number of Times to Play Each Word"
-                  fullWidth
-                  variant="outlined"
-                  margin="normal"
-                  size="small"
-                  value={countListenToWord}
-                  onChange={(e) => setCountListenToWord(e.target.value)}
-                />
-              </Grid>
-            </Grid>
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth variant="outlined" margin="normal" size="small">
+              <InputLabel id="active-label">Status</InputLabel>
+              <Select
+                labelId="active-label"
+                id="active"
+                name="active"
+                label="Active"
+                value={active}
+                onChange={(e) => setActive(e.target.value)}
+              >
+                <MenuItem value={true}>Enabled</MenuItem>
+                <MenuItem value={false}>Disabled</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth variant="outlined" margin="normal" size="small">
+              <InputLabel id="seeWords-label">See Words</InputLabel>
+              <Select
+                labelId="seeWords-label"
+                id="seeWords"
+                name="seeWords"
+                label="See Words"
+                value={seeWords}
+                onChange={(e) => setSeeWords(e.target.value)}
+              >
+                <MenuItem value={true}>Yes</MenuItem>
+                <MenuItem value={false}>No</MenuItem>
+              </Select>
+            </FormControl>
+
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              name="countListenToWord"
+              type="number"
+              label="Number of Times to Play Each Word"
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              size="small"
+              value={countListenToWord}
+              onChange={(e) => setCountListenToWord(e.target.value)}
+            />
+          </Grid>
+        </Grid>
 
 
         <form onSubmit={handleSubmitSave}>
@@ -337,7 +346,7 @@ speakWord(word)
                     />
                   </TableCell>
                   <TableCell>
-                  <IconButton onClick={() => handleListen(row.word)}
+                    <IconButton onClick={() => handleListen(row.word)}
                       className='wordSpeakerButton'
                     >
                       <HiOutlineSpeakerWave />
@@ -358,13 +367,40 @@ speakWord(word)
           </Table>
           <Box display="flex" justifyContent="center" sx={{ mt: 2 }}>
             <Button type="submit" variant="contained" color="primary">
-              { _id ? buttonUpdate : buttonText }
+              {_id ? buttonUpdate : buttonText}
             </Button>
             <Button onClick={addNewRow} variant="contained" color="secondary" sx={{ ml: 2 }}>
               Add New Row
             </Button>
           </Box>
         </form>
+        {seeWarningActive&& (
+            <Box mt={3} textAlign="center">
+              <Typography variant="contained" sx={{ color: "maroon", mb: 2 }}>
+                עשית את הבוחן כ-active לאחר מכן אין אפשרות לעשות שינויים בבוחן!
+                <br />
+האם הינך בטוח בכך?
+              </Typography>
+              <Box mt={2}>
+                <Button
+                type="submit"
+                  variant="contained"
+                  color="primary"
+                  onClick={backToFuncSubmit}
+                  sx={{ mr: 1 }}
+                >
+                  כן
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                   onClick={handleWarningClose}
+                >
+                  חזרה
+                </Button>
+              </Box>
+            </Box>
+          )}
       </Box>
     </Box>
   );

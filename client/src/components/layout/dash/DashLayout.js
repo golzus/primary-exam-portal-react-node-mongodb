@@ -4,8 +4,6 @@ import { Outlet } from 'react-router-dom'
 import Footer from '../../footer/Footer'
 import "./dash-dashLayout.css"
 import SitdeBar from '../../sitdebar/Sitdebar'
-import useAuth from '../../../hooks/useAuth'
-
 const DashLayout = () => {
   return (
     <div className='container'>

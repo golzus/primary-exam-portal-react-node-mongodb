@@ -52,11 +52,6 @@ body, html {
 .footer{
   height: 10vh;
 }
-@media (max-width:1000px) {
-  .content {
-    /* padding: 0 10px; מוסיף padding כדי למנוע גלילה צדית במכשירים קטנים */
-  }
-}
 
 
 

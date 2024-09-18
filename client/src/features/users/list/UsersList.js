@@ -134,11 +134,12 @@ useEffect(()=>{
 
   if (isLoading) return <LOADING/>
   if (isError) return <h1>Error: {JSON.stringify(error)}</h1>;
-  if(!chosenClass)return <CurrentSchoolAndClass/>
+  if(!chosenClass&&!class_id)return <CurrentSchoolAndClass/>
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '75vh' }}>
-        <Box className='user-list-top' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+        <Box className='user-list-top' sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px',overflowX: 'auto', 
+ }}>
           <Button
             className="users-list-add-button"
             onClick={() => setShowAddUserForm(true)}
@@ -172,7 +173,7 @@ useEffect(()=>{
 
           />
         </Box>
-      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'hidden' }}>
 {/* <Box
   sx={{
     flex: 1,
@@ -208,7 +209,8 @@ useEffect(()=>{
   paddingBottom: '20vh', 
   display: 'flex', 
   flexDirection: 'column', 
-  minHeight: '85vh' // מאפשר ל-Box להתכווץ ולהתממש בהתאם לתוכן
+  minHeight: '85vh', // מאפשר ל-Box להתכווץ ולהתממש בהתאם לתוכן,
+  minWidth:'800px'
 }}>
   <DataGrid
     rows={filteredRows}
@@ -224,7 +226,7 @@ useEffect(()=>{
         fontSize: "larger",
       },
       "& .MuiDataGrid-cell": {
-        overflow: "hidden",
+        // overflow: "hidden",
         textOverflow: "ellipsis",
       },
     }}

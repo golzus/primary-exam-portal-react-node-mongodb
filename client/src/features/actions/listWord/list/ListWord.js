@@ -75,7 +75,10 @@ const ListWord = ({ todos }) => {
   useEffect(() => {
     if (roles === "Teacher" && chosenClass) getAllListWordsByClass(classObj);
   }, [chosenClass]);
-
+useEffect(()=>{
+  if(wordsList)
+    console.log(wordsList,"data");
+},[wordsList])
   const [deleteListWords] = useDeleteListWordsMutation();
 
   if (!chosenClass && roles === "Teacher") return <CurrentSchoolAndClass />;
@@ -199,7 +202,7 @@ if(isLoading)return <LOADING/>
 
           {roles === "Teacher" ? (
             <>
-
+{/* 
               <Tooltip title="Update">
                 <IconButton
                   component={Link}
@@ -210,7 +213,41 @@ if(isLoading)return <LOADING/>
                 >
                   <EditIcon />
                 </IconButton>
+              </Tooltip> */}
+
+
+
+
+
+       {  params.row.active&&         
+            <Tooltip title="Update">
+                <IconButton
+                  component={Link}
+                  to={`/dash/${params.row.id}`}
+                  aria-label="update"
+                  color="info"
+                  sx={{ mr: 1 }}
+                >
+                  <EditIcon />
+                </IconButton>
               </Tooltip>
+        }
+        
+          
+           {!params.row.active&&
+            <Tooltip title="Update-locked">
+           <IconButton>
+              <EditIcon />
+             <LockIcon sx={{ color: '#ff5252', position: 'absolute', top: 16, right:15, fontSize: '1rem' }} />
+            </IconButton>
+            </Tooltip>
+
+    }
+        
+      
+
+
+
 
               <Tooltip title="marks">
                 <IconButton
@@ -318,7 +355,7 @@ if(isLoading)return <LOADING/>
       </Typography>
     </Box> */}
       {/* <CssBaseline /> */}
-      <Box sx={{ display: "flex", flexDirection: "column", height: "75vh" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", height: "75vh",overflowX:'auto' }}>
         <Box
           sx={{
             p: 2,
@@ -368,7 +405,8 @@ if(isLoading)return <LOADING/>
   // paddingBottom: '20vh', 
   display: 'flex', 
   flexDirection: 'column', 
-  minHeight: '65vh'
+  minHeight: '65vh',
+  minWidth:'800px'
 }}>
   <DataGrid
     rows={filteredRows}
