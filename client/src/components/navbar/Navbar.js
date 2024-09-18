@@ -48,7 +48,6 @@ const { chosenClass } = useSchoolAndClass();
 const [currentPage, setCurrentPage] = useState(window.location.hash);
 useEffect(()=>{
   setCurrentPage( window.location.hash.split('/').pop())
-console.log(currentPage,"zfgh");
 },[window.location.hash])
 
 const [logout, { IsSucsses,isLoading }] = useSendLoguotMutation();

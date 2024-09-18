@@ -32,7 +32,6 @@ import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/Curr
 import { useAddListWordsMutation, useUpdateListWordsMutation } from "../view/ListWordApiSlice";
 import useWordSpeaker from "../../../../hooks/useWordSpeaker";
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
-import { set } from "mongoose";
 const AddWordsList = ({ WORDLIST }) => {
   // const { company } = useAuth();
   const { _id } = useParams();
@@ -85,7 +84,7 @@ const AddWordsList = ({ WORDLIST }) => {
     if (_id && WORDLIST) {
       setTitle(WORDLIST.data.title);
 
-      setDate(WORDLIST.data.date.toString().slice(0, 10));
+      setDate(WORDLIST.data.date?.toString().slice(0, 10));
       setActive(WORDLIST.data.active);
       setCountListenToWord(WORDLIST.data.countListenToWord);
       setOpenDialog(false)
@@ -140,9 +139,10 @@ if(okActive||!active){
  else
     setSeeWarningActive(true)
   };
-const backToFuncSubmit=()=>{
+const backToFuncSubmit=(e)=>{
   setOkActive(true)
-  // handleSubmitSave()
+  setSeeWarningActive(false)
+   handleSubmitSave(e)
 }
   const handleInitialDetailsSubmit = () => {
     setOpenDialog(false);
