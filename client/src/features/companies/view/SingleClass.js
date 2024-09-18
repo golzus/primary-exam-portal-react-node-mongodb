@@ -39,7 +39,7 @@ const SingleClass = () => {
               <Typography variant="h6" color="primary" gutterBottom style={{ marginTop: '10px' }}>
                 {class1.name}
               </Typography>
-              <Link to={`/dash/users`} style={{ textDecoration: 'none' }}>
+              <Link to={`/dash/users/${class1._id}`} style={{ textDecoration: 'none' }}>
                 <Button variant="contained" color="primary" fullWidth style={{ marginTop: '10px' }}>
                   לצפייה בכל בנות הכיתה
                 </Button>

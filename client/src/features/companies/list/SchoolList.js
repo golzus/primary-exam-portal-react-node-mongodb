@@ -78,7 +78,7 @@ const SchoolList = () => {
               </IconButton>
             </Tooltip>
           </Link>
-          <Link to={`/dash/companies/class`} className='companies-list-button companies-list-view'>
+          <Link to={`/dash/companies/class/${params.row._id}`} className='companies-list-button companies-list-view'>
             <Tooltip title="add class">
               <IconButton aria-label="add-class">
                 <AddCircleOutlineIcon />

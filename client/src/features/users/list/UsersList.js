@@ -8,7 +8,7 @@ import { Box, TextField, InputAdornment, IconButton, Tooltip, Button, Modal, Pap
 import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { useDeleteUserMutation,useGetAllUsersByClassMutation } from '../view/userApiSlice';
 
@@ -30,6 +30,7 @@ const [getAllUsersByClass,{ data: users, isError, error, isLoading}]=useGetAllUs
   const [showAddUserForm, setShowAddUserForm] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
 const {chosenClass}=useSchoolAndClass()
+const {class_id}=useParams()
   useEffect(() => {
     let usersData
     if (users) {
@@ -48,11 +49,15 @@ const {chosenClass}=useSchoolAndClass()
     }
   }, [users]);
 useEffect(()=>{
-  if(chosenClass){
-    console.log(chosenClass);
+  //shows all the students after seeing any class
+  if(class_id){
+    getAllUsersByClass({chosenClass:class_id})
+  }
+  //shows the students from the chosen class
+ else if(chosenClass){
    getAllUsersByClass({chosenClass})
   }
-},[chosenClass,showAddUserForm])
+},[chosenClass,showAddUserForm,class_id])
   const deleteClick = (user) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       deleteUser({ _id: user._id });

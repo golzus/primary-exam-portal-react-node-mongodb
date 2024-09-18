@@ -84,7 +84,8 @@ function App() {
                     />
                     <Route path="users" element={<Outlet />}>
                       <Route index element={<UsersList />} />
-                    
+                      <Route path=":class_id" element={<UsersList />} />
+
                       <Route path="add" element={<AddUser />} />
                       <Route path=":userId" element={<SingleUser />} />
                       <Route path="markbystudent/:_id" element={<MarksByStudent/>}/>
@@ -93,8 +94,7 @@ function App() {
                       <Route index element={<SchoolList />} />
                       <Route path="add" element={<AddSchool />} />
                       <Route path=":school" element={<SingleClass />} />
-                      <Route path="aa" element={<Students />} />
-                      <Route path="class" element={<AddClass />} />
+                      <Route path="class/:school_id" element={<AddClass />} />
                     </Route>
                     <Route path="instructions" element={<Instructions />} />
                     {/* <Route path="settings"element={<Translation />}/> */}

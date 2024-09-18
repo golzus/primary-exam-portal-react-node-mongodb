@@ -1,121 +1,119 @@
-import { useEffect } from "react"
-import useAuth from "../../../hooks/useAuth"
-import { useAddClassMutation,useGetAllClassesBySchoolMutation, useGetAllSchoolsByTeacherMutation } from "../CompaniesApiSlice"
-import {  useNavigate } from "react-router-dom"
-import LOADING from "../../loadingAnimation/LoadingAnimation"
+import { useEffect } from "react";
+import useAuth from "../../../hooks/useAuth";
+import {
+    useAddClassMutation,
+    useGetAllSchoolsByTeacherMutation,
+} from "../CompaniesApiSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { Box, TextField, Select, MenuItem, Button, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import ClassOutlinedIcon from "@mui/icons-material/ClassOutlined"; // אייקון כיתה
 
 const AddClass = () => {
-    const [addClass,{data:addClassData,isSuccess}]=useAddClassMutation()
-    const [getAllSchoolsByTeacher,{data:schools,errorschoolsisError,error:schoolsErrorData,isLoading:schoolsisLoading}]=useGetAllSchoolsByTeacherMutation()
+    const [addClass, {  isSuccess }] = useAddClassMutation();
+    const [
+        getAllSchoolsByTeacher,
+        { data: schools, isError: schoolsIsError, error: schoolsErrorData, isLoading: schoolsIsLoading },
+    ] = useGetAllSchoolsByTeacherMutation();
     const navigate = useNavigate();
-    const {_id}=useAuth()
-    useEffect(()=>{
-        getAllSchoolsByTeacher({teacher:_id})
-    },[])
+    const { _id } = useAuth();
+    const theme = useTheme(); // שימוש בנושא הקיים
+    const { school_id } = useParams()
+    useEffect(() => {
+        getAllSchoolsByTeacher({ teacher: _id });
+    }, []);
 
     useEffect(() => {
         if (isSuccess) {
             navigate("/dash/companies");
         }
     }, [isSuccess]);
+
     const formSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const classrObject = Object.fromEntries(formData.entries());
-        addClass(classrObject)
+        const classObject = Object.fromEntries(formData.entries());
+        addClass(classObject);
     };
-    const teacher=_id
-     const [getAllClassesBySchool,{data,isError,isLoading,error}]=useGetAllClassesBySchoolMutation()
-        if(schoolsisLoading||!schools)return <LOADING/>
-        if(error||schoolsErrorData)return <h1>error</h1>
-    const schoolsTeacher=schools.data.filter(school=>school.teacher===teacher)
-    return (
-    <div className='add-company-container'>
-               <form onSubmit={formSubmit} className='add-company-form'>
-                   <input
-                        type='text'
-                        required
-                        name='name'
-                        placeholder='שם בית הספר'
-                    />
-                    <select name='school' id='school'required>
-            <option  name='school' id='school'>?school</option>
-            {schools.data.map(school=>{
-              return   <option  value={school._id}>{school.name}</option>
 
-           })}
-        </select>
 
-             
-                    <select name='active' id='active'>
-                        <option value={true}>פעיל?</option>
-                        <option value={false}>לא פעיל</option>
-                        <option value={true}>פעיל</option>
-                    </select>
   
-                    <button type='submit'>שלח</button>
-                </form>
-            </div>
-          )
-}
-
-export default AddClass
 
 
+    return (
+        <Box
+            sx={{
+                padding: theme.spacing(4),
+                backgroundColor: theme.palette.background.default,
+                color: theme.palette.text.primary,
+                borderRadius: "10px",
+                boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.15)",
+                height: "68vh", // גובה מוגדר
+                maxWidth: "600px",
+                margin: "auto",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+            }}
+        >
+            {/* אייקון כיתה בראש העמוד */}
+            <Box sx={{ display: "flex", justifyContent: "center", marginBottom: theme.spacing(2) }}>
+                <ClassOutlinedIcon sx={{ fontSize: 80, color: theme.palette.primary.main }} />
+            </Box>
 
-// import { useEffect } from 'react';
-// import "./add-ompany.css";
-// import { useAddSchoolMutation } from '../CompaniesApiSlice';
-// import { useNavigate } from 'react-router-dom';
-// import useAuth from '../../../hooks/useAuth';
-// const AddSchool = () => {
-//     const [addSchool, { isError, error, isSuccess, isLoading }] = useAddSchoolMutation();
-//     const navigate = useNavigate();
-// const {company}=useAuth()
-// const _id=company._id
-//     useEffect(() => {
-//         if (isSuccess) {
-//             navigate("/dash/companies");
-//         }
-//     }, [isSuccess]);
+            <Typography variant="h5" component="h2" gutterBottom sx={{ textAlign: "center" }}>
+                הוספת כיתה
+            </Typography>
 
-//     const formSubmit = (e) => {
-//         e.preventDefault();
-//         console.log(_id,"id");
-//          const data =(e.target.value);
-//          console.log(data,"dara");
-//         const formData = new FormData(e.target);
-//         const SchoolObject = Object.fromEntries(formData.entries());
-//         console.log(SchoolObject,"formdata");
+            <form onSubmit={formSubmit}>
+                <TextField
+                    label="שם הכיתה"
+                    name="name"
+                    required
+                    fullWidth
+                    sx={{ marginBottom: theme.spacing(2) }}
+                />
 
-//     // addCompany(data)
-//         addSchool(SchoolObject)
-//     };
+                {/* <Select
+                    label="בחר בית ספר"
+                    name="school"
+                    required
+                    fullWidth
+                    defaultValue=""
+                    sx={{ marginBottom: theme.spacing(2) }}
+                >
+                    <MenuItem disabled value="">
+                        בחר בית ספר
+                    </MenuItem>
+                    {schools.data.map((school) => (
+                        <MenuItem key={school._id} value={school._id}>
+                            {school.name}
+                        </MenuItem>
+                    ))}
+                </Select> */}
+                <input
+                    name="school"
+                    value={school_id}
+                    type="hidden"
+                />
+                <Select
+                    label="פעיל?"
+                    name="active"
+                    required
+                    fullWidth
+                    defaultValue={true}
+                    sx={{ marginBottom: theme.spacing(2) }}
+                >
+                    <MenuItem value={true}>פעיל</MenuItem>
+                    <MenuItem value={false}>לא פעיל</MenuItem>
+                </Select>
 
-//     if (isLoading) return <h1>Loading...</h1>;
-//     if (isError) return <h1>Error: {JSON.stringify(error)}</h1>;
+                <Button variant="contained" color="primary" type="submit" fullWidth>
+                    שלח
+                </Button>
+            </form>
+        </Box>
+    );
+};
 
-//     return (
-//         <div className='add-company-container'>
-//             <form onSubmit={formSubmit} className='add-company-form'>
-//                 <input
-//                     type='text'
-//                     required
-//                     name='name'
-//                     placeholder='שם בית הספר'
-//                 />
-           
-//                 <select name='active' id='active'>
-//                     <option value={true}>פעיל?</option>
-//                     <option value={false}>לא פעיל</option>
-//                     <option value={true}>פעיל</option>
-//                 </select>
-//                 <input name='teacher' value={_id}/>
-//                 <input type='file' name='image' />
-//                 <button type='submit'>שלח</button>
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default AddSchool;
+export default AddClass;
