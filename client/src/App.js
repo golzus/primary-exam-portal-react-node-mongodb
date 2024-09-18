@@ -87,7 +87,7 @@ function App() {
                       <Route path=":class_id" element={<UsersList />} />
 
                       <Route path="add" element={<AddUser />} />
-                      <Route path=":userId" element={<SingleUser />} />
+                      <Route path="update/:userId" element={<SingleUser />} />
                       <Route path="markbystudent/:_id" element={<MarksByStudent/>}/>
                     </Route>
                     <Route path="companies" element={<Outlet />}>

@@ -7,8 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, TextField, InputAdornment, IconButton, Tooltip, Button, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from "@mui/icons-material/Visibility";
+ import DeleteIcon from '@mui/icons-material/Delete';
 import { Link, useSearchParams } from 'react-router-dom';
 import { BsBuildingAdd } from "react-icons/bs";
 import { useGetAllSchoolsByTeacherMutation, useDeleteSchoolMutation } from '../CompaniesApiSlice';
@@ -70,15 +70,15 @@ const SchoolList = () => {
       sortable: false,
       renderCell: (params) => (
         <>
-          <Link to={`/dash/companies/${params.row._id}`} className='companies-list-button companies-list-view'>
-            <Tooltip title="View">
-              <IconButton aria-label="view">
-                <ListAltIcon />
+          <Link to={`/dash/companies/${params.row._id}`} className='list-view'>
+            <Tooltip title="View-classes">
+              <IconButton aria-label="view-classes">
+                <VisibilityIcon />
 
               </IconButton>
             </Tooltip>
           </Link>
-          <Link to={`/dash/companies/class/${params.row._id}`} className='companies-list-button companies-list-view'>
+          <Link to={`/dash/companies/class/${params.row._id}`} className='class-list-button'>
             <Tooltip title="add class">
               <IconButton aria-label="add-class">
                 <AddCircleOutlineIcon />
@@ -87,9 +87,14 @@ const SchoolList = () => {
             </Tooltip>
           </Link>
 
+
+         
+
+
+
           <Tooltip title="Delete">
             <IconButton aria-label="delete" onClick={() => deleteClick(params.row)}>
-            <EditIcon />
+            <DeleteIcon />
             </IconButton>
           </Tooltip>
         </>

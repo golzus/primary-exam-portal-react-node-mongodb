@@ -105,9 +105,9 @@ useEffect(()=>{
       sortable: false,
       renderCell: (params) => (
         <>
-          <Link to={`/dash/users/${params.row.id}`} className='users-list-button users-list-view'>
-            <Tooltip title="View">
-              <IconButton aria-label="view">
+          <Link to={`/dash/users/update/${params.row.id}`} className='users-list-button users-list-view'>
+            <Tooltip title="update">
+              <IconButton aria-label="update">
                 <EditIcon />
               </IconButton>
             </Tooltip>

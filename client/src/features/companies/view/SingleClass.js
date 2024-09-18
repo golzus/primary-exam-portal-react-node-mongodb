@@ -2,22 +2,28 @@ import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useDeleteClassMutation, useGetAllClassesBySchoolMutation } from '../CompaniesApiSlice';
 import LOADING from '../../loadingAnimation/LoadingAnimation';
-import { Card, CardContent, Typography, Button, IconButton, CardHeader, Avatar } from '@mui/material';
+import { Card, CardContent, Typography, Button, IconButton, Avatar, Box } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SchoolIcon from '@mui/icons-material/School';
 import { useTheme } from '@mui/material/styles';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 const SingleClass = () => {
   const { school } = useParams();
   const theme = useTheme(); // Get the current theme
 
-  const [getAllClassesBySchool, { data: classes, isError: classesisError, isLoading: classesIsLoading, error: classesError }] = useGetAllClassesBySchoolMutation();
+  const [getAllClassesBySchool, { data: classes,  isLoading: classesIsLoading }] = useGetAllClassesBySchoolMutation();
   const [deleteClass, { isSuccess }] = useDeleteClassMutation();
 
   useEffect(() => {
-    getAllClassesBySchool({ school });
+    getAllClassesBySchool({ school }
+    
+    );
+    
   }, [school]);
-
+useEffect(()=>{
+  if(classes)
+    console.log(classes,"classes")
+},[classes])
   const deleteClick = (class1) => {
     if (window.confirm("בטוח שברצונך למחוק את הכיתה ?")) {
       deleteClass({ _id: class1._id });
@@ -25,8 +31,33 @@ const SingleClass = () => {
   };
 
   if (classesIsLoading) return <LOADING />;
-  if (!classes?.data) return <Typography variant="h6" color="error">אין כיתות להצגה</Typography>;
-
+  if (classes?.data.length===0)  
+    return (
+      <Box
+        sx={{
+          maxWidth: '300px',
+          margin: 'auto',
+          padding: '16px',
+          backgroundColor: theme.palette.background.paper,
+          boxShadow: theme.shadows[3],
+          borderRadius: '8px',
+          textAlign: 'center',
+          display: 'flex',            // שימוש ב-flexbox
+          justifyContent: 'center',   // ממורכז בציר X
+          alignItems: 'center',       // ממורכז בציר Y
+          height: '65vh',  
+          width:'40vw'            // גובה כדי למרכז את התוכן בציר Y
+        }}
+      >
+        <Typography variant="h5" color="error" gutterBottom>
+          אין כיתות להצגה
+        </Typography>
+        
+      </Box>
+    );
+    
+   
+    
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center' }}>
       {classes?.data.map((class1) => (
@@ -34,7 +65,7 @@ const SingleClass = () => {
           <Card key={class1._id} style={{ maxWidth: '300px', backgroundColor: theme.palette.background.paper, boxShadow: theme.shadows[3], textAlign: 'center' }}>
             <CardContent>
               <Avatar style={{ backgroundColor: theme.palette.primary.main, margin: '0 auto', width: '60px', height: '60px' }}>
-                <SchoolIcon style={{ color: '#fff', fontSize: '30px' }} />
+                <ListAltIcon style={{ color: '#fff', fontSize: '30px' }} />
               </Avatar>
               <Typography variant="h6" color="primary" gutterBottom style={{ marginTop: '10px' }}>
                 {class1.name}
