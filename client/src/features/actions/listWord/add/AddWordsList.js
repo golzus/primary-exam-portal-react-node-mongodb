@@ -27,9 +27,9 @@ import {
   // CircularProgress,
   Grid,
 } from "@mui/material";
+import WarningIcon from '@mui/icons-material/Warning';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { MdDelete } from "react-icons/md";
-import { useSelector } from "react-redux";
 import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
 import { useAddListWordsMutation, useGetAllListWordsByClassMutation, useUpdateListWordsMutation } from "../view/ListWordApiSlice";
 import useWordSpeaker from "../../../../hooks/useWordSpeaker";
@@ -46,6 +46,7 @@ const AddWordsList = ({ WORDLIST }) => {
   const [seeWords, setSeeWords] = useState(false);
   const [words, setWords] = useState([]);
   const [title, setTitle] = useState("");
+  const [showRequired,setShowRequired]=useState(false)
   const [date, setDate] = useState("");
   const [active, setActive] = useState(true);
   const [countListenToWord, setCountListenToWord] = useState(5);
@@ -154,7 +155,11 @@ setAllTestsFromThatTeacher(allTestsFromNotSelected)
     setAllTestsFromThatTeacher(teacherResponse.data.data)
   setWasFull(true)}
   },[teacherResponse.isSuccess])
-
+  useEffect(()=>{
+    if(!title||!date){
+      setOpenDialog(true)
+    }
+  },[openDialog])
   useEffect(() => {
     if (_id && WORDLIST) {
       setTitle(WORDLIST.data.title);
@@ -220,8 +225,10 @@ setAllTestsFromThatTeacher(allTestsFromNotSelected)
     setSeeWarningActive(false)
     handleSubmitSave(e)
   }
+
   const handleInitialDetailsSubmit = () => {
     setOpenDialog(false);
+    setShowRequired(true)
   };
   const handleWarningClose = () => {
     setSeeWarningActive(false)
@@ -255,8 +262,17 @@ setAllTestsFromThatTeacher(allTestsFromNotSelected)
     }}>
       {/* Dialog for initial details */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle>Enter Test Details</DialogTitle>
+        <DialogTitle fontWeight='bold'display='flex' justifyContent='center'>Enter Test Details</DialogTitle>
         <DialogContent>
+        
+   {!title&& showRequired&& (
+    <Box display="flex" alignItems="center" justifyContent='center' style={{ color: '#9B153B' }}>
+      <WarningIcon style={{ marginRight: '8px' }} />
+      <Typography variant="h6" component="h1" gutterBottom>
+       שדה חובה!
+      </Typography>
+    </Box>
+  )}
           <TextField
             required
             name="title"
@@ -267,6 +283,15 @@ setAllTestsFromThatTeacher(allTestsFromNotSelected)
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
+         
+         {!date&& showRequired&& (
+    <Box display="flex" alignItems="center" justifyContent='center' style={{ color: '#9B153B' }}>
+      <WarningIcon style={{ marginRight: '8px' }} />
+      <Typography variant="h6" component="h1" gutterBottom>
+שדה חובה!
+      </Typography>
+    </Box>
+  )}
           <TextField
             name="date"
             type="date"
@@ -371,14 +396,7 @@ setAllTestsFromThatTeacher(allTestsFromNotSelected)
             </FormControl>
 
           </Grid>
-          
-
-        
-
-
-
-
-          
+     
           <Grid item xs={12} sm={4}>
             <TextField
               name="countListenToWord"
@@ -394,20 +412,34 @@ setAllTestsFromThatTeacher(allTestsFromNotSelected)
           </Grid>
         </Grid>
 
-        <Box display="flex" alignItems="center">
-      {allTestsFromThatTeacher?.length>0 && (
-        <FormControl fullWidth variant="outlined" margin="normal">
+        <Box
+      display="flex"
+      alignItems="flex-end" // יישור הרכיבים לקו תחתון משותף
+      justifyContent="space-between"
+      gap="20px"
+      sx={{ width: '100%', mt: 2 }}
+    >
+      {allTestsFromThatTeacher?.length > 0 && (
+        <FormControl
+          fullWidth
+          variant="outlined"
+          sx={{ width: '75%', mb: 0 }} // הבטחת יישור תחתון
+        >
           <InputLabel id="test-select-label">בחר מבחן להוספה</InputLabel>
           <Select
             labelId="test-select-label"
             multiple
+            label="בחר מבחן להוספה"
             value={selectedTests}
             onChange={handleTestChange}
             renderValue={(selected) => (
               <Box>
-                {selected.map((testId) => (
-                 allTestsFromThatTeacher.find(test => test._id === testId).title
-                )).join(', ')}
+                {selected
+                  .map((testId) =>
+                    allTestsFromThatTeacher.find((test) => test._id === testId)
+                      .title
+                  )
+                  .join(', ')}
               </Box>
             )}
             MenuProps={{
@@ -428,9 +460,22 @@ setAllTestsFromThatTeacher(allTestsFromNotSelected)
           </Select>
         </FormControl>
       )}
-    { allTestsFromThatTeacher?.length>0&& <Button variant="contained" color="primary" onClick={handleAdd} sx={{ ml: 2 }}>
-        הוסף
-      </Button>}
+      {allTestsFromThatTeacher?.length > 0 && (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleAdd}
+          sx={{
+            width: '23%', // שמירה על גודל יחסי לכפתור ולתיבה
+            height: '56px', // גובה אחיד עם ה-Select
+            fontSize: '16px',
+            textTransform: 'none',
+            mb: 0, // הבטחת יישור תחתון
+          }}
+        >
+          הוסף
+        </Button>
+      )}
     </Box>
         <form onSubmit={handleSubmitSave}>
           <Table>

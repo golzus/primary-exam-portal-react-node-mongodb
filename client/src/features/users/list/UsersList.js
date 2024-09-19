@@ -243,7 +243,7 @@ useEffect(()=>{
           aria-describedby="modal-description"
         >
           <Paper sx={{ padding: '16px', width: '400px', margin: 'auto', marginTop: '20vh' }}>
-            <Typography id="modal-title" variant="h6" component="h2">
+            <Typography id="modal-title" variant="h6" fontWeight='bold' display='flex' justifyContent='center' component="h2">
               הוספת תלמידה חדשה
             </Typography>
             <AddUserForm

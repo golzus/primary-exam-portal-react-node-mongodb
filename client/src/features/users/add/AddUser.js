@@ -63,6 +63,14 @@ const AddUserForm = ({ setShowThankYou, setOpenModal }) => {
 
   return (
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {messageUsername && (
+      <Box display="flex" alignItems="center" justifyContent='center' style={{ color: '#9B153B' }}>
+        <WarningIcon style={{ marginRight: '8px' }} />
+        <Typography variant="h6" component="h1" gutterBottom>
+          {messageUsername}
+        </Typography>
+      </Box>
+    )}
       <TextField
         required
         name='username'
@@ -71,14 +79,7 @@ const AddUserForm = ({ setShowThankYou, setOpenModal }) => {
         value={formData.username}
         onChange={handleInputChange}
       />
-       {messageUsername && (
-      <Box display="flex" alignItems="center" style={{ color: '#9B153B' }}>
-        <WarningIcon style={{ marginRight: '8px' }} />
-        <Typography variant="h6" component="h1" gutterBottom>
-          {messageUsername}
-        </Typography>
-      </Box>
-    )}
+      
            <TextField
         required
         name='password'
