@@ -9,6 +9,8 @@ import {
   TableHead,
   TableBody,
   TableRow,
+  Checkbox,
+  ListItemText,
   TableCell,
   TextField,
   Paper,
@@ -55,13 +57,15 @@ const AddWordsList = ({ WORDLIST }) => {
   const [okActive, setOkActive] = useState(false)
   const speakWord = useWordSpeaker()
   const {chosenClass}=useSchoolAndClass()
+  const [allTestsFromThatTeacher,setAllTestsFromThatTeacher]=useState()
+  const [wasFull,setWasFull]=useState(false)
   useEffect(() => {
     if(teacherResponse.data)
     console.log(teacherResponse.data,"sdfghjk");
     if(chosenClass)
 getAllListWordsByClass({ chosenClass})
 
-  }, [chosenClass,teacherResponse.data]);
+  }, [chosenClass]);
 
   useEffect(() => {
     if (WORDLIST) {
@@ -91,6 +95,66 @@ getAllListWordsByClass({ chosenClass})
       }, 2000);
     }
   }, [updateSuccess, updateLoading])
+
+
+
+
+
+
+  const [selectedTests, setSelectedTests] = useState([]);
+
+  // Handle change in selection
+  const handleTestChange = (event) => {
+    setSelectedTests(event.target.value);
+  };
+
+  // Handle add button click
+  const handleAdd = () => {
+    // Log the selected test IDs
+    console.log('Selected test IDs:', selectedTests);
+  
+    // Log the teacherResponse.data for debugging
+    console.log(teacherResponse.data, "teacherResponse.data");
+  
+    // Filter the tests to get only those that are selected
+    const allTestsFromSelected = allTestsFromThatTeacher.filter(test =>
+      selectedTests.includes(test._id)
+    );
+
+    //all test who havent chosen
+    const allTestsFromNotSelected = allTestsFromThatTeacher.filter(test =>
+     ! selectedTests.includes(test._id)
+    );
+console.log(allTestsFromNotSelected,"allTestsFromNotSelected");
+setSelectedTests([]);
+
+setAllTestsFromThatTeacher(allTestsFromNotSelected)
+
+    // Log the filtered tests
+    console.log(allTestsFromSelected, "allTestsFromSelected");
+  
+    // Aggregate all words from the selected tests
+    setWords(prevWords => [
+      ...prevWords,  // Previous words
+      ...allTestsFromSelected.flatMap(test => test.test || []) // New words
+    ]);  
+    // Log all collected words
+    console.log(words,"allWords");
+  
+    // You can implement your logic to add the words to the desired place here
+    // e.g., update state, make API call, etc.
+  };
+  
+
+
+
+
+  useEffect(()=>{
+    if(teacherResponse.isSuccess&&!wasFull){
+    setAllTestsFromThatTeacher(teacherResponse.data.data)
+  setWasFull(true)}
+  },[teacherResponse.isSuccess])
+
   useEffect(() => {
     if (_id && WORDLIST) {
       setTitle(WORDLIST.data.title);
@@ -177,6 +241,11 @@ getAllListWordsByClass({ chosenClass})
     speakWord(word)
   }
 
+
+
+
+
+  
   return (
     <Box className="background-animation" sx={{
       width: '100%', maxWidth: '210mm', margin: 'auto', p: 3, padding: '20px',
@@ -304,7 +373,8 @@ getAllListWordsByClass({ chosenClass})
           </Grid>
           
 
-       
+        
+
 
 
 
@@ -324,7 +394,44 @@ getAllListWordsByClass({ chosenClass})
           </Grid>
         </Grid>
 
-
+        <Box display="flex" alignItems="center">
+      {allTestsFromThatTeacher?.length>0 && (
+        <FormControl fullWidth variant="outlined" margin="normal">
+          <InputLabel id="test-select-label">בחר מבחן להוספה</InputLabel>
+          <Select
+            labelId="test-select-label"
+            multiple
+            value={selectedTests}
+            onChange={handleTestChange}
+            renderValue={(selected) => (
+              <Box>
+                {selected.map((testId) => (
+                 allTestsFromThatTeacher.find(test => test._id === testId).title
+                )).join(', ')}
+              </Box>
+            )}
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxHeight: 224,
+                  width: '30vw',
+                },
+              },
+            }}
+          >
+            {allTestsFromThatTeacher.map((test) => (
+              <MenuItem key={test._id} value={test._id}>
+                <Checkbox checked={selectedTests.indexOf(test._id) > -1} />
+                <ListItemText primary={test.title} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
+    { allTestsFromThatTeacher?.length>0&& <Button variant="contained" color="primary" onClick={handleAdd} sx={{ ml: 2 }}>
+        הוסף
+      </Button>}
+    </Box>
         <form onSubmit={handleSubmitSave}>
           <Table>
             <TableHead>
@@ -384,14 +491,14 @@ getAllListWordsByClass({ chosenClass})
               ))}
             </TableBody>
           </Table>
-          <Box display="flex" justifyContent="center" sx={{ mt: 2 }}>
+        {  !seeWarningActive&&<Box display="flex" justifyContent="center" sx={{ mt: 2 }}>
             <Button type="submit" variant="contained" color="primary">
               {_id ? buttonUpdate : buttonText}
             </Button>
             <Button onClick={addNewRow} variant="contained" color="secondary" sx={{ ml: 2 }}>
               Add New Row
             </Button>
-          </Box>
+          </Box>}
         </form>
         {seeWarningActive && (
           <Box mt={3} textAlign="center">
