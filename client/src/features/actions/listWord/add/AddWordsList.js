@@ -304,23 +304,7 @@ getAllListWordsByClass({ chosenClass})
           </Grid>
           
 
-          { teacherResponse.data&&<FormControl fullWidth variant="outlined" margin="normal">
-        <InputLabel id="test-select-label">בחר מבחן להוספה</InputLabel>
-        <Select
-          labelId="test-select-label"
-          // id="test-select"
-          // value={selectedTest}
-          // onChange={handleTestSelect}
-          // label="Select Test"
-        >
-          {teacherResponse.data.data.map((test) => (
-            <MenuItem key={test._id} value={test._id}>
-              {test.title}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>}
-
+       
 
 
 

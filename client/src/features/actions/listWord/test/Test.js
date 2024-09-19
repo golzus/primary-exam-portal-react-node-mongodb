@@ -119,6 +119,10 @@ const Test = () => {
       updateTest({ _id: _id, active: false, complete: true,test:null});
     }
   }, [trying, sureStarting, _id, isUpdateSuccess, isError, loading, updateTest]);
+  // useEffect(()=>{
+  //   if(sureStarting)
+  //   startExam()
+  // },[sureStarting])
   useEffect(()=>{
     if (checkedTest&&wordList){
       if(!isTrying)
