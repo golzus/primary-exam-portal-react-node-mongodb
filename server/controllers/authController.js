@@ -62,6 +62,8 @@ const login = async (req, res) => {
 
   res.cookie("jwt", refreshToken, {
     httpOnly: true,
+    secure: true,  // רק אם את משתמשת ב-HTTPS
+    sameSite: 'None',  // עבור דומיינים שונים
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
@@ -183,7 +185,7 @@ const logout = async (req, res) => {
   console.log("hhh",cookies)
 
   if (!cookies?.jwt) {
-    console.log(";;");
+    console.log(cookies,";;");
     return res.status(204).json({
       error: true,
       message: "no content",
