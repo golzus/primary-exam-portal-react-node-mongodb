@@ -104,7 +104,7 @@ const ListMarkStudents = () => {
           {data.data[0].title}
         </Typography>
         <Typography variant="h6" align="center" gutterBottom>
-          {data.data[0].date.slice(0, 10)}
+          {data.data[0].date?.slice(0, 10)}
         </Typography>
         <Box className='user-list-top' sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '8px' }}>
           <TextField

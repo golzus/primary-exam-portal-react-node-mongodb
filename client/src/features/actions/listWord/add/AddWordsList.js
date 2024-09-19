@@ -199,7 +199,6 @@ setAllTestsFromThatTeacher(allTestsFromNotSelected)
           return;
         }
       }
-
       const listObject = {
         test: words,
         class: chosenClass,

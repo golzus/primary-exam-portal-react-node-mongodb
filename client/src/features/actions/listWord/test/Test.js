@@ -16,8 +16,7 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-import Speech from 'react-speech';
-
+import useAuth from "../../../../hooks/useAuth";
 
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
 import { FaCheck, FaTimes } from "react-icons/fa";
@@ -42,12 +41,6 @@ const Test = () => {
       setSelectedSpeed(Number(event.target.value));
     };
   
-    // const handleSpeakClick = () => {
-    //   speakWord("identify", selectedSpeed);
-    // };
-
-
-
   const compareWords = useWordComparison();
   const [markStudent, setMarkStudent] = useState(0);
   const [seeMark, setSeeMark] = useState(false);
@@ -59,6 +52,7 @@ const Test = () => {
   const { trying } = useParams()
   const isTrying = trying === "true";
   const [checkedTest,setCheckedTest]=useState(false)
+  const {roles}=useAuth()
   const [
     updateTest,
     {
@@ -142,7 +136,14 @@ const Test = () => {
     );
     setWordList(updatedList);
   };
-
+  const handleTeacherChange = (index, value) => {
+    const updatedList = wordList.map((item, i) =>
+      i === index
+        ? { ...item, anotherTranslate: value } // Create a new object with the updated answer
+        : item
+    );
+    setWordList(updatedList);
+  };
   const handleWantsStart = () => {
     setSureStarting(true);
   };
@@ -163,23 +164,7 @@ const Test = () => {
   const handleWarningClose = () => {
     setSeeWarning(false);
   };
-
-  const updateWordList = (index, isCorrect) => {
-    setWordList((prevList) =>
-      prevList.map((item, i) =>
-        i === index ? { ...item, correct: isCorrect } : item
-      )
-    );
-  };
-
-  // const handleResult = (index, isCorrect) => {
-  //   updateWordList(index, isCorrect);
-  // };
-
-
-
   const handleListen = (index, word) => {
-
     // Decrement the listen count if greater than zero
     if (listenCounts[index] > 0) {
       const updatedListenCounts = [...listenCounts];
@@ -187,61 +172,30 @@ const Test = () => {
       setListenCounts(updatedListenCounts);
     }
     speakWord(word,selectedSpeed);
-
-    // // e.stopPropagation();
-    // const voices = window.speechSynthesis.getVoices();
-
-    // // Try to find a US English female voice (priority)
-    // const preferredVoice = voices.find(voice => voice.lang === 'en-US' && voice.name.includes('Female'));
-
-    // // Fallback to any US English voice
-    // const fallbackVoice = voices.find(voice => voice.lang === 'en-US');
-
-    // const voice = preferredVoice || fallbackVoice;
-
-    // if (voice) {
-    //  <Speech
-    //     text={word}
-    //     voice="Google UK English Female" // ניתן לשנות לקול המועדף עליך
-    //     rate="1" // מהירות ההקראה
-    //     pitch="1" // גובה הצליל
-    //     volume="1" // עוצמת הקול
-    //   />  
-
-    // } else {
-    //   console.warn('No US English voice found');
-    // }
-
-
-
   };
-   // const checkTest = (e) => {
-  //   setSeeWarning(false);
-  //   const updatedList = wordList.map((item) => ({
-  //     ...item,
-  //     correct:compareWords(item.translate , item.answer)
-  //     // Check if the answer is correct
-
-  //   }));
-
-  const checkTest = (e) => {
+  const checkTest = () => {
     setSeeWarning(false);
-  
-    const updatedList = wordList.map((item) => {
-      // Split item.translate by comma and trim whitespace
-      const translationArray = item.translate
-        .split(',')
-        .map(word => word.trim());
-  
+    const updatedList = wordList?.map((item) => {
+      // Split item.translate by comma and trim whitespace if translate exists
+      const translationArray = item?.translate 
+        ? item.translate.split(',').map(word => word.trim()) 
+        : []; // If translate is undefined, use an empty array
+    
+      // Split item.anotherTranslate by comma and trim whitespace if anotherTranslate exists
+      const translationArray2 = item?.anotherTranslate 
+        ? item.anotherTranslate.split(',').map(word => word.trim()) 
+        : []; // If anotherTranslate is undefined, use an empty array
+    
       // Check if any translation matches the answer
       const isCorrect = translationArray.some(translation => compareWords(translation, item.answer));
-  
+      const isCorrect2 = translationArray2.some(translation => compareWords(translation, item.answer));
       // Return updated item with correct field set
       return {
         ...item,
-        correct: isCorrect
+        correct: (isCorrect || isCorrect2)
       };
     });
+    
  
     // Update the state or perform any further actions with updatedList
     // e.g., setWordList(updatedList);
@@ -252,18 +206,12 @@ const Test = () => {
     const mark = (correctAnswers / updatedList.length) * 100;
     setMarkStudent(mark);
     setWordList(updatedList);
-    // if (!trying)
-      // updateTest({
-      //   _id: _id,
-      //   active: false,
-      //   test: wordList,
-      //   complete: true,
-      //   mark:markStudent
-      // });
     setSeeMark(true);
 
   };
-
+  const handleTeacherClick=()=>{
+    checkTest()
+  }
   if (sureStarting === false) {
     return (
       <Box
@@ -369,11 +317,15 @@ const Test = () => {
                 <TableCell>תשובה</TableCell>
                 {seeMark && <TableCell>תשובה נכונה</TableCell>}
                 <TableCell>השמעה</TableCell>
+                {roles==='Teacher'&&<TableCell>תשובה נוספת נכונה</TableCell>}
+
               </TableRow>
             </TableHead>
             <TableBody>
               {wordList?.map((cat, index) => (
                 <TableRow key={index}>
+  
+
                   {seeMark && (
                     <TableCell>
                       {cat.correct ? <FaCheck /> : <FaTimes />}
@@ -411,6 +363,7 @@ const Test = () => {
                       <Box name="test">{cat.answer}</Box>
                     </TableCell>
                   )}
+                  
                   {seeMark && <TableCell>{cat.translate}</TableCell>}
 
 
@@ -423,12 +376,51 @@ const Test = () => {
                     </IconButton>
                   </TableCell>
 
+                  {roles === 'Teacher' && (
+                <TableCell sx={{   backgroundColor: '#800020',}}>
+                  <TextField
+                    size="small"
+                    variant="standard"
+                    onChange={(e) => handleTeacherChange(index, e.target.value)}
+                    InputProps={{
+                      // disableUnderline: true,
+                      sx: {
+                        backgroundColor: 'white', // צבע בורדו
+                        color: 'white', // צבע הטקסט
+                        // padding: '5px',
+                        // borderRadius: '10px',
+                      },
+                    }}
+                    inputProps={{
+                      style: {
+                        color: 'white', // צבע הטקסט הפנימי
+                        backgroundColor: '#800020',
+                      },
+                    }}
+                    sx={{
+                      width: '100px',
+                      '& .MuiInputBase-input': {
+                        color: 'white', // צבע הכיתוב בתוך האינפוט
+                      },
+                    }}
+                  />
+                </TableCell>
+              )}
+            </TableRow>
+          
 
-
-                </TableRow>
+                
               ))}
             </TableBody>
           </Table>
+          {roles==='Teacher' && (
+            <Box display="flex" justifyContent="center" sx={{ mt: 2 ,
+            }}>
+              <Button onClick={handleTeacherClick} variant="contained" color="primary">
+                עדכן מילים וציון
+              </Button>
+            </Box>
+          )}
           {!seeMark && (
             <Box display="flex" justifyContent="center" sx={{ mt: 2 }}>
               <Button type="submit" variant="contained" color="primary">
