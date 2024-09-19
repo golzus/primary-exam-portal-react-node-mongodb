@@ -135,23 +135,22 @@ const refresh = async (req, res) => {
 
   jwt.verify(
     refreshToken,
-
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decode) => {
       if (err) {
-
         return res.status(403).json({
           error: true,
           message: "Forbidden",
           data: null,
         });
       }
+      console.log(decode.username,"decode");
       const foundUser = await User.findOne({
         username: decode.username,
-        deleted: false,
-        active: true,
+        // deleted: false,
+        // active: true,
       })
-        .populate("class", { name: 1, image: 1 })
+        .populate("class", { name: 1 })
         .lean();
       if (!foundUser) {
         return res.status(401).json({
