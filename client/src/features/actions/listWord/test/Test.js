@@ -31,8 +31,10 @@ import useWordComparison from "../../../../hooks/useWordComparison";
 import useWordSpeaker from "../../../../hooks/useWordSpeaker";
 import {  FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import LOADING from "../../../loadingAnimation/LoadingAnimation";
+import useFullscreenExam from "../../../../hooks/useFullscreenExam";
 
 const Test = () => {
+  const { startExam, isExamLocked } = useFullscreenExam();
 
     const [selectedSpeed, setSelectedSpeed] = useState(1); // ברירת המחדל למהירות רגילה
   

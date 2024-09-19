@@ -29,15 +29,18 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import CurrentSchoolAndClass from "../../../companies/CurrentSchoolAndClass/CurrentSchoolAndClass";
-import { useAddListWordsMutation, useUpdateListWordsMutation } from "../view/ListWordApiSlice";
+import { useAddListWordsMutation, useGetAllListWordsByClassMutation, useUpdateListWordsMutation } from "../view/ListWordApiSlice";
 import useWordSpeaker from "../../../../hooks/useWordSpeaker";
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
+import useSchoolAndClass from "../../../../hooks/useSchoolAndClass";
 const AddWordsList = ({ WORDLIST }) => {
   // const { company } = useAuth();
   const { _id } = useParams();
   // const navigate = useNavigate();
   const [addListWords, { isError: addError, error: addApiError, isSuccess: addSuccess, isLoading: addLoading }] = useAddListWordsMutation();
   const [updateListWords, { isError: updateError, error: updateApiError, isSuccess: updateSuccess, isLoading: updateLoading }] = useUpdateListWordsMutation();
+  const [getAllListWordsByClass, teacherResponse] = useGetAllListWordsByClassMutation();
+
   const [seeWords, setSeeWords] = useState(false);
   const [words, setWords] = useState([]);
   const [title, setTitle] = useState("");
@@ -45,13 +48,21 @@ const AddWordsList = ({ WORDLIST }) => {
   const [active, setActive] = useState(true);
   const [countListenToWord, setCountListenToWord] = useState(5);
   const [openDialog, setOpenDialog] = useState(true);
-  const { chosenClass } = useSelector((state) => state.schoolAndClass);
   const [buttonText, setButtonText] = useState("SAVE TEST")
   const [buttonUpdate, setButtonUpdate] = useState("UPDATE TEST")
-  const [seeWarningActive,setSeeWarningActive]=useState(false)
+  const [seeWarningActive, setSeeWarningActive] = useState(false)
   const navigate = useNavigate()
-  const [okActive,setOkActive]=useState(false)
+  const [okActive, setOkActive] = useState(false)
   const speakWord = useWordSpeaker()
+  const {chosenClass}=useSchoolAndClass()
+  useEffect(() => {
+    if(teacherResponse.data)
+    console.log(teacherResponse.data,"sdfghjk");
+    if(chosenClass)
+getAllListWordsByClass({ chosenClass})
+
+  }, [chosenClass,teacherResponse.data]);
+
   useEffect(() => {
     if (WORDLIST) {
       setWords(WORDLIST.data.test);
@@ -110,44 +121,45 @@ const AddWordsList = ({ WORDLIST }) => {
   const handleSubmitSave = (e) => {
     e.preventDefault();
 
-if(okActive||!active){
-    setButtonText("Adding......");
-    // Verify that all word fields are filled
-    for (let i = 0; i < words.length; i++) {
-      if (!words[i].word || !words[i].translate) {
-        alert("Please fill out all word and translation fields before saving.");
-        return;
+    if (okActive || !active) {
+      setButtonText("Adding......");
+      // Verify that all word fields are filled
+      for (let i = 0; i < words.length; i++) {
+        if (!words[i].word || !words[i].translate) {
+          alert("Please fill out all word and translation fields before saving.");
+          return;
+        }
+      }
+
+      const listObject = {
+        test: words,
+        class: chosenClass,
+        title: title,
+        date: date,
+        active: active,
+        countListenToWord: countListenToWord,
+        seeWords: seeWords
+      };
+
+      if (_id) {
+        listObject._id = _id;
+        updateListWords(listObject);
+      } else {
+        addListWords(listObject);
       }
     }
-
-    const listObject = {
-      test: words,
-      class: chosenClass,
-      title: title,
-      date: date,
-      active: active,
-      countListenToWord: countListenToWord,
-      seeWords: seeWords
-    };
-
-    if (_id) {
-      listObject._id = _id;
-      updateListWords(listObject);
-    } else {
-      addListWords(listObject);
-    }}
- else
-    setSeeWarningActive(true)
+    else
+      setSeeWarningActive(true)
   };
-const backToFuncSubmit=(e)=>{
-  setOkActive(true)
-  setSeeWarningActive(false)
-   handleSubmitSave(e)
-}
+  const backToFuncSubmit = (e) => {
+    setOkActive(true)
+    setSeeWarningActive(false)
+    handleSubmitSave(e)
+  }
   const handleInitialDetailsSubmit = () => {
     setOpenDialog(false);
   };
-  const handleWarningClose=()=>{
+  const handleWarningClose = () => {
     setSeeWarningActive(false)
   }
 
@@ -290,6 +302,29 @@ const backToFuncSubmit=(e)=>{
             </FormControl>
 
           </Grid>
+          
+
+          { teacherResponse.data&&<FormControl fullWidth variant="outlined" margin="normal">
+        <InputLabel id="test-select-label">בחר מבחן להוספה</InputLabel>
+        <Select
+          labelId="test-select-label"
+          // id="test-select"
+          // value={selectedTest}
+          // onChange={handleTestSelect}
+          // label="Select Test"
+        >
+          {teacherResponse.data.data.map((test) => (
+            <MenuItem key={test._id} value={test._id}>
+              {test.title}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>}
+
+
+
+
+          
           <Grid item xs={12} sm={4}>
             <TextField
               name="countListenToWord"
@@ -374,33 +409,33 @@ const backToFuncSubmit=(e)=>{
             </Button>
           </Box>
         </form>
-        {seeWarningActive&& (
-            <Box mt={3} textAlign="center">
-              <Typography variant="contained" sx={{ color: "maroon", mb: 2 }}>
-                עשית את הבוחן כ-active לאחר מכן אין אפשרות לעשות שינויים בבוחן!
-                <br />
-האם הינך בטוח בכך?
-              </Typography>
-              <Box mt={2}>
-                <Button
+        {seeWarningActive && (
+          <Box mt={3} textAlign="center">
+            <Typography variant="contained" sx={{ color: "maroon", mb: 2 }}>
+              עשית את הבוחן כ-active לאחר מכן אין אפשרות לעשות שינויים בבוחן!
+              <br />
+              האם הינך בטוח בכך?
+            </Typography>
+            <Box mt={2}>
+              <Button
                 type="submit"
-                  variant="contained"
-                  color="primary"
-                  onClick={backToFuncSubmit}
-                  sx={{ mr: 1 }}
-                >
-                  כן
-                </Button>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                   onClick={handleWarningClose}
-                >
-                  חזרה
-                </Button>
-              </Box>
+                variant="contained"
+                color="primary"
+                onClick={backToFuncSubmit}
+                sx={{ mr: 1 }}
+              >
+                כן
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleWarningClose}
+              >
+                חזרה
+              </Button>
             </Box>
-          )}
+          </Box>
+        )}
       </Box>
     </Box>
   );
