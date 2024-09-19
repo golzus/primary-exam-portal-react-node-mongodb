@@ -66,7 +66,7 @@ const AddUserForm = ({ setShowThankYou, setOpenModal }) => {
       {messageUsername && (
       <Box display="flex" alignItems="center" justifyContent='center' style={{ color: '#9B153B' }}>
         <WarningIcon style={{ marginRight: '8px' }} />
-        <Typography variant="h6" component="h1" gutterBottom>
+        <Typography variant="h6" component="h1"  fontSize='small' gutterBottom>
           {messageUsername}
         </Typography>
       </Box>
