@@ -29,8 +29,9 @@ const MarksByStudent = () => {
           const testsArray = response.data.data;
           const formattedRows = testsArray.map(item => ({
             id: item._id,
-            mark:item.complete? `${item.mark.toFixed(2)}%`:"--",
-            date: item.date.slice(0, 10),
+            
+            mark: item.complete ? (item.mark != null ? `${item.mark.toFixed(2)}%` :'0.00%') : "--",
+            date: item.date?.slice(0, 10),
             actions: item._id,
             complete: item.complete,
             title: item.title
@@ -59,7 +60,10 @@ const MarksByStudent = () => {
   const handleSearch = (event) => {
     setSearchText(event.target.value);
   };
-
+useEffect(()=>{
+  if(data)
+    console.log(data,'data');
+},[data])
   const columns = [
     { field: 'complete', headerName: 'הושלם', width: 200, headerAlign: 'center', align: 'center' },
     { field: 'mark', headerName: 'ציון', width: 150, headerAlign: 'center', align: 'center' },

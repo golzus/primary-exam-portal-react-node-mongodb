@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   Box,
@@ -12,10 +12,12 @@ import {
   TableCell,
   TextField,
   Paper,
-  CircularProgress,
   IconButton,
   Divider,
+  Popover
 } from "@mui/material";
+import { FaLightbulb } from 'react-icons/fa'; // אייקון נוסף של נורה
+import { AiOutlineInfoCircle } from 'react-icons/ai'; // אייקון של הדרכה
 import useAuth from "../../../../hooks/useAuth";
 
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
@@ -63,6 +65,21 @@ const Test = () => {
       isLoading: loading,
     },
   ] = useUpdateTestMutation();
+//משתנים נצרכים לפופ-ובר
+const [anchorEl, setAnchorEl] = useState(null);
+const ref = useRef(null); // הגדרת ref לכפתור
+
+const handlePopoverOpen = (event) => {
+  setAnchorEl(event.currentTarget); // כאשר לוחצים על הכפתור, הפופאובר יופיע
+};
+
+const handlePopoverClose = () => {
+  setAnchorEl(null); // סגירת הפופאובר
+};
+
+const open = Boolean(anchorEl);
+
+
   const [
     getSingleTest,
     { isSuccess, data: listWord, isLoading, isError: err },
@@ -139,11 +156,17 @@ const Test = () => {
   const handleTeacherChange = (index, value) => {
     const updatedList = wordList.map((item, i) =>
       i === index
-        ? { ...item, anotherTranslate: value } // Create a new object with the updated answer
+        ? {
+            ...item,
+            anotherTranslate: item.anotherTranslate
+              ? `${item.anotherTranslate}, ${value}` // הוספת פסיק והתוכן החדש אם יש כבר תוכן
+              : value, // אם אין תוכן קודם, נכניס את הערך החדש ישירות
+          }
         : item
     );
     setWordList(updatedList);
   };
+  
   const handleWantsStart = () => {
     setSureStarting(true);
   };
@@ -178,13 +201,17 @@ const Test = () => {
     const updatedList = wordList?.map((item) => {
       // Split item.translate by comma and trim whitespace if translate exists
       const translationArray = item?.translate 
-        ? item.translate.split(',').map(word => word.trim()) 
+        ? item.translate.split(',').map(word => word.trim()).filter(word=>word!='')
         : []; // If translate is undefined, use an empty array
     
       // Split item.anotherTranslate by comma and trim whitespace if anotherTranslate exists
       const translationArray2 = item?.anotherTranslate 
-        ? item.anotherTranslate.split(',').map(word => word.trim()) 
-        : []; // If anotherTranslate is undefined, use an empty array
+    ? item.anotherTranslate
+        .split(',')
+        .map(word => word.trim())
+        .filter(word => word !== '') // סינון מילים ריקות
+    : [];
+// If anotherTranslate is undefined, use an empty array
     
       // Check if any translation matches the answer
       const isCorrect = translationArray.some(translation => compareWords(translation, item.answer));
@@ -203,8 +230,9 @@ const Test = () => {
     setCheckedTest(true)
 
     const correctAnswers = updatedList.filter((item) => item.correct).length;
-    const mark = (correctAnswers / updatedList.length) * 100;
-    setMarkStudent(mark);
+    const mark = ((correctAnswers / updatedList.length) * 100)
+    const roundMark=mark>0?mark.toFixed(2):0
+    setMarkStudent(roundMark);
     setWordList(updatedList);
     setSeeMark(true);
 
@@ -377,7 +405,8 @@ const Test = () => {
                   </TableCell>
 
                   {roles === 'Teacher' && (
-                <TableCell sx={{   backgroundColor: '#800020',}}>
+                <TableCell sx={{            backgroundColor: '#f3f3e9',width:'200px'
+                  ,}}>
                   <TextField
                     size="small"
                     variant="standard"
@@ -385,20 +414,19 @@ const Test = () => {
                     InputProps={{
                       // disableUnderline: true,
                       sx: {
-                        backgroundColor: 'white', // צבע בורדו
-                        color: 'white', // צבע הטקסט
+                     
                         // padding: '5px',
                         // borderRadius: '10px',
                       },
                     }}
                     inputProps={{
                       style: {
-                        color: 'white', // צבע הטקסט הפנימי
-                        backgroundColor: '#800020',
+                        color: '#800020', // צבע הטקסט הפנימי
+                      backgroundColor: '#f3f3e9'
                       },
                     }}
                     sx={{
-                      width: '100px',
+                      width: '100%',
                       '& .MuiInputBase-input': {
                         color: 'white', // צבע הכיתוב בתוך האינפוט
                       },
@@ -463,6 +491,41 @@ const Test = () => {
           )}
         </form>
       </Box>
+      <IconButton ref={ref} onClick={handlePopoverOpen}>
+        <AiOutlineInfoCircle size={24} />
+      </IconButton>   
+      {roles === 'Teacher' && (
+        <Popover
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handlePopoverClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <Box sx={{ p: 2, backgroundColor: '#800020', color: '#fff', borderRadius: '8px', maxWidth: '300px' }}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', borderBottom: '2px solid #fff', pb: 1 }}>
+              <FaLightbulb style={{ marginRight: '8px', color: '#FFD700' }} /> הוראות
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 1 }}>
+              אם תרצה להוסיף תשובה, תוסיף בעוד תשובות
+            </Typography>
+            <Typography variant="body2" sx={{ mt: 1 }}>
+              כדי לוודא שתשובותיך נכונות, נא לעיין ברשימת התשובות המוצגות מתחת לטבלה.
+            </Typography>
+            <Typography variant="body2" sx={{ mt: 1 }}>
+              ניתן גם לעדכן את מהירות ההשמעה לפי הצורך, באמצעות הכפתור המתאים.
+            </Typography>
+          </Box>
+        </Popover>
+      )}
+  
+
     </Box>
   );
 };
