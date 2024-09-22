@@ -27,6 +27,8 @@ import {
   // CircularProgress,
   Grid,
 } from "@mui/material";
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+
 import WarningIcon from '@mui/icons-material/Warning';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { MdDelete } from "react-icons/md";
@@ -35,6 +37,7 @@ import { useAddListWordsMutation, useGetAllListWordsByClassMutation, useUpdateLi
 import useWordSpeaker from "../../../../hooks/useWordSpeaker";
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
 import useSchoolAndClass from "../../../../hooks/useSchoolAndClass";
+import usePopoverInstructions from "../../../../hooks/usePopoverInstructions";
 const AddWordsList = ({ WORDLIST }) => {
   // const { company } = useAuth();
   const { _id } = useParams();
@@ -42,7 +45,7 @@ const AddWordsList = ({ WORDLIST }) => {
   const [addListWords, { isError: addError, error: addApiError, isSuccess: addSuccess, isLoading: addLoading }] = useAddListWordsMutation();
   const [updateListWords, { isError: updateError, error: updateApiError, isSuccess: updateSuccess, isLoading: updateLoading }] = useUpdateListWordsMutation();
   const [getAllListWordsByClass, teacherResponse] = useGetAllListWordsByClassMutation();
-
+  const { handlePopoverOpen, PopoverComponent } = usePopoverInstructions();
   const [seeWords, setSeeWords] = useState(false);
   const [words, setWords] = useState([]);
   const [title, setTitle] = useState("");
@@ -61,8 +64,7 @@ const AddWordsList = ({ WORDLIST }) => {
   const [allTestsFromThatTeacher,setAllTestsFromThatTeacher]=useState()
   const [wasFull,setWasFull]=useState(false)
   useEffect(() => {
-    if(teacherResponse.data)
-    console.log(teacherResponse.data,"sdfghjk");
+  
     if(chosenClass)
 getAllListWordsByClass({ chosenClass})
 
@@ -258,6 +260,7 @@ setAllTestsFromThatTeacher(allTestsFromNotSelected)
       borderRadius: '16px',
       boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינה
       overflowY: 'auto',
+    
     }}>
       {/* Dialog for initial details */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
@@ -299,7 +302,8 @@ setAllTestsFromThatTeacher(allTestsFromNotSelected)
             variant="outlined"
             margin="normal"
             value={date}
-            onChange={(e) => setDate(e.target.value)}
+
+            onChange={(e) => setDate(e.target.value.slice(0, 10))}
           />
 
 
@@ -572,6 +576,15 @@ setAllTestsFromThatTeacher(allTestsFromNotSelected)
           </Box>
         )}
       </Box>
+      <div>
+      <IconButton
+        onClick={(event) => handlePopoverOpen(event, 'אם ברצונך להוסיף למבחן הזה עוד מבחנים מהכיתה הזאת הנך יכול לבחור אילו מבחנים אתה רוצה, ואז לחץ על הוסף |שים לב אם ברצונך לעשות שינויים בבחנים לאחר מכן עשה את את הסטטוס לdisable ,מכיוון שברגע שהסטטוס הוא enable אין אפשרות לעשות שינויים בבחנים יותר- הבחנים נכנסים לתלמידות והם יכולות לעשות זאת כבר!| הנך יכול להחליט האם התלמידים יראו את המילים של הבוחן או רק יוכלו להקשיב וכן מה מספר הפעמים שהנך רוצה שיוכלו לשמוע את המילה כל פעם')}
+        sx={{ color: '#9B153B'}}
+      >
+        <AiOutlineInfoCircle size={30} />הוראות
+      </IconButton>
+ <PopoverComponent />
+    </div>
     </Box>
   );
 };

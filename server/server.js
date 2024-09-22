@@ -28,6 +28,7 @@ app.use("/api/companies", require("./routes/compamyRoute"));
 app.use("/api/schools", require("./routes/schoolRoute"));
 app.use("/api/users", require("./routes/userRoute"));
 app.use("/api/test",require("./routes/testRoute"))
+app.use("/api/comment",require("./routes/messageRoute"))
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'build')));

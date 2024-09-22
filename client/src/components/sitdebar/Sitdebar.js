@@ -20,6 +20,8 @@ import { ChatBubbleOutline } from '@mui/icons-material';
 import { Book } from '@mui/icons-material';
 import { FaBook } from 'react-icons/fa';
 import { FaCheckCircle } from 'react-icons/fa';
+import { BsFillChatRightDotsFill } from "react-icons/bs";
+
 const teacherMenuActions = [
   {
     list: [
@@ -60,6 +62,7 @@ const studentMenuActions = [
       { title: "גרפים", path: "graphs", icon: <FaChartLine /> },
       { title: "טיפים לדיבור באנגלית", path: "tips", icon: <ChatBubbleOutline /> },
       { title:"כללי דקדוק", path: "gramar-rules", icon: <Book /> },
+      { title:"התכתבות עם המורה", path: "comments", icon: <BsFillChatRightDotsFill /> },
 
     ],
 

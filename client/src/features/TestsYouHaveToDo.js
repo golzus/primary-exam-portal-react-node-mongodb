@@ -73,11 +73,8 @@ const TestsYouHaveToDo = () => {
         כמות הבחנים שעליך לעשות: {tests.length}
       </Typography>
 
-      {tests.length === 0 ? (
-        <Typography variant="body1">
-          הידד, אין לך מבחנים!!
-        </Typography>
-      ) : (
+    
+    
         <Stack spacing={2} sx={{ width: '100%' }}>
    
 {tests.map((test) => (
@@ -105,7 +102,7 @@ const TestsYouHaveToDo = () => {
 ))}
 
         </Stack>
-      )}
+    
     </Box>
   );
 };

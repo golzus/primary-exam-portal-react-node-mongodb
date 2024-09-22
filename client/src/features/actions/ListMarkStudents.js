@@ -7,6 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import DescriptionIcon from '@mui/icons-material/Description'; // אייקון למבחן
 import theme from '../../theme';
 import LockIcon from '@mui/icons-material/Lock';
+import { BsFillChatRightDotsFill } from "react-icons/bs";
 
 const ListMarkStudents = () => {
   const [getAlltestsByListWordId, { error, data, isLoading }] = useGetAlltestsByListWordIdMutation();
@@ -25,7 +26,7 @@ const ListMarkStudents = () => {
           const testsArray = response.data.data;
           const formattedRows = testsArray.map(item => ({
             id: item._id,
-            mark:item.complete? `${item.mark.toFixed(2)}%`:"--",
+            mark: item.complete ? `${item.mark.toFixed(2)}%` : "--",
             user: item.user.fullname,
             actions: item._id,
             complete: item.complete
@@ -56,11 +57,23 @@ const ListMarkStudents = () => {
   const handleSearch = (event) => {
     setSearchText(event.target.value);
   };
-
+  // { title:"התכתבות עם המורה", path: "comments", icon: <BsFillChatRightDotsFill /> },
   const columns = [
     { field: 'complete', headerName: 'הושלם', width: 200, headerAlign: 'center', align: 'center' },
     { field: 'mark', headerName: 'ציון', width: 150, headerAlign: 'center', align: 'center' },
     { field: 'user', headerName: 'תלמידה', width: 200, headerAlign: 'center', align: 'center' },
+    {
+      field: 'id', headerName: 'התכתבות עם התלמידה', width: 100,
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: (params) => {
+        return (
+          <Link to={`comments/${params.value}`} style={{ textDecoration: 'none', color: '#9B153B' }}>
+            <BsFillChatRightDotsFill />
+          </Link>
+        );
+      }
+    },
     {
       field: 'actions',
       headerName: 'מבחן',
@@ -78,12 +91,13 @@ const ListMarkStudents = () => {
         } else {
           return (
             <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-              <DescriptionIcon  />
-              <LockIcon sx={{ color:'#ff5252', position: 'absolute', top: 0, right: 0, fontSize: '0.9rem' }} />
+              <DescriptionIcon />
+              <LockIcon sx={{ color: '#ff5252', position: 'absolute', top: 0, right: 0, fontSize: '0.9rem' }} />
             </Box>
           );
         }
-      }}
+      }
+    }
 
   ];
 
@@ -92,11 +106,13 @@ const ListMarkStudents = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '1200px', margin: 'auto',   backgroundColor: '#ffffff',  // צבע רקע לבן
-          padding: '20px',
-          borderRadius: '16px',
-          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינה
-          overflowY: 'auto', }}>
+      <Box sx={{
+        display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '1200px', margin: 'auto', backgroundColor: '#ffffff',  // צבע רקע לבן
+        padding: '20px',
+        borderRadius: '16px',
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // הצללה עדינה
+        overflowY: 'auto',
+      }}>
         <Typography variant="h4" align="center" gutterBottom>
           ציונים ובחנים של תלמידות
         </Typography>

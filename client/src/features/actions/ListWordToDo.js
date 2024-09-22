@@ -35,7 +35,7 @@ const ListWordToDo = ({ onNumChange }) => {
     }
   }, [data, onNumChange]);
 
-  if (!chosenClass && roles === 'Teacher') {
+  if (!chosenClass && roles === 'Teacher'||error||!data) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '20vh',width:'20vw' }}>
         <Typography variant="h5">אין התראות</Typography>
@@ -53,14 +53,7 @@ const ListWordToDo = ({ onNumChange }) => {
     );
   }
 
-  if (error) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center',   height: '20vh',
-      width: '20vw' }}>
-        <Typography color="error">Error: {error.message}</Typography>
-      </Box>
-    );
-  }
+ 
 
   return (
     <Box
@@ -77,9 +70,7 @@ const ListWordToDo = ({ onNumChange }) => {
         alignItems: "center",
       }}
     >
-      {itemCount === 0 ? (
-        <Typography variant="h5">הידד! עדכנת את כל המבחנים!</Typography>
-      ) : (
+    
         <>
           <Typography variant="h6" sx={{ mb: 2 }}>
             כמות הבחנים שעליך לעדכן: {itemCount}
@@ -99,7 +90,7 @@ const ListWordToDo = ({ onNumChange }) => {
             ))}
           </Stack>
         </>
-      )}
+      
     </Box>
   );
 };

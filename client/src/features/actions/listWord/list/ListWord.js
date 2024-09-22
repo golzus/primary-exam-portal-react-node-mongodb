@@ -19,6 +19,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import { BsFillChatRightDotsFill } from "react-icons/bs";
+
 import { Link } from "react-router-dom";
 // import { FaCheckCircle } from 'react-icons/fa';
 
@@ -324,6 +326,17 @@ if(isLoading)return <LOADING/>
                   <DescriptionIcon />
                 </IconButton>
               </Tooltip> */}
+                   <Tooltip title="התכתבות עם המורה">
+                <IconButton
+                  component={Link}
+                  to={`/dash/comments/${params.row.title}/${params.row.id}`}
+                  aria-label="התכתבות עם המורה"
+                  color="primary"
+                >
+
+                  <BsFillChatRightDotsFill />
+                </IconButton>
+              </Tooltip>
               <Tooltip title="trying">
                 <IconButton
                   component={Link}

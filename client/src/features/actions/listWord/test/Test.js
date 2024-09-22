@@ -33,9 +33,11 @@ import useWordSpeaker from "../../../../hooks/useWordSpeaker";
 import {  FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import LOADING from "../../../loadingAnimation/LoadingAnimation";
 import useFullscreenExam from "../../../../hooks/useFullscreenExam";
+import usePopoverInstructions from "../../../../hooks/usePopoverInstructions";
 
 const Test = () => {
-  const { startExam, isExamLocked } = useFullscreenExam();
+  // const { startExam, isExamLocked } = useFullscreenExam();
+  // const { handlePopoverOpen, PopoverComponent } = usePopoverInstructions();
 
     const [selectedSpeed, setSelectedSpeed] = useState(1); // ברירת המחדל למהירות רגילה
   
@@ -524,7 +526,15 @@ const open = Boolean(anchorEl);
           </Box>
         </Popover>
       )}
-  
+      <div>
+    {/* <IconButton
+      onClick={(event) => handlePopoverOpen(event, 'הוראות פה|עוד הוראות פה')}
+      sx={{ color: '#9B153B' }}
+    >
+      <AiOutlineInfoCircle size={30} />הוראות
+    </IconButton>
+    <PopoverComponent /> */}
+  </div>
 
     </Box>
   );
