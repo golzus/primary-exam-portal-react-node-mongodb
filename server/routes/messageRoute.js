@@ -10,6 +10,8 @@ router.post('/', messageController.createMessage);
 router.get('/:testId', messageController.getMessagesByTestId);
 
 // עדכון תגובה כנקראה
+// router.post('/:messageId/responses/:responseIndex/read', messageController.markResponseAsRead);
 router.put('/:messageId/responses/:responseIndex/read', messageController.markResponseAsRead);
 
 module.exports = router;
+

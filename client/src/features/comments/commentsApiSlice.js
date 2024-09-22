@@ -18,8 +18,10 @@ const commentApiSlice = apiSlice.injectEndpoints({
         }),
         markResponseAsRead: build.mutation({
             query: ({ messageId, responseIndex }) => ({
-                url: `/api/comment/${messageId}/responses/${responseIndex}/read`, // שימוש ב-messageId ו-responseIndex בנתיב
-                method: "POST",
+               url: `/api/comment/${messageId}/responses/0/read`, // שימוש ב-messageId ו-responseIndex בנתיב
+              url: `/api/comment/${messageId}/responses/${parseInt(responseIndex, 10)}/read`,
+
+                method: "PUT",
             }),
             invalidatesTags: ["comment"],
         }),

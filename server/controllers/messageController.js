@@ -46,13 +46,17 @@ exports.getMessagesByTestId = async (req, res) => {
 
 // עדכון תגובה כנקראה
 exports.markResponseAsRead = async (req, res) => {
+    console.log("i am here");
   const { messageId, responseIndex } = req.params;
-
+console.log(messageId,"message");
   try {
-    const message = await Message.findById(messageId);
+    const message = await Message.findById({_id:messageId});
+    console.log("i am שךדם  here",message);
+
     if (!message) {
       return res.status(404).json({ message: 'Message not found',error:true,data:null });
     }
+    console.log("more");
     message.responses[responseIndex].isRead = true; // עדכון סטטוס לקריאה
     await message.save();
     res.json(message);

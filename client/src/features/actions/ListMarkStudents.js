@@ -28,6 +28,7 @@ const ListMarkStudents = () => {
             id: item._id,
             mark: item.complete ? `${item.mark.toFixed(2)}%` : "--",
             user: item.user.fullname,
+            user_id:item.user._id,
             actions: item._id,
             complete: item.complete
           }));
@@ -68,7 +69,9 @@ const ListMarkStudents = () => {
       align: 'center',
       renderCell: (params) => {
         return (
-          <Link to={`comments/${params.value}`} style={{ textDecoration: 'none', color: '#9B153B' }}>
+          // to={`comments/${params.value}/${params.row.user}`} // שילוב שני השדות בנתיב
+
+          <Link to={`comments/${ data?.data[0].title}/${params.value}/${params.row. user_id}`} style={{ textDecoration: 'none', color: '#9B153B' }}>
             <BsFillChatRightDotsFill />
           </Link>
         );

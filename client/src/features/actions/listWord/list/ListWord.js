@@ -254,7 +254,7 @@ if(isLoading)return <LOADING/>
               <Tooltip title="marks">
                 <IconButton
                   component={Link}
-                  to={`/dash/marks/${params.row.id}`}
+                  to={`marks/${params.row.id}`}
                   aria-label="marks"
                   color="info"
                   sx={{ mr: 1 }}

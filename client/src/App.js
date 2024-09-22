@@ -127,13 +127,13 @@ function App() {
                   <Route path="play/:_id/multi-choice" element={<MultiChoiceGame />} />
                   <Route path="play/:_id/hangman" element={<HangmanGame />} />
                   {/* <Route path="play/puzzle/:_id" element={<PuzzleGame />} /> */}
-
+                  <Route path="wordsList/marks/:wordlist_id/comments/:title/:test_id/:userId" element={<Comments />} />
                   <Route path="add-test" element={<AddWordsList />} />
                   <Route path="todos" element={<Todos />} />
                   <Route path="play/:_id" element={<Play/>}/>
                   <Route path="play" element={<Play/>}/>
                   <Route path="graphs" element={<MainGraphs/>}/>
-                  <Route path="marks/:_id" element={<ListMarkStudents />} />
+                  <Route path="wordsList/marks/:_id" element={<ListMarkStudents />} />
 
                   <Route path="words/:_id" element={<Words />} />
                   <Route path=":_id" element={<SingleListWord />} />
