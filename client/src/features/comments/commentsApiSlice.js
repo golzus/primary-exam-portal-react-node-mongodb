@@ -4,7 +4,7 @@ const commentApiSlice = apiSlice.injectEndpoints({
     endpoints: (build) => ({
         getAllCommentsByTestId: build.query({
             query: ({ testId }) => ({
-                url: `/api/comment/${testId}`, // שימוש ב-testId בנתיב
+                url: `/api/comment//${testId}`, // שימוש ב-testId בנתיב
             }),
             providesTags: ["comment"],
         }),

@@ -51,6 +51,7 @@ body, html {
 }
 .footer{
   height: 10vh;
+  flex: 0 1 auto;
 }
 
 

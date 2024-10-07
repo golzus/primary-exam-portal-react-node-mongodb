@@ -11,13 +11,13 @@ const Comments = ({ quizzes }) => {
   const [comment, setComment] = useState('');
   const [messages, setMessages] = useState([]);
   const [response, setResponse] = useState('');
-  const { test_id } = useParams();
+  const { test_id = null } = useParams();
   const { userId } = useParams();
   const { title } = useParams();
-  const { data, refetch } = useGetAllCommentsByTestIdQuery({ testId: test_id });
+  const { _id, roles } = useAuth();
+  const { data, refetch } = useGetAllCommentsByTestIdQuery({userId:_id, testId: test_id });
   const [createMessage, { error }] = useCreateMessageMutation();
   const [markResponseAsRead] = useMarkResponseAsReadMutation();
-  const { _id, roles } = useAuth();
 
   useEffect(() => {
     if (data?.data[0]?.responses) {
@@ -42,6 +42,9 @@ const Comments = ({ quizzes }) => {
   const handleSendComment = async () => {
     if (comment.trim()) {
       try {
+        if(!test_id)
+        await createMessage({ userId: roles === 'Student' ? _id : userId, testId: null, text: comment, type: roles });
+else
         await createMessage({ userId: roles === 'Student' ? _id : userId, testId: test_id, text: comment, type: roles });
         setComment('');
         refetch();
@@ -74,12 +77,12 @@ const Comments = ({ quizzes }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Paper elevation={3} sx={{ padding: '20px', margin: '20px', borderRadius: '10px', overflowY: 'auto' }}>
-        <Typography variant="h4" sx={{ marginBottom: '20px' }}>
+      <Paper elevation={3} sx={{ padding: '20px',flexDirection:'column', margin: '20px', borderRadius:'10px',justifyContent:'center' ,alignItems:'center', overflowY: 'auto' }}>
+        <Typography variant="h4" sx={{ marginBottom: '20px',alignSelf:'center' }}>
           Teacher-Student Chat
         </Typography>
         {title && (
-          <Typography variant="h6" sx={{ marginBottom: '20px' }}>
+          <Typography variant="h6" sx={{ marginBottom: '20px',alignSelf:'center' }}>
             {title}
           </Typography>
         )}
@@ -125,8 +128,7 @@ const Comments = ({ quizzes }) => {
             ))
           ) : (
             <Typography variant="body2" sx={{ textAlign: 'center' }}>
-              No messages yet.
-            </Typography>
+עדיין אין שיחות            </Typography>
           )}
           <Divider />
         </List>

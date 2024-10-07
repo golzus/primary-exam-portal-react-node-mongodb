@@ -110,10 +110,11 @@ const Footer = () => {
         borderTop: `2px solid ${theme.palette.primary.main}`, // גבול עליון בצבע הנושא
         position: 'fixed',
         bottom: 0,
-     width: '85%',
+    //  width: '85%',
         height: '5vh',
         zIndex: 1000,
         boxShadow: '0 -2px 4px rgba(0, 0, 0, 0.1)', // צל עדין לחלק התחתון
+        
       }}
     >
       <Box
