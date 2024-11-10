@@ -10,6 +10,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import Badge from '@mui/material/Badge';
 import { FaPen } from 'react-icons/fa';
 import { MdSportsEsports } from 'react-icons/md';
 import SearchIcon from "@mui/icons-material/Search";
@@ -38,7 +39,7 @@ import useSchoolAndClass from "../../../../hooks/useSchoolAndClass";
 import LOADING from "../../../loadingAnimation/LoadingAnimation";
 const ListWord = ({ todos }) => {
   const { roles, _id: user } = useAuth(); // Retrieve roles
-
+  const [activeConversationsCount,setActiveConversationsCount]=useState()
   const [getAllTestsDone, doneResponse] = useGetAllTestsDoneMutation();
   const [getTestByClassAndUser, studentResponse] =
     useGetTestByClassAndUserMutation();
@@ -326,17 +327,24 @@ if(isLoading)return <LOADING/>
                   <DescriptionIcon />
                 </IconButton>
               </Tooltip> */}
-                   <Tooltip title="התכתבות עם המורה">
-                <IconButton
-                  component={Link}
-                  to={`/dash/comments/${params.row.title}/${params.row.id}`}
-                  aria-label="התכתבות עם המורה"
-                  color="primary"
-                >
+              
 
-                  <BsFillChatRightDotsFill />
-                </IconButton>
-              </Tooltip>
+<Tooltip title="התכתבות עם המורה">
+  <IconButton
+    component={Link}
+    to={`/dash/comments/${params.row.title}/${params.row.id}`}
+    aria-label="התכתבות עם המורה"
+    color="primary"
+  >
+    <Badge
+      badgeContent={activeConversationsCount}  // משתנה שמחזיק את מספר השיחות האקטיביות
+      color="secondary"  // צבע הרקע של האינדיקטור
+    >
+      <BsFillChatRightDotsFill />
+    </Badge>
+  </IconButton>
+</Tooltip>
+
               <Tooltip title="trying">
                 <IconButton
                   component={Link}
