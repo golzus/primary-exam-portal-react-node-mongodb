@@ -53,4 +53,17 @@ This project is an English Quiz website developed as a freelance project for a c
 - **Student Management**: Ability for students to view their progress and manage their quizzes 📝.
 
 ---
+### Screenshots:
+<div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+  <img src="https://github.com/user-attachments/assets/2105cdcb-75b2-42e5-bdae-d7803ae9e073" style="width: 30vw; height: 30vw; border: 5px solid pink; border-radius: 15px; margin: 10px;" />
+  <img src="https://github.com/user-attachments/assets/31706afd-6cd4-4a64-9b2c-79bee02e452d" style="width: 30vw; height: 30vw; border: 5px solid pink; border-radius: 15px; margin: 10px;" />
+  <img src="https://github.com/user-attachments/assets/7a68d6ba-3aba-4b99-b3c5-33ea595bf08c" style="width: 30vw; height: 30vw; border: 5px solid pink; border-radius: 15px; margin: 10px;" />
+  <img src="https://github.com/user-attachments/assets/135f44ac-01c1-4546-9835-d3172ac1ef59" style="width: 30vw; height: 30vw; border: 5px solid pink; border-radius: 15px; margin: 10px;" />
+  <img src="https://github.com/user-attachments/assets/cca045b9-aa80-45dd-983e-58061f9eb3e4" style="width: 30vw; height: 30vw; border: 5px solid pink; border-radius: 15px; margin: 10px;" />
+</div>
 
+
+---
+
+### Contact
+For any questions or issues, feel free to reach out!
